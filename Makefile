@@ -1,12 +1,10 @@
 NAME	=	miniRT
 
-SRCS	=	main.c \
+SRCS	=	main.c
 
 OBJDIR	=	Objects
 
 OBJS	=	$(SRCS:%.c=$(OBJDIR)/%.o)
-
-MEMLIB	=	Includes/MemoryCard/memorycard.a
 
 INCLUDES	=	-I Includes
 
@@ -20,13 +18,16 @@ TOTAL_SRCS	=	$(words $(SRCS))
 
 COMPILED_SRCS	=	0
 
+MEMLIB	=	Includes/MemoryCard/memorycard.a
+MLXLIB	=	Includes/minilibx-linux/libmlx.a
+
 all: $(NAME)
 
 $(MEMLIB):
 	@make -C Includes/MemoryCard --silent
 
-$(NAME): $(OBJS) $(MEMLIB)
-		@$(CC) -o $(NAME) $(OBJS) $(MEMLIB)
+$(NAME): $(OBJS) $(MEMLIB) $(MLXLIB)
+		@$(CC) -o $(NAME) $(OBJS) $(MEMLIB) $(MLXLIB) -Imlx_linux -lXext -lX11 -lm
 		@echo "\033[1;97m👾 MiniRT Is Ready! 👾\033[0m"
 
 $(OBJDIR)/%.o: %.c

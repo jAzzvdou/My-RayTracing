@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/11 14:32:11 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:10:32 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 # define MINIRT_H
 
 //----------| LIBRARIES |----------//
-# include <unistd.h> // WRITE
-# include <stdlib.h> // MALLOC, FREE, NULL
-# include <fcntl.h>  // OPEN, CLOSE
-# include <stdio.h>  // PRINTF
-# include <limits.h> // LIMITS
-# include <math.h>   // SIN, COS
-# include "memory.h" // MEMORYCARD
+# include <unistd.h>               //| WRITE, READ
+# include <stdlib.h>               //| MALLOC, FREE, NULL
+# include <fcntl.h>                //| OPEN, CLOSE
+# include <stdio.h>                //| PRINTF
+# include <limits.h>               //| INTMAX, INTMIN
+# include <math.h>                 //| SIN, COS
+# include "./minilibx-linux/mlx.h" //| MiniLibX
+# include "memory.h"               //| MEMORYCARD
 
 //----------| DEFINES |----------//
+//__________ colors __________
 # define RED	"\001\033[38;2;255;0;0m\002"
 # define GREEN	"\001\033[38;2;0;255;0m\002"
 # define BLUE	"\001\033[38;2;0;0;255m\002"
@@ -39,8 +41,25 @@
 # define CYAN	"\001\033[38;2;0;255;255m\002"
 # define RESET	"\033[0m"
 # define CLEAR	"\033[H\033[J"
+//__________ hooks __________
+# define ESC       65307
+# define DESTROY   17
+# define KEY_EVENT 02
+//__________ image __________
+# define WIDTH  1000
+# define HEIGHT 1000
 
 //----------| STRUCTS |----------//
+typedef struct s_minilibx
+{
+	int	bpp;
+	int	linelen;
+	int	endian;
+	char	*addr;
+	void	*mlx;
+	void	*win;
+	void	*img;
+}	t_minilibx;
 
 //----------| FUNCTIONS |----------//
 
