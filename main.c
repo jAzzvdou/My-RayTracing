@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/11 16:23:07 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/11 22:39:26 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,63 @@ void	test(t_minilibx *libx)
 	mlx_loop(libx->mlx);
 }
 
+int	invalid_arguments(int argc, char **argv)
+{
+	if (argc != 2)
+		return (1);
+	if (invalid_mapname(argv[1])
+		return (1);
+	return (0);
+}
+
+t_map	*start_map(void)
+{
+	t_map	*map;
+
+	map = memcard(NULL, DEFAULT, MALLOC, sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->first = NULL;
+	map->last = NULL;
+	map->size = 0;
+	return (map);
+}
+
+t_map	*readmap(char *file)
+{
+	int	fd;
+	char	*line;
+	char	**infos;
+	t_map	*map;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	map = start_map();
+	line = get_next_line(fd);
+	while (line)
+	{
+		infos = ft_split(line, ' ');
+		clear((void **)&line);
+		add_line(map, infos); //| Fazer essa função.
+		//| Dar free em infos**.
+		line = get_next_line(fd);
+	}
+	return (map);
+}
+
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
+	t_main	main;
 
-	t_minilibx	libx;
-
-	libx = (t_minilibx){0};
+	if (invalid_arguments(argc, argv))
+		return (-1); //| Fazer retornar uma mensagem de erro no STDERR.
+	main = (t_main){0};
+	memlist_holder(start_memlist(), 0); //| Inicializa o memorycard.
+	main.map = readmap(argv[1]);        //| Aqui a gente tem que pegar as informações do arquivo. (Mini Parsing).
+	if (!main.map)
+		return (-1); //| Erro. Mapa inválido.
+	//| Fazer a MiniRT funcionar.
 	test(&libx);
 	return (0);
 }

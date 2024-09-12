@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/11 16:10:32 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/11 22:45:17 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,21 @@
 # define HEIGHT 1000
 
 //----------| STRUCTS |----------//
+typedef struct s_line
+{
+	char	*var;
+	int	rgb[3];
+	s_line	*next;
+	s_line	*prev;
+}	t_line;
+
+typedef struct s_map
+{
+	t_line	*first;
+	t_line	*last;
+	int	size;
+}	t_map;
+
 typedef struct s_minilibx
 {
 	int	bpp;
@@ -60,6 +75,12 @@ typedef struct s_minilibx
 	void	*win;
 	void	*img;
 }	t_minilibx;
+
+typedef struct s_main
+{
+	t_map		*map;
+	t_minilibx	*libx;
+}	t_main;
 
 //----------| FUNCTIONS |----------//
 
