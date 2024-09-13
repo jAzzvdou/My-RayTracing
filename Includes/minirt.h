@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/11 22:45:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:04:29 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,65 @@
 # define HEIGHT 1000
 
 //----------| STRUCTS |----------//
-typedef struct s_line
+typedef enum e_type
 {
-	char	*var;
-	int	rgb[3];
-	s_line	*next;
-	s_line	*prev;
-}	t_line;
+	A,
+	C,
+	L,
+	PL,
+	SP,
+	CY
+}	t_type;
+
+typedef struct s_amb
+{
+	e_type	type;
+	double	amblight;
+	double	rgb[3];
+}	t_amb;
+
+typedef struct s_cam
+{
+	e_type	type;
+	double	coord[3];
+	double	nvector[3];
+	int	fov;
+}	t_cam;
+
+typedef struct s_light
+{
+	e_type	type;
+	double	coord[3];
+	double	brightness;
+	double	rgb[3];
+}	t_light;
+
+typedef	struct s_plane
+{
+	t_type	type;
+	double	coord[3];
+	double	diameter;
+	double	rgb[3];
+}	t_plane;
+
+typedef	struct s_cylinder
+{
+	t_type	type;
+	double	coord[3];
+	double	nvector[3];
+	double	diameter;
+	double	height;
+	double	rgb[3];
+}	t_cylinder;
 
 typedef struct s_map
 {
-	t_line	*first;
-	t_line	*last;
-	int	size;
+	t_amb		*a;
+	t_cam		*c;
+	t_light		*l;
+	t_plane		*pl;
+	t_sphere	*sp;
+	t_cylinder	*cy;
 }	t_map;
 
 typedef struct s_minilibx
