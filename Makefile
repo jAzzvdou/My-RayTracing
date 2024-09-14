@@ -1,6 +1,12 @@
 NAME	=	miniRT
 
-SRCS	=	main.c
+SRCS	=	main.c                \
+		Parser/readfile.c     \
+		Screen/screen.c       \
+		Utils/get_next_line.c \
+		Utils/space.c         \
+		Utils/utils1.c        \
+		Utils/utils2.c        \
 
 OBJDIR	=	Objects
 

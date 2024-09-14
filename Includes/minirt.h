@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/13 21:07:21 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:33:12 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 # define MINIRT_H
 
 //----------| LIBRARIES |----------//
-# include <unistd.h>               //| WRITE, READ
-# include <stdlib.h>               //| MALLOC, FREE, NULL
-# include <fcntl.h>                //| OPEN, CLOSE
-# include <stdio.h>                //| PRINTF
-# include <limits.h>               //| INTMAX, INTMIN
-# include <math.h>                 //| SIN, COS
-# include "./minilibx-linux/mlx.h" //| MiniLibX
-# include "memory.h"               //| MEMORYCARD
+# include <unistd.h>                  //| WRITE, READ
+# include <stdlib.h>                  //| MALLOC, FREE, NULL
+# include <fcntl.h>                   //| OPEN, CLOSE
+# include <stdio.h>                   //| PRINTF
+# include <limits.h>                  //| INTMAX, INTMIN
+# include <math.h>                    //| SIN, COS
+# include "./minilibx-linux/mlx.h"    //| MiniLibX
+# include "./MemoryCard/memorycard.h" //| MEMORYCARD
 
 //----------| DEFINES |----------//
+//__________ getnextline __________
+# define BUFFER_SIZE 4200
 //__________ colors __________
 # define RED	"\001\033[38;2;255;0;0m\002"
 # define GREEN	"\001\033[38;2;0;255;0m\002"
@@ -46,11 +48,12 @@
 # define DESTROY   17
 # define KEY_EVENT 02
 //__________ image __________
-# define WIDTH  1000
-# define HEIGHT 1000
+# define WIDTH  1920
+# define HEIGHT 1080
 //__________ errors __________
 # define ARGV "Error! Usage: ./fdf <filename>.\n"
-# define FILENAME "Error! File Not '.rt'.\n"
+# define FILENAME "Error! File Is Not '.rt'.\n"
+# define INVALID_VARIABLE "Error! Invalid Element Name.\n"
 
 //----------| STRUCTS |----------//
 typedef enum e_type
@@ -65,14 +68,14 @@ typedef enum e_type
 
 typedef struct s_amb
 {
-	e_type	type;
+	t_type	type;
 	double	amblight;
-	double	rgb[3];
+	int	rgb[3];
 }	t_amb;
 
 typedef struct s_cam
 {
-	e_type	type;
+	t_type	type;
 	double	coord[3];
 	double	nvector[3];
 	int	fov;
@@ -80,18 +83,26 @@ typedef struct s_cam
 
 typedef struct s_light
 {
-	e_type	type;
+	t_type	type;
 	double	coord[3];
 	double	brightness;
-	double	rgb[3];
+	int	rgb[3];
 }	t_light;
+
+typedef	struct s_sphere
+{
+	t_type	type;
+	double	coord[3];
+	double	diameter;
+	int	rgb[3];
+}	t_sphere;
 
 typedef	struct s_plane
 {
 	t_type	type;
 	double	coord[3];
 	double	diameter;
-	double	rgb[3];
+	int	rgb[3];
 }	t_plane;
 
 typedef	struct s_cylinder
@@ -101,7 +112,7 @@ typedef	struct s_cylinder
 	double	nvector[3];
 	double	diameter;
 	double	height;
-	double	rgb[3];
+	int	rgb[3];
 }	t_cylinder;
 
 typedef struct s_map
@@ -132,9 +143,24 @@ typedef struct s_main
 }	t_main;
 
 //----------| FUNCTIONS |----------//
+//__________ parser __________
+t_map	*readfile(char *file);
+//__________ screen __________
+void	screen(t_minilibx *libx);
+
+//----------| ERRORS |----------//
+void	err(char *color1, char *error, char *color2);
 
 //----------| CLEANERS |----------//
 
 //----------| UTILS |----------//
+void	skip_spaces(char **s);
+size_t	ft_strlen(const char *s);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int	revstrncmp(char *s1, char *s2, int n);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*get_next_line(int fd);
 
 #endif //| MINIRT_H

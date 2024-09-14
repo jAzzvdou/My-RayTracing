@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:57:15 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/10 10:18:09 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:42:26 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	search_memnode(void *content)
 	t_memnode	*node;
 	t_memlist	*list;
 
+	if (!content)
+		return ;
 	list = memlist_holder(NULL, 0);
 	if (!list)
 		return ;
