@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/13 18:04:29 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/13 21:07:21 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 //__________ image __________
 # define WIDTH  1000
 # define HEIGHT 1000
+//__________ errors __________
+# define ARGV "Error! Usage: ./fdf <filename>.\n"
+# define FILENAME "Error! File Not '.rt'.\n"
 
 //----------| STRUCTS |----------//
 typedef enum e_type

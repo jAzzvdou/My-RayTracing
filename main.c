@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/13 18:11:20 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/13 21:32:41 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,22 @@ void	test(t_minilibx *libx)
 	mlx_loop(libx->mlx);
 }
 
+void	err(char *color1, char *error, char *color1)
+{
+	if (color1)
+		write(2, color1, ft_strlen(color1));
+	if (error)
+		write(2, error, ft_strlen(error));
+	if (color2)
+		write(2, color2, ft_strlen(color2));
+}
+
 int	invalid_arguments(int argc, char **argv)
 {
 	if (argc != 2)
-		return (1);
+		return (err(RED, ARGV, RESET), 1);
 	if (revstrncmp(".rt", argv[1], 4))
-		return (1);
+		return (err(RED, FILENAME, RESET), 1);
 	return (0);
 }
 
@@ -68,6 +78,24 @@ t_map	*start_map(void)
 	return (map);
 }
 
+int	add_map(t_map *map, char *line)
+{
+	if (line[0] == 'A')
+		return (1)
+	else if (line[0] == 'C')
+		return (1)
+	else if (line[0] == 'L')
+		return (1)
+	else if (!strncmp(line, "PL ", 3))
+		return (1)
+	else if (!strncmp(line, "SP ", 3))
+		return (1)
+	else if (!strncmp(line, "CY ", 3))
+		return (1)
+	err(RED, INVALID_VARIABLE, RESET);
+	return (0);
+}
+
 t_map	*readmap(char *file)
 {
 	int	fd;
@@ -81,7 +109,10 @@ t_map	*readmap(char *file)
 	line = get_next_line(fd);
 	while (line)
 	{
-		//| Adicionar a linha na lista correta.
+		skip_spaces(&line);
+		if (line[0] != '\n')
+			if (add_map(map, line))
+				return (NULL);
 		free(line);
 		line = get_next_line(fd);
 	}
