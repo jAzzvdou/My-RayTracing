@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:06:58 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 19:52:05 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:16:50 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,24 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (new_s);
 }
 
-static size_t	countwords(char const *s)
+static size_t	countwords(char const *s, char c)
 {
 	size_t	length;
 
 	length = 0;
 	while (*s)
 	{
-		if (*s != ' ')
+		if (*s != c)
 			length++;
-		while (*s && *s != ' ')
+		while (*s && *s != c)
 			s++;
-		while (*s && *s == ' ')
+		while (*s && *s == c)
 			s++;
 	}
 	return (length);
 }
 
-char	**splitline(char const *s)
+char	**splitline(char const *s, char c)
 {
 	size_t	i;
 	size_t	words;
@@ -59,17 +59,17 @@ char	**splitline(char const *s)
 
 	if (!s)
 		return (NULL);
-	words = countwords(s);
+	words = countwords(s, c);
 	final = (char **)memcard(NULL, DEFAULT, MALLOC, words + 1);
 	if (!final)
 		return (NULL);
 	i = -1;
 	while (++i < words)
 	{
-		while (*s == ' ')
+		while (*s == c)
 			s++;
 		wordsize = 0;
-		while (s[wordsize] && s[wordsize] != ' ')
+		while (s[wordsize] && s[wordsize] != c)
 			wordsize++;
 		final[i] = ft_substr(s, 0, wordsize);
 		if (!final[i])

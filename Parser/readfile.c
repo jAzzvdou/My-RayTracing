@@ -6,11 +6,28 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 19:38:50 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:24:31 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
+
+int	invalid_rgb(char *line)
+{
+	size_t		rgb[3];
+	char	**split;
+
+	split = splitline(line, ',');
+	if (matrixlen(split) != 3)
+		return (1);
+	rgb[0] = (size_t)ft_atoi(split[0]);
+	rgb[1] = (size_t)ft_atoi(split[1]);
+	rgb[2] = (size_t)ft_atoi(split[2]);
+	split = memcard(split, VECTOR, FREE, 0);
+	if (rgb[0] > 255 || rgb[1] > 255 || rgb[2] > 255)
+		return (1);
+	return (0);
+}	
 
 t_map	*start_map(void)
 {
