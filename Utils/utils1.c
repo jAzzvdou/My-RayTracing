@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 09:39:28 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 09:54:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:59:47 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = -1;
+	while (s1[++i] || s2[i])
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

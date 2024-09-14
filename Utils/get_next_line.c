@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 09:51:05 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 09:51:44 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:40:29 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,34 @@ char	*free_function(char *wardrobe, char *buffer)
 	char	*temp;
 
 	temp = ft_strjoin(wardrobe, buffer);
-	free(wardrobe);
+	wardrobe = memcard(wardrobe, STRING, FREE, 0);
 	return (temp);
 }
 
 char	*cutter(char *wardrobe)
 {
-	char	*single;
 	int		end;
+	char	*single;
 
 	end = 0;
 	while (wardrobe[end] && wardrobe[end] != '\n')
 		end++;
 	if (wardrobe[end] == '\n')
 		end++;
-	single = malloc(end + 1);
-	if (!single)
-		return (NULL);
+	single = memcard(NULL, STRING, MALLOC, end);
 	single[end] = '\0';
 	while (end--)
 		single[end] = wardrobe[end];
 	if (single[0] == '\0')
-	{
-		free(single);
-		return (NULL);
-	}
+		return (single = memcard(NULL, STRING, FREE, 0), NULL);
 	return (single);
 }
 
 char	*remover(char *wardrobe)
 {
-	char	*new_wardrobe;
 	int		end;
+	int	size;
+	char	*new_wardrobe;
 
 	end = 0;
 	while (wardrobe[end] && wardrobe[end] != '\n')
@@ -56,12 +52,10 @@ char	*remover(char *wardrobe)
 	if (wardrobe[end] == '\n')
 		end++;
 	if (wardrobe[end] == '\0')
-	{
-		free(wardrobe);
-		return (NULL);
-	}
-	new_wardrobe = ft_strdup(wardrobe + end);
-	free(wardrobe);
+		return (wardrobe = memcard(wardrobe, STRING, FREE, 0), NULL);
+	size = ft_strlen(wardrobe + end);
+	new_wardrobe = memcard(wardrobe + end, STRING, MALLOC, size);
+	wardrobe = memcard(wardrobe, STRING, FREE, 0);
 	return (new_wardrobe);
 }
 
@@ -73,21 +67,19 @@ char	*reader(int fd)
 	int			bytes;
 
 	bytes = 1;
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
+	buffer = memcard(NULL, STRING, MALLOC, BUFFER_SIZE);
 	while (bytes > 0 && (!wardrobe || !ft_strchr(wardrobe, '\n')))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes == -1)
 		{
-			free(buffer);
+			buffer = memcard(buffer, STRING, FREE, 0);
 			return (NULL);
 		}
 		buffer[bytes] = '\0';
 		wardrobe = free_function(wardrobe, buffer);
 	}
-	free(buffer);
+	buffer = memcard(buffer, STRING, FREE, 0);
 	single = cutter(wardrobe);
 	wardrobe = remover(wardrobe);
 	return (single);

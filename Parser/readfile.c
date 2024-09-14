@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 11:44:57 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:38:50 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_map	*readfile(char *file)
 		if (line[0])
 			if (!add_map(map, line))
 				return (NULL);
-		free(line);
+		line = memcard(line, STRING, FREE, 0);
 		line = get_next_line(fd);
 	}
 	return (map);

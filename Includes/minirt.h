@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 12:33:12 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:59:26 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,24 @@ void	err(char *color1, char *error, char *color2);
 //----------| CLEANERS |----------//
 
 //----------| UTILS |----------//
+//__________ space.c __________
 void	skip_spaces(char **s);
+//__________ splitline.c __________
+char	**splitline(char const *s);
+//__________ get_next_line.c __________
+char	*get_next_line(int fd);
+//__________ utils1.c __________
 size_t	ft_strlen(const char *s);
+int	ft_strcmp(const char *s1, const char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
+//__________ utils2.c __________
 char	*ft_strjoin(char *s1, char *s2);
-char	*get_next_line(int fd);
+//__________ utils3.c __________
+int	ft_isdigit(int c);
+size_t	matrixlen(char **matrix);
+int	ft_atoi(const char *nptr);
+double	ft_atod(const char *nptr);
 
 #endif //| MINIRT_H
