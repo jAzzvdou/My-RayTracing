@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:01:17 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 12:41:09 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/15 11:12:16 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**fillvector(char **vector, size_t memsize)
 	i = 0;
 	while (i < memsize)
 	{
-		vector[i] = type_str(NULL, MALLOC, 1);
+		vector[i] = NULL;
 		i++;
 	}
 	vector[i] = NULL;

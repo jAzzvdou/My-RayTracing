@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 11:46:46 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 20:27:38 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/15 11:19:43 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int	add_ambient(t_map *map, char *line)
 	amb->type = A;
 	amb->amblight = ft_atod(split[1]);
 	color = splitline(split[2], ',');
+	split = memcard(split, VECTOR, FREE, 0);
 	amb->rgb[0] = color[0];
 	amb->rgb[1] = color[1];
 	amb->rgb[2] = color[2];
+	color = memcard(color, VECTOR, FREE, 0);
 	return (1);
 }

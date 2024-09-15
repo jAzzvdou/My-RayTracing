@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:06:58 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 20:16:50 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/15 11:13:34 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**splitline(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = countwords(s, c);
-	final = (char **)memcard(NULL, DEFAULT, MALLOC, words + 1);
+	final = memcard(NULL, VECTOR, MALLOC, words);
 	if (!final)
 		return (NULL);
 	i = -1;

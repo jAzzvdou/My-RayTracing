@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 20:24:31 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/15 11:09:44 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	invalid_rgb(char *line)
 
 	split = splitline(line, ',');
 	if (matrixlen(split) != 3)
-		return (1);
+		return (split = memcard(split, VECTOR, FREE, 0), 1);
 	rgb[0] = (size_t)ft_atoi(split[0]);
 	rgb[1] = (size_t)ft_atoi(split[1]);
 	rgb[2] = (size_t)ft_atoi(split[2]);
