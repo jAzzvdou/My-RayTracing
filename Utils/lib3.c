@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:03:28 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 17:50:04 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:59:49 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	onlynumber(char *s)
 	{
 		if (!ft_isdigit(s[i]))
 		{
-			if (s[i] == '.' && dot == 1)
+			if (s[i] == '.' && s[i + 1] && dot == 1)
 			{
 				dot--;
 				continue ;
