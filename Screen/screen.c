@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 10:20:03 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:32:04 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	end_program(t_minilibx *libx)
 	mlx_destroy_window(libx->mlx, libx->win);
 	mlx_destroy_display(libx->mlx);
 	free(libx->mlx);
+	memcard(NULL, 0, FREEALL, 0);
 	exit(0);
 	return (0);
 }

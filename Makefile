@@ -1,12 +1,15 @@
 NAME	=	miniRT
 
 SRCS	=	main.c                \
+		Parser/add_ambient.c  \
 		Parser/readfile.c     \
 		Screen/screen.c       \
 		Utils/get_next_line.c \
 		Utils/space.c         \
-		Utils/utils1.c        \
-		Utils/utils2.c        \
+		Utils/splitline.c     \
+		Utils/lib1.c          \
+		Utils/lib2.c          \
+		Utils/lib3.c          \
 
 OBJDIR	=	Objects
 

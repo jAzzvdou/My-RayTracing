@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 10:38:40 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:34:32 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ int	main(int argc, char **argv)
 	t_main	main;
 
 	if (invalid_arguments(argc, argv))
-		return (-1); //| Fazer retornar uma mensagem de erro no STDERR.
-	memlist_holder(start_memlist(), 0); //| Inicializa o memorycard.
+		return (-1);
+	memlist_holder(start_memlist(), 0);
 	main = (t_main){0};
-	main.map = readfile(argv[1]); //| Aqui a gente tem que pegar as informações do arquivo. (Mini Parsing).
+	main.map = readfile(argv[1]);
 	if (!main.map)
-		return (-1); //| Erro. Mapa inválido.
+		return (-1);
 	//| Fazer a MiniRT funcionar.
+	main.libx = &((t_minilibx){0});
 	screen(main.libx);
+	memcard(NULL, 0, FREEALL, 0);
 	return (0);
 }
-//| Fiz apenas um teste abrindo uma imagem e fazendo-a fechar no ESC ou no x.

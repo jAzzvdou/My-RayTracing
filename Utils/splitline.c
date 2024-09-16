@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:06:58 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/15 11:13:34 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:04:29 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	s_size = ft_strlen(s);
 	if ((size_t)start > s_size)
-		return (memcard("", STRING, MALLOC, ft_strlen(""));
+		return (memcard("", STRING, MALLOC, ft_strlen("")));
 	s += start;
 	s_size -= start;
 	if (s_size > len)

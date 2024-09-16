@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/15 11:09:44 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:46:09 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	add_map(t_map *map, char *line)
 	valid = 0;
 	if (!ft_strncmp(line, "A ", 2))
 		valid = add_ambient(map, line);
-	else if (!ft_strncmp(line, "C ", 2))
+	/*else if (!ft_strncmp(line, "C ", 2))
 		valid = add_camera(map, line);
 	else if (!ft_strncmp(line, "L ", 2))
 		valid = add_light(map, line);
@@ -61,12 +61,11 @@ int	add_map(t_map *map, char *line)
 	else if (!ft_strncmp(line, "sp ", 3))
 		valid = add_sphere(map, line);
 	else if (!ft_strncmp(line, "cy ", 3))
-		valid = add_cylinder(map, line);
+		valid = add_cylinder(map, line);*/
 	if (valid)
 		return (1);
 	err(RED, INVALID_VARIABLE, RESET);
-	memcard(NULL, 0, FREEALL, 0);
-	return (0);
+	return (memcard(NULL, 0, FREEALL, 0), 0);
 }
 
 t_map	*readfile(char *file)
@@ -77,13 +76,16 @@ t_map	*readfile(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
+	{
+		err(RED, INVALID_FILE, RESET);
+		return (memcard(NULL, 0, FREEALL, 0), NULL);
+	}
 	map = start_map();
 	line = get_next_line(fd);
 	while (line)
 	{
 		skip_spaces(&line);
-		if (line[0])
+		if (*line)
 			if (!add_map(map, line))
 				return (NULL);
 		line = memcard(line, STRING, FREE, 0);

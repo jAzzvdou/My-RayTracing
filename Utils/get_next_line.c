@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 09:51:05 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 19:40:29 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:20:35 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*cutter(char *wardrobe)
 	while (end--)
 		single[end] = wardrobe[end];
 	if (single[0] == '\0')
-		return (single = memcard(NULL, STRING, FREE, 0), NULL);
+		return (single = memcard(single, STRING, FREE, 0), NULL);
 	return (single);
 }
 

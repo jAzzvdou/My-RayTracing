@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 20:30:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:39:02 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@
 # define WIDTH  1920
 # define HEIGHT 1080
 //__________ errors __________
-# define ARGV "Error! Usage: ./fdf <filename>.\n"
+# define ARGV "Error! Usage: ./miniRT <filename>.\n"
 # define FILENAME "Error! File Is Not '.rt'.\n"
+# define INVALID_FILE "Error! Invalid File.\n"
 # define INVALID_VARIABLE "Error! Invalid Element Name.\n"
 
 //----------| STRUCTS |----------//
