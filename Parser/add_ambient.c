@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 11:46:46 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:42:42 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:12:29 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	add_ambient(t_map *map, char *line)
 	t_amb	*amb;
 
 	split = splitline(line, ' ');
-	if (!split || invalid_ambient(split))
+	if (invalid_ambient(split))
 		return (split = memcard(split, VECTOR, FREE, 0), 0);
 	amb = memcard(NULL, DEFAULT, MALLOC, sizeof(t_amb));
 	amb->type = A;

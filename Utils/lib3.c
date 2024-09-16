@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3.c                                           :+:      :+:    :+:   */
+/*   lib3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:03:28 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/14 19:54:31 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:50:04 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,43 @@ int	ft_isdigit(int c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
+}
+
+int	onlynumber(char *s)
+{
+	int	dot;
+	size_t	i;
+
+	if (!s)
+		return (0);
+	dot = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '.')
+			dot++;
+		if (dot > 1)
+			return (0);
+		i++;
+	}
+	i = 0;
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+		{
+			if (s[i] == '.' && dot == 1)
+			{
+				dot--;
+				continue ;
+			}
+			else
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 size_t	matrixlen(char **matrix)

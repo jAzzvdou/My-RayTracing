@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:39:02 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:34:07 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 //__________ utils3.c __________
 int	ft_isdigit(int c);
+int	onlynumber(char *s);
 size_t	matrixlen(char **matrix);
 int	ft_atoi(const char *nptr);
 double	ft_atod(const char *nptr);

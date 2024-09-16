@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:46:09 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:34:28 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int	invalid_rgb(char *line)
 	split = splitline(line, ',');
 	if (matrixlen(split) != 3)
 		return (split = memcard(split, VECTOR, FREE, 0), 1);
+	if (!onlynumber(split[0]) || !onlynumber(split[1])
+		|| !onlynumber(split[2]))
+		return (1);
 	rgb[0] = (size_t)ft_atoi(split[0]);
 	rgb[1] = (size_t)ft_atoi(split[1]);
 	rgb[2] = (size_t)ft_atoi(split[2]);
@@ -52,8 +55,9 @@ int	add_map(t_map *map, char *line)
 	valid = 0;
 	if (!ft_strncmp(line, "A ", 2))
 		valid = add_ambient(map, line);
-	/*else if (!ft_strncmp(line, "C ", 2))
+	else if (!ft_strncmp(line, "C ", 2))
 		valid = add_camera(map, line);
+	/*
 	else if (!ft_strncmp(line, "L ", 2))
 		valid = add_light(map, line);
 	else if (!ft_strncmp(line, "pl ", 3))
@@ -61,7 +65,8 @@ int	add_map(t_map *map, char *line)
 	else if (!ft_strncmp(line, "sp ", 3))
 		valid = add_sphere(map, line);
 	else if (!ft_strncmp(line, "cy ", 3))
-		valid = add_cylinder(map, line);*/
+		valid = add_cylinder(map, line);
+	*/
 	if (valid)
 		return (1);
 	err(RED, INVALID_VARIABLE, RESET);
