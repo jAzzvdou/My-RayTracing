@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:34:32 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:00:27 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(int argc, char **argv)
 	main.map = readfile(argv[1]);
 	if (!main.map)
 		return (-1);
-	//| Fazer a MiniRT funcionar.
 	main.libx = &((t_minilibx){0});
 	screen(main.libx);
 	memcard(NULL, 0, FREEALL, 0);

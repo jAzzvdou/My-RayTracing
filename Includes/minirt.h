@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 17:34:07 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:58:47 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@
 # define FILENAME "Error! File Is Not '.rt'.\n"
 # define INVALID_FILE "Error! Invalid File.\n"
 # define INVALID_VARIABLE "Error! Invalid Element Name.\n"
+//__________ types __________
+# define INT 2147483647
+# define DOUBLE 179769308
 
 //----------| STRUCTS |----------//
 typedef enum e_type
@@ -146,6 +149,7 @@ typedef struct s_main
 //----------| FUNCTIONS |----------//
 //__________ parser __________
 int	invalid_rgb(char *line);
+int	invalid_coord(char *line);
 int	add_ambient(t_map *map, char *line);
 t_map	*readfile(char *file);
 //__________ screen __________
@@ -163,19 +167,22 @@ void	skip_spaces(char **s);
 char	**splitline(char const *s, char c);
 //__________ get_next_line.c __________
 char	*get_next_line(int fd);
-//__________ utils1.c __________
+//__________ lib1.c __________
 size_t	ft_strlen(const char *s);
 int	ft_strcmp(const char *s1, const char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
-//__________ utils2.c __________
+//__________ lib2.c __________
 char	*ft_strjoin(char *s1, char *s2);
-//__________ utils3.c __________
-int	ft_isdigit(int c);
-int	onlynumber(char *s);
+//__________ lib3.c __________
 size_t	matrixlen(char **matrix);
 int	ft_atoi(const char *nptr);
 double	ft_atod(const char *nptr);
+//__________ lib4.c __________
+int	ft_isdigit(int c);
+int	is_int(char *s);
+int	is_double(char *s);
+int	onlynumber(char *s, int type);
 
 #endif //| MINIRT_H
