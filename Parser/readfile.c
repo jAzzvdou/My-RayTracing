@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 10:59:12 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:55:22 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	add_map(t_map *map, char *line)
 	valid = 0;
 	if (!ft_strncmp(line, "A ", 2))
 		valid = add_ambient(map, line);
-	/*
 	else if (!ft_strncmp(line, "C ", 2))
 		valid = add_camera(map, line);
+	/*
 	else if (!ft_strncmp(line, "L ", 2))
 		valid = add_light(map, line);
 	else if (!ft_strncmp(line, "pl ", 3))

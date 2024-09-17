@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:03:28 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 10:15:26 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:46:08 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,28 @@ int	ft_atoi(const char *nptr)
 	return (nb * mult);
 }
 
+int	power(int base, int exp)
+{
+	int	result;
+
+	result = 1;
+	while (exp)
+	{
+		result *= base;
+		exp--;
+	}
+	return (result);
+}
+
 double	ft_atod(const char *nptr)
 {
+	int		i;
 	double	nb;
-	int	mult;
+	double	mult;
 
 	nb = 0;
 	mult = 1;
+	i = 0;
 	while ((*nptr > 8 && *nptr < 14) || *nptr == ' ')
 		nptr++;
 	if (*nptr == '-')
@@ -62,6 +77,16 @@ double	ft_atod(const char *nptr)
 	{
 		nb = (nb * 10) + (*nptr - '0');
 		nptr++;
+	}
+	if (*nptr == '.')
+	{
+		nptr++;
+		while (*nptr >= '0' && *nptr <= '9')
+		{
+			nb = nb + ((double)(*nptr - '0') / power(10, i + 1));
+			nptr++;
+			i++;
+		}
 	}
 	return (nb * mult);
 }
