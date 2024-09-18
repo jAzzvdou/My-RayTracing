@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 11:55:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:25:24 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	add_map(t_map *map, char *line)
 	int	valid;
 
 	valid = 0;
-	if (!ft_strncmp(line, "A ", 2))
+	if (line[0] == "A" && is_space(line[1]))
 		valid = add_ambient(map, line);
-	else if (!ft_strncmp(line, "C ", 2))
+	else if (line[0] == "C" && is_space(line[1]))
 		valid = add_camera(map, line);
 	/*
 	else if (!ft_strncmp(line, "L ", 2))
@@ -50,6 +50,7 @@ int	add_map(t_map *map, char *line)
 	if (valid)
 		return (1);
 	err(RED, INVALID_VARIABLE, RESET);
+	printf("Invalid: |%s|\n", line);
 	return (memcard(NULL, 0, FREEALL, 0), 0);
 }
 
@@ -70,6 +71,7 @@ t_map	*readfile(char *file)
 	while (line)
 	{
 		skip_spaces(&line);
+		printf("line: |%s|\n", line);
 		if (*line)
 			if (!add_map(map, line))
 				return (NULL);

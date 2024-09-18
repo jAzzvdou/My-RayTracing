@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 11:00:27 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:16:07 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ int	main(int argc, char **argv)
 {
 	t_main	main;
 
-	if (invalid_arguments(argc, argv))
-		return (-1);
+	(void)argc;
+	(void)argv;
+	/*if (invalid_arguments(argc, argv))
+		return (-1);*/
 	memlist_holder(start_memlist(), 0);
 	main = (t_main){0};
-	main.map = readfile(argv[1]);
-	if (!main.map)
-		return (-1);
+	//main.map = readfile(argv[1]);
+	//if (!main.map)
+	//	return (-1);
 	main.libx = &((t_minilibx){0});
 	screen(main.libx);
 	memcard(NULL, 0, FREEALL, 0);

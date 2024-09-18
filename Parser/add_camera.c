@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 12:47:03 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 11:54:39 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 09:38:17 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ int	add_camera(t_map *map, char *line)
 	char	**tmp;
 	t_cam	*cam;
 
-	split = splitline(line ' ');
+	split = splitline(line, ' ');
 	if (invalid_camera(split))
 		return (split = memcard(split, VECTOR, FREE, 0), 0);
-	cam = memcard(NULL, DEFAULT, MALLOC, sizeof(t_camera));
+	cam = memcard(NULL, DEFAULT, MALLOC, sizeof(t_cam));
 	cam->type = C;
 	tmp = splitline(split[1], ',');
 	cam->coord[0] = ft_atod(tmp[0]);
 	cam->coord[1] = ft_atod(tmp[1]);
 	cam->coord[2] = ft_atod(tmp[2]);
-	tmp = memcard(coord, VECTOR, FREE, 0);
+	tmp = memcard(tmp, VECTOR, FREE, 0);
 	tmp = splitline(split[2], ',');
 	cam->nvector[0] = ft_atod(tmp[0]);
 	cam->nvector[1] = ft_atod(tmp[1]);
 	cam->nvector[2] = ft_atod(tmp[2]);
-	tmp = memcard(coord, VECTOR, FREE, 0);
+	tmp = memcard(tmp, VECTOR, FREE, 0);
 	cam->fov = ft_atoi(split[3]);
 	split = memcard(split, VECTOR, FREE, 0);
 	map->c = cam;

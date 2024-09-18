@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/17 11:59:36 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 09:39:17 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ typedef struct s_main
 //__________ parser __________
 int	invalid_rgb(char *line);
 int	invalid_coord(char *line);
+int	invalid_vector(char *line);
 int	add_ambient(t_map *map, char *line);
 int	add_camera(t_map *map, char *line);
 t_map	*readfile(char *file);

@@ -2,6 +2,7 @@ NAME	=	miniRT
 
 SRCS	=	main.c                \
 		Parser/add_ambient.c  \
+		Parser/add_camera.c   \
 		Parser/invalids.c     \
 		Parser/readfile.c     \
 		Screen/screen.c       \

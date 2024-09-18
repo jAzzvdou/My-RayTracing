@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:32:04 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:20:48 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ int	key_hook(int key, t_minilibx *libx)
 	return (0);
 }
 
+void	draw_pixel(t_minilibx *libx, int x, int y, int color)
+{
+	char	*pixel;
+
+	if (y > HEIGHT || x > WIDTH || x < 0 || y < 0)
+		return ;
+	pixel = libx->addr + (y * libx->linelen + x * (libx->bpp / 8));
+	*(unsigned int *)pixel = color;
+}
+
 void	screen(t_minilibx *libx)
 {
 	libx->mlx = mlx_init();
@@ -37,6 +47,7 @@ void	screen(t_minilibx *libx)
 	libx->img = mlx_new_image(libx->mlx,  WIDTH, HEIGHT);
 	libx->addr = mlx_get_data_addr(libx->img, &libx->bpp, \
 			&libx->linelen, &libx->endian);
+	//| Aqui vamos desenhar na imagem.
 	mlx_put_image_to_window(libx->mlx, libx->win, libx->img, 0, 0);
 	//| Aqui dá pra colocar um menu na tela se a gente quiser.
 	mlx_hook(libx->win, KEY_EVENT, 1L << 0, key_hook, libx);
