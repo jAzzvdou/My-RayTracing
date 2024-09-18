@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 09:39:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:10:23 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 # define DESTROY   17
 # define KEY_EVENT 02
 //__________ image __________
-# define WIDTH  1920
-# define HEIGHT 1080
+# define WIDTH  1281
+# define HEIGHT 721
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
 # define FILENAME "Error! File Is Not '.rt'.\n"
@@ -148,13 +148,18 @@ typedef struct s_main
 
 //----------| FUNCTIONS |----------//
 //__________ parser __________
+
 int	invalid_rgb(char *line);
 int	invalid_coord(char *line);
 int	invalid_vector(char *line);
 int	add_ambient(t_map *map, char *line);
 int	add_camera(t_map *map, char *line);
 t_map	*readfile(char *file);
+
 //__________ screen __________
+
+void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius);
+void	draw_pixel(t_minilibx *libx, int x, int y, int color);
 void	screen(t_minilibx *libx);
 
 //----------| ERRORS |----------//
@@ -164,24 +169,38 @@ void	err(char *color1, char *error, char *color2);
 
 //----------| UTILS |----------//
 //__________ space.c __________
+
+int		is_space(int c);
 void	skip_spaces(char **s);
+
 //__________ splitline.c __________
+
 char	**splitline(char const *s, char c);
+
 //__________ get_next_line.c __________
+
 char	*get_next_line(int fd);
+
 //__________ lib1.c __________
+
 size_t	ft_strlen(const char *s);
 int	ft_strcmp(const char *s1, const char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
+
 //__________ lib2.c __________
+
 char	*ft_strjoin(char *s1, char *s2);
+
 //__________ lib3.c __________
+
 size_t	matrixlen(char **matrix);
 int	ft_atoi(const char *nptr);
 double	ft_atod(const char *nptr);
+
 //__________ lib4.c __________
+
 int	ft_isdigit(int c);
 int	is_int(char *s);
 int	is_double(char *s);

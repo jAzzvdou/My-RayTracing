@@ -35,13 +35,16 @@ int	main(int argc, char **argv)
 {
 	t_main	main;
 
-	if (invalid_arguments(argc, argv))
+
+	(void) argc;
+	(void) argv;
+	/*if (invalid_arguments(argc, argv))
 		return (-1);
 	memlist_holder(start_memlist(), 0);
 	main = (t_main){0};
 	main.map = readfile(argv[1]);
 	if (!main.map)
-		return (-1);
+		return (-1);*/
 	main.libx = &((t_minilibx){0});
 	screen(main.libx);
 	memcard(NULL, 0, FREEALL, 0);

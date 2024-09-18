@@ -13,6 +13,7 @@ SRCS	=	main.c                \
 		Utils/lib2.c          \
 		Utils/lib3.c          \
 		Utils/lib4.c          \
+		Screen/make_sphere.c  \
 
 OBJDIR	=	Objects
 

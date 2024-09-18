@@ -33,9 +33,9 @@ int	add_map(t_map *map, char *line)
 	int	valid;
 
 	valid = 0;
-	if (line[0] == "A" && is_space(line[1]))
+	if (line[0] == 'A' && is_space(line[1]))
 		valid = add_ambient(map, line);
-	else if (line[0] == "C" && is_space(line[1]))
+	else if (line[0] == 'C' && is_space(line[1]))
 		valid = add_camera(map, line);
 	/*
 	else if (!ft_strncmp(line, "L ", 2))

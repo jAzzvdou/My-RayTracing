@@ -34,7 +34,7 @@ int	add_ambient(t_map *map, char *line)
 	char	**color;
 	t_amb	*amb;
 
-	split = splitline(line, NULL); //| RESOLVER ' ' -> ISSPACE().
+	split = splitline(line, ' '); //| RESOLVER ' ' -> ISSPACE().
 	if (invalid_ambient(split))
 		return (split = memcard(split, VECTOR, FREE, 0), 0);
 	amb = memcard(NULL, DEFAULT, MALLOC, sizeof(t_amb));
