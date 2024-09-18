@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 09:39:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:46:57 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void	err(char *color1, char *error, char *color2);
 
 //----------| UTILS |----------//
 //__________ space.c __________
+int	is_space(int c);
 void	skip_spaces(char **s);
 //__________ splitline.c __________
 char	**splitline(char const *s, char c);
@@ -177,6 +178,7 @@ int	revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
 //__________ lib2.c __________
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 //__________ lib3.c __________
 size_t	matrixlen(char **matrix);
 int	ft_atoi(const char *nptr);

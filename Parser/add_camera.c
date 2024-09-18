@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 12:47:03 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 09:38:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:23:21 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	add_camera(t_map *map, char *line)
 	char	**tmp;
 	t_cam	*cam;
 
-	split = splitline(line, ' ');
+	split = splitline(line, '\0');
 	if (invalid_camera(split))
 		return (split = memcard(split, VECTOR, FREE, 0), 0);
 	cam = memcard(NULL, DEFAULT, MALLOC, sizeof(t_cam));
