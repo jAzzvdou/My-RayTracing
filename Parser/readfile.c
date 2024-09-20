@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 11:50:49 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:51:22 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ int	add_map(t_map *map, char *line)
 		valid = add_camera(map, line);
 	else if (line[0] == 'L' && is_space(line[1]))
 		valid = add_light(map, line);
-	/*
-	else if (!strncmp(line, "pl", 2) && is_space(line[3]))
-		valid = add_plane(map, line);
-	else if (!strncmp(line, "sp", 2) && is_space(line[3]))
+	else if (!ft_strncmp(line, "sp", 2) && is_space(line[3]))
 		valid = add_sphere(map, line);
-	else if (!strncmp(line, "cy", 2) && is_space(line[3]))
+	else if (!ft_strncmp(line, "pl", 2) && is_space(line[3]))
+		valid = add_plane(map, line);
+	else if (!ft_strncmp(line, "cy", 2) && is_space(line[3]))
 		valid = add_cylinder(map, line);
-	*/
 	if (valid)
 		return (1);
 	err(RED, INVALID_VARIABLE, RESET);

@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 11:46:57 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:02:14 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef enum e_type
 	A,
 	C,
 	L,
-	PL,
 	SP,
+	PL,
 	CY
 }	t_type;
 
@@ -74,7 +74,7 @@ typedef struct s_amb
 {
 	t_type	type;
 	double	amblight;
-	int	rgb[3];
+	int		rgb[3];
 }	t_amb;
 
 typedef struct s_cam
@@ -82,7 +82,7 @@ typedef struct s_cam
 	t_type	type;
 	double	coord[3];
 	double	nvector[3];
-	int	fov;
+	int		fov;
 }	t_cam;
 
 typedef struct s_light
@@ -90,33 +90,33 @@ typedef struct s_light
 	t_type	type;
 	double	coord[3];
 	double	brightness;
-	int	rgb[3];
+	int		rgb[3];
 }	t_light;
 
-typedef	struct s_sphere
+typedef struct s_sphere
 {
 	t_type	type;
 	double	coord[3];
 	double	diameter;
-	int	rgb[3];
+	int		rgb[3];
 }	t_sphere;
 
-typedef	struct s_plane
+typedef struct s_plane
 {
 	t_type	type;
 	double	coord[3];
-	double	diameter;
-	int	rgb[3];
+	double	nvector[3];
+	int		rgb[3];
 }	t_plane;
 
-typedef	struct s_cylinder
+typedef struct s_cylinder
 {
 	t_type	type;
 	double	coord[3];
 	double	nvector[3];
 	double	diameter;
 	double	height;
-	int	rgb[3];
+	int		rgb[3];
 }	t_cylinder;
 
 typedef struct s_map
@@ -124,16 +124,16 @@ typedef struct s_map
 	t_amb		*a;
 	t_cam		*c;
 	t_light		*l;
-	t_plane		*pl;
 	t_sphere	*sp;
+	t_plane		*pl;
 	t_cylinder	*cy;
 }	t_map;
 
 typedef struct s_minilibx
 {
-	int	bpp;
-	int	linelen;
-	int	endian;
+	int		bpp;
+	int		linelen;
+	int		endian;
 	char	*addr;
 	void	*mlx;
 	void	*win;
@@ -148,11 +148,15 @@ typedef struct s_main
 
 //----------| FUNCTIONS |----------//
 //__________ parser __________
-int	invalid_rgb(char *line);
-int	invalid_coord(char *line);
-int	invalid_vector(char *line);
-int	add_ambient(t_map *map, char *line);
-int	add_camera(t_map *map, char *line);
+int		invalid_rgb(char *line);
+int		invalid_coord(char *line);
+int		invalid_vector(char *line);
+int		add_ambient(t_map *map, char *line);
+int		add_camera(t_map *map, char *line);
+int		add_light(t_map *map, char *line);
+int		add_sphere(t_map *map, char *line);
+int		add_plane(t_map *map, char *line);
+int		add_cylinder(t_map *map, char *line);
 t_map	*readfile(char *file);
 //__________ screen __________
 void	screen(t_minilibx *libx);
@@ -164,7 +168,7 @@ void	err(char *color1, char *error, char *color2);
 
 //----------| UTILS |----------//
 //__________ space.c __________
-int	is_space(int c);
+int		is_space(int c);
 void	skip_spaces(char **s);
 //__________ splitline.c __________
 char	**splitline(char const *s, char c);
@@ -172,21 +176,23 @@ char	**splitline(char const *s, char c);
 char	*get_next_line(int fd);
 //__________ lib1.c __________
 size_t	ft_strlen(const char *s);
-int	ft_strcmp(const char *s1, const char *s2);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	revstrncmp(char *s1, char *s2, int n);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
 //__________ lib2.c __________
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 //__________ lib3.c __________
 size_t	matrixlen(char **matrix);
-int	ft_atoi(const char *nptr);
+int		ft_atoi(const char *nptr);
 double	ft_atod(const char *nptr);
 //__________ lib4.c __________
-int	ft_isdigit(int c);
-int	is_int(char *s);
-int	is_double(char *s);
-int	onlynumber(char *s, int type);
+int		ft_isdigit(int c);
+int		is_int(char *s);
+int		is_double(char *s);
+int		onlynumber(char *s, int type);
+
+void	print_map(t_map *map);
 
 #endif //| MINIRT_H

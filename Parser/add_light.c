@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 12:47:25 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 18:14:41 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:51:41 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	invalid_light(char **split)
 		return (1);
 	if (invalid_coord(split[1]))
 		return (1);
-	if (onlynumber(split[2], DOUBLE))
+	if (!onlynumber(split[2], DOUBLE))
 		return (1);
 	brightness = ft_atod(split[2]);
 	if (brightness < 0 || brightness > 1)
@@ -32,15 +32,11 @@ int	invalid_light(char **split)
 	return (0);
 }
 
-int	add_light(t_map *map, char *line)
+t_light	*fill_light(char **split)
 {
-	char	**split;
 	char	**tmp;
 	t_light	*light;
 
-	split = splitline(line, '\0');
-	if (invalid_light(split))
-		return (split = memcard(split, VECTOR, FREE, 0), 0);
 	light = memcard(NULL, DEFAULT, MALLOC, sizeof(t_light));
 	light->type = L;
 	tmp = splitline(split[1], ',');
@@ -53,7 +49,16 @@ int	add_light(t_map *map, char *line)
 	light->rgb[0] = ft_atoi(tmp[0]);
 	light->rgb[1] = ft_atoi(tmp[1]);
 	light->rgb[2] = ft_atoi(tmp[2]);
-	tmp = memcard(tmp, VECTOR, FREE, 0);
-	map->l = light;
-	return (1);
+	return (tmp = memcard(tmp, VECTOR, FREE, 0), light);
+}
+
+int	add_light(t_map *map, char *line)
+{
+	char	**split;
+
+	split = splitline(line, '\0');
+	if (invalid_light(split))
+		return (split = memcard(split, VECTOR, FREE, 0), 0);
+	map->l = fill_light(split);
+	return (split = memcard(split, VECTOR, FREE, 0), 1);
 }
