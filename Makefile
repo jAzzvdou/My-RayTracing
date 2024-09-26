@@ -1,8 +1,13 @@
 NAME	=	miniRT
 
 SRCS	=	main.c                \
+		printers.c            \
 		Parser/add_ambient.c  \
 		Parser/add_camera.c   \
+		Parser/add_light.c    \
+		Parser/add_sphere.c   \
+		Parser/add_plane.c    \
+		Parser/add_cylinder.c \
 		Parser/invalids.c     \
 		Parser/readfile.c     \
 		Screen/screen.c       \

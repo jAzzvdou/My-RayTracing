@@ -6,34 +6,13 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:06:58 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/16 15:04:29 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:47:08 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	size_t	s_size;
-	char	*new_s;
-
-	s_size = ft_strlen(s);
-	if ((size_t)start > s_size)
-		return (memcard("", STRING, MALLOC, ft_strlen("")));
-	s += start;
-	s_size -= start;
-	if (s_size > len)
-		s_size = len;
-	new_s = memcard(NULL, STRING, MALLOC, s_size);
-	i = -1;
-	while (++i < s_size)
-		new_s[i] = s[i];
-	new_s[i] = '\0';
-	return (new_s);
-}
-
-static size_t	countwords(char const *s, char c)
+static size_t	countwords1(char const *s, char c)
 {
 	size_t	length;
 
@@ -50,16 +29,14 @@ static size_t	countwords(char const *s, char c)
 	return (length);
 }
 
-char	**splitline(char const *s, char c)
+char	**split_with_c(char const *s, char c)
 {
 	size_t	i;
 	size_t	words;
 	size_t	wordsize;
 	char	**final;
 
-	if (!s)
-		return (NULL);
-	words = countwords(s, c);
+	words = countwords1(s, c);
 	final = memcard(NULL, VECTOR, MALLOC, words);
 	if (!final)
 		return (NULL);
@@ -77,4 +54,57 @@ char	**splitline(char const *s, char c)
 		s += wordsize;
 	}
 	return (final[i] = NULL, final);
+}
+
+static size_t	countwords2(char const *s)
+{
+	size_t	length;
+
+	length = 0;
+	while (*s)
+	{
+		if (!is_space(*s))
+			length++;
+		while (*s && !is_space(*s))
+			s++;
+		while (*s && is_space(*s))
+			s++;
+	}
+	return (length);
+}
+
+char	**split_without_c(char const *s)
+{
+	size_t	i;
+	size_t	words;
+	size_t	wordsize;
+	char	**final;
+
+	words = countwords2(s);
+	final = memcard(NULL, VECTOR, MALLOC, words);
+	if (!final)
+		return (NULL);
+	i = -1;
+	while (++i < words)
+	{
+		while (is_space(*s))
+			s++;
+		wordsize = 0;
+		while (s[wordsize] && !is_space(s[wordsize]))
+			wordsize++;
+		final[i] = ft_substr(s, 0, wordsize);
+		if (!final[i])
+			return (final = memcard(final, VECTOR, FREE, 0), NULL);
+		s += wordsize;
+	}
+	return (final[i] = NULL, final);
+}
+
+char	**splitline(char const *s, char c)
+{
+	if (!s)
+		return (NULL);
+	if (!c)
+		return (split_without_c(s));
+	return (split_with_c(s, c));
 }

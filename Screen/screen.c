@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 14:14:58 by jbergfel         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:45:38 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	screen(t_minilibx *libx)
 {
 	libx->mlx = mlx_init();
 	libx->win = mlx_new_window(libx->mlx, WIDTH, HEIGHT, "| MiniRT |");
-	libx->img = mlx_new_image(libx->mlx,  WIDTH, HEIGHT);
+	libx->img = mlx_new_image(libx->mlx, WIDTH, HEIGHT);
 	libx->addr = mlx_get_data_addr(libx->img, &libx->bpp, \
 			&libx->linelen, &libx->endian);
 	//| Aqui vamos desenhar na imagem.

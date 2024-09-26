@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 10:36:34 by jazevedo         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:52:45 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minirt.h"
+#include "Includes/minirt.h"
 
 void	err(char *color1, char *error, char *color2)
 {
@@ -44,7 +44,8 @@ int	main(int argc, char **argv)
 	main = (t_main){0};
 	main.map = readfile(argv[1]);
 	if (!main.map)
-		return (-1);*/
+		return (-1);
+	print_map(main.map);*/
 	main.libx = &((t_minilibx){0});
 	screen(main.libx);
 	memcard(NULL, 0, FREEALL, 0);
