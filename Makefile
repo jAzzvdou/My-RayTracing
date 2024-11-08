@@ -1,6 +1,6 @@
 NAME	=	miniRT
 
-SRCS	=	main.c                \
+SRCS	=	main.c            \
 		printers.c            \
 		Parser/add_ambient.c  \
 		Parser/add_camera.c   \
@@ -19,6 +19,8 @@ SRCS	=	main.c                \
 		Utils/lib3.c          \
 		Utils/lib4.c          \
 		Screen/make_sphere.c  \
+		Mathlib/vectors.c     \
+		Mathlib/matrix.c      \
 
 OBJDIR	=	Objects
 
@@ -28,7 +30,7 @@ INCLUDES	=	-I Includes
 
 CC	=	cc
 
-CFLAGS	=	-Wall -Werror -Wextra $(INCLUDES)
+CFLAGS	=	-Wall -Werror -Wextra -lm $(INCLUDES)
 
 RM	=	rm -rf
 

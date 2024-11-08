@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/26 12:46:32 by jbergfel         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:33:30 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@
 # include <fcntl.h>                   //| OPEN, CLOSE
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
-# include <math.h>                    //| SIN, COS
+# include "mathlib.h"                 //| OWN MATH LIB (VECTOR, MATRIX)
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
 
 //----------| DEFINES |----------//
 //__________ getnextline __________
 # define BUFFER_SIZE 4200
+
 //__________ colors __________
 # define RED	"\001\033[38;2;255;0;0m\002"
 # define GREEN	"\001\033[38;2;0;255;0m\002"
@@ -43,18 +44,22 @@
 # define CYAN	"\001\033[38;2;0;255;255m\002"
 # define RESET	"\033[0m"
 # define CLEAR	"\033[H\033[J"
+
 //__________ hooks __________
 # define ESC       65307
 # define DESTROY   17
 # define KEY_EVENT 02
+
 //__________ image __________
 # define WIDTH  1281
 # define HEIGHT 721
+
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
 # define FILENAME "Error! File Is Not '.rt'.\n"
 # define INVALID_FILE "Error! Invalid File.\n"
 # define INVALID_VARIABLE "Error! Invalid Element Name.\n"
+
 //__________ types __________
 # define INT 2147483647
 # define DOUBLE 179769308
@@ -160,7 +165,6 @@ int		add_cylinder(t_map *map, char *line);
 t_map	*readfile(char *file);
 
 //__________ screen __________
-
 void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius);
 void	draw_pixel(t_minilibx *libx, int x, int y, int color);
 void	screen(t_minilibx *libx);
@@ -171,20 +175,18 @@ void	err(char *color1, char *error, char *color2);
 //----------| CLEANERS |----------//
 
 //----------| UTILS |----------//
+
 //__________ space.c __________
 int		is_space(int c);
 void	skip_spaces(char **s);
 
 //__________ splitline.c __________
-
 char	**splitline(char const *s, char c);
 
 //__________ get_next_line.c __________
-
 char	*get_next_line(int fd);
 
 //__________ lib1.c __________
-
 size_t	ft_strlen(const char *s);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -192,11 +194,10 @@ int		revstrncmp(char *s1, char *s2, int n);
 char	*ft_strchr(const char *s, int c);
 
 //__________ lib2.c __________
-
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-//__________ lib3.c __________
 
+//__________ lib3.c __________
 size_t	matrixlen(char **matrix);
 int		ft_atoi(const char *nptr);
 double	ft_atod(const char *nptr);
