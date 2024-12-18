@@ -36,6 +36,7 @@ t_matrix	matrix_scalar_multiply(t_matrix a, double scalar);
 t_vector	vector_add(t_vector a, t_vector b);
 t_vector	vector_subtract(t_vector a, t_vector b);
 t_vector	vector_multiply(t_vector a, t_vector b);
-t_vector	vector_scalar(t_vector a, double scalar);
+t_vector	vector_scalar_multiply(t_vector a, double scalar);
+double		vector_len(t_vector a);
 
 #endif

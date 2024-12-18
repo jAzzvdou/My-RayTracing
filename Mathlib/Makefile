@@ -1,4 +1,3 @@
-# Variables
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src

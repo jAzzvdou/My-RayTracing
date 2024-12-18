@@ -42,7 +42,7 @@ t_vector	vector_multiply(t_vector a, t_vector b)
 	return (result);
 }
 
-t_vector	vector_scalar(t_vector a, double scalar)
+t_vector	vector_scalar_multiply(t_vector a, double scalar)
 {
 	t_vector result;
 
@@ -52,12 +52,34 @@ t_vector	vector_scalar(t_vector a, double scalar)
 	return (result);
 }
 
-t_vector	vector_len(t_vector a)
+double	vector_len(t_vector v)
+{
+	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+t_vector	vector_normalize(t_vector v)
+{
+	double	w;
+	t_vector result;
+
+	w = vector_len(v);
+	result.x = v.x / w;
+	result.y = v.y / w;
+	result.z = v.z / w;
+	return (result);
+}
+
+double	vector_dot(t_vector a, t_vector b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.y);
+}
+
+t_vector vector_cross(t_vector a, t_vector b)
 {
 	t_vector result;
 
-	result.x = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
-	result.y = 0;
-	result.z = 0;
+	result.x = a.y * b.z - a.z * b.y;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
 	return (result);
 }

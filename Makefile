@@ -30,7 +30,9 @@ INCLUDES	=	-I Includes
 
 CC	=	cc
 
-CFLAGS	=	-Wall -Werror -Wextra -lm $(INCLUDES)
+CFLAGS	=	-Wall -Werror -Wextra $(INCLUDES)
+
+LIBMATH	=	-lm
 
 RM	=	rm -rf
 

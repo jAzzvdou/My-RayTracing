@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:16:53 by jbergfel          #+#    #+#             */
-/*   Updated: 2024/11/07 11:32:26 by jbergfel         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:46:57 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void draw_horizontal_line(t_minilibx *libx, int x_start, int x_end, int y, int c
 		draw_pixel(libx, x, y, color);
 }
 
-void	make_sphere(t_minilibx *libx, t_sphere *sph, int x_center, int y_center, int radius)
+void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius)
 {
 	int	x = 0;
 	int	y = radius;
