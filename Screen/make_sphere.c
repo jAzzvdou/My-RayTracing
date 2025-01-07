@@ -25,7 +25,7 @@ void draw_horizontal_line(t_minilibx *libx, int x_start, int x_end, int y, int c
 		draw_pixel(libx, x, y, color);
 }
 
-void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius)
+void	make_sphere(t_main *main, int x_center, int y_center, int radius)
 {
 	int	x = 0;
 	int	y = radius;
@@ -35,10 +35,10 @@ void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius)
 
 	while (y >= x)
 	{
-		draw_horizontal_line(libx, x_center - x, x_center + x, y_center + y, 0xFFFFFF);
-		draw_horizontal_line(libx, x_center - x, x_center + x, y_center - y, 0xFFFFFF);
-		draw_horizontal_line(libx, x_center - y, x_center + y, y_center + x, 0xFFFFFF);
-		draw_horizontal_line(libx, x_center - y, x_center + y, y_center - x, 0xFFFFFF);
+		draw_horizontal_line(main->libx, x_center - x, x_center + x, y_center + y, 0xFFFFFF);
+		draw_horizontal_line(main->libx, x_center - x, x_center + x, y_center - y, 0xFFFFFF);
+		draw_horizontal_line(main->libx, x_center - y, x_center + y, y_center + x, 0xFFFFFF);
+		draw_horizontal_line(main->libx, x_center - y, x_center + y, y_center - x, 0xFFFFFF);
 		if (d < 0)
 		{
 			d += deltaE;

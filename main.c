@@ -38,16 +38,16 @@ int	main(int argc, char **argv)
 
 	(void) argc;
 	(void) argv;
-	/*if (invalid_arguments(argc, argv))
+	if (invalid_arguments(argc, argv))
 		return (-1);
 	memlist_holder(start_memlist(), 0);
 	main = (t_main){0};
 	main.map = readfile(argv[1]);
 	if (!main.map)
 		return (-1);
-	print_map(main.map);*/
+	print_map(main.map);
 	main.libx = &((t_minilibx){0});
-	screen(main.libx);
+	screen(&main);
 	memcard(NULL, 0, FREEALL, 0);
 	return (0);
 }

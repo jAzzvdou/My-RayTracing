@@ -50,6 +50,7 @@ t_matrix	matrix_rotate_x(double degree)
 	result.m[2][1] = sin(radian(degree));
 	result.m[2][2] = cos(radian(degree));
 	result.m[3][3] = 1.0;
+	return (result);
 }
 
 t_matrix	matrix_rotate_y(double degree)

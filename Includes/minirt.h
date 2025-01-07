@@ -165,9 +165,9 @@ int		add_cylinder(t_map *map, char *line);
 t_map	*readfile(char *file);
 
 //__________ screen __________
-void	make_sphere(t_minilibx *libx, int x_center, int y_center, int radius);
+void	make_sphere(t_main *main, int x_center, int y_center, int radius);
 void	draw_pixel(t_minilibx *libx, int x, int y, int color);
-void	screen(t_minilibx *libx);
+void	screen(t_main *main);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

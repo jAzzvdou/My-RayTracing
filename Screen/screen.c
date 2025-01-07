@@ -40,18 +40,18 @@ void	draw_pixel(t_minilibx *libx, int x, int y, int color)
 	*(unsigned int *)pixel = color;
 }
 
-void	screen(t_minilibx *libx)
+void	screen(t_main *main)
 {
-	libx->mlx = mlx_init();
-	libx->win = mlx_new_window(libx->mlx, WIDTH, HEIGHT, "| MiniRT |");
-	libx->img = mlx_new_image(libx->mlx, WIDTH, HEIGHT);
-	libx->addr = mlx_get_data_addr(libx->img, &libx->bpp, \
-			&libx->linelen, &libx->endian);
+	main->libx->mlx = mlx_init();
+	main->libx->win = mlx_new_window(main->libx->mlx, WIDTH, HEIGHT, "| MiniRT |");
+	main->libx->img = mlx_new_image(main->libx->mlx, WIDTH, HEIGHT);
+	main->libx->addr = mlx_get_data_addr(main->libx->img, &main->libx->bpp, \
+			&main->libx->linelen, &main->libx->endian);
 	//| Aqui vamos desenhar na imagem.
-	make_sphere(libx, 640, 360, 100);
-	mlx_put_image_to_window(libx->mlx, libx->win, libx->img, 0, 0);
+	make_sphere(main, 640, 360, main->map->sp->diameter);
+	mlx_put_image_to_window(main->libx->mlx, main->libx->win, main->libx->img, 0, 0);
 	//| Aqui dá pra colocar um menu na tela se a gente quiser.
-	mlx_hook(libx->win, KEY_EVENT, 1L << 0, key_hook, libx);
-	mlx_hook(libx->win, DESTROY, 1L << 2, end_program, libx);
-	mlx_loop(libx->mlx);
+	mlx_hook(main->libx->win, KEY_EVENT, 1L << 0, key_hook, main->libx);
+	mlx_hook(main->libx->win, DESTROY, 1L << 2, end_program, main->libx);
+	mlx_loop(main->libx->mlx);
 }
