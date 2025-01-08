@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/05 20:53:40 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/01/05 20:55:42 by jbergfel         ###   ########.fr       */
+/*   Created: 2025-01-08 15:52:57 by jbergfel          #+#    #+#             */
+/*   Updated: 2025-01-08 15:52:57 by jbergfel         ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vectors.h"
+#include "mathlib.h"
 
 t_vector	copy_vector(double x, double y, double z)
 {

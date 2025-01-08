@@ -51,7 +51,22 @@ void	screen(t_main *main)
 	make_sphere(main, 640, 360, main->map->sp->diameter);
 	mlx_put_image_to_window(main->libx->mlx, main->libx->win, main->libx->img, 0, 0);
 	//| Aqui dá pra colocar um menu na tela se a gente quiser.
-	mlx_hook(main->libx->win, KEY_EVENT, 1L << 0, key_hook, main->libx);
-	mlx_hook(main->libx->win, DESTROY, 1L << 2, end_program, main->libx);
+	mlx_loop_hook(main->libx->mlx, &main_gr_loop, &main);
 	mlx_loop(main->libx->mlx);
+}
+
+void	main_gr_loop(void *data)
+{
+	t_main	*main_graph;
+
+	main_graph = data;
+	//func para key hook
+	render_graphics(main_graph);
+}
+
+void	render_graphics(t_main *main_graph)
+{
+	t_map	*map;
+
+	map = main_graph->map;
 }

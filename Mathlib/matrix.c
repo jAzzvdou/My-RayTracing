@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrix.h"
+#include "mathlib.h"
 
 
 t_matrix	matrix_multiply(t_matrix a, t_matrix b)
