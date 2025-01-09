@@ -12,7 +12,7 @@
 
 #include "../Includes/minirt.h"
 
-int	ft_isdigit(int c)
+int	my_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -28,7 +28,7 @@ int	is_int(char *s)
 		i++;
 	while (s[i])
 	{
-		if (!ft_isdigit(s[i]))
+		if (!my_isdigit(s[i]))
 			return (0);
 		i++;
 	}
@@ -48,7 +48,7 @@ int	is_double(char *s)
 	{
 		if (s[i] == '.')
 			dot++;
-		else if (!ft_isdigit(s[i]))
+		else if (!my_isdigit(s[i]))
 			return (0);
 		i++;
 	}

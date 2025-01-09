@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/26 12:52:45 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:26:08 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	err(char *color1, char *error, char *color2)
 {
 	if (color1)
-		write(2, color1, ft_strlen(color1));
+		write(2, color1, my_strlen(color1));
 	if (error)
-		write(2, error, ft_strlen(error));
+		write(2, error, my_strlen(error));
 	if (color2)
-		write(2, color2, ft_strlen(color2));
+		write(2, color2, my_strlen(color2));
 }
 
 int	invalid_arguments(int argc, char **argv)
@@ -34,7 +34,6 @@ int	invalid_arguments(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_main	main;
-
 
 	(void) argc;
 	(void) argv;

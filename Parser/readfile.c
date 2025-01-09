@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:11:43 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:51:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:50:55 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ int	add_map(t_map *map, char *line)
 	int	valid;
 
 	valid = 0;
-	if (line[0] == 'A' /*&& is_space(line[1])*/)
+	if (line[0] == 'A' && is_space(line[1]))
 		valid = add_ambient(map, line);
-	else if (line[0] == 'C' /*&& is_space(line[1])*/)
+	else if (line[0] == 'C' && is_space(line[1]))
 		valid = add_camera(map, line);
-	else if (line[0] == 'L' /*&& is_space(line[1])*/)
+	else if (line[0] == 'L' && is_space(line[1]))
 		valid = add_light(map, line);
-	else if (!ft_strncmp(line, "sp", 2) /*&& is_space(line[3])*/)
+	else if (!my_strncmp(line, "sp", 2) && is_space(line[2]))
 		valid = add_sphere(map, line);
-	else if (!ft_strncmp(line, "pl", 2) /*&& is_space(line[3])*/)
+	else if (!my_strncmp(line, "pl", 2) && is_space(line[2]))
 		valid = add_plane(map, line);
-	else if (!ft_strncmp(line, "cy", 2) /*&& is_space(line[3])*/)
+	else if (!my_strncmp(line, "cy", 2) && is_space(line[2]))
 		valid = add_cylinder(map, line);
 	if (valid)
 		return (1);
-	err(RED, INVALID_VARIABLE, RESET);
+	err(RED, INVALID_CONFIG, RESET);
 	return (memcard(NULL, 0, FREEALL, 0), 0);
 }
 

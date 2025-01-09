@@ -16,15 +16,15 @@ int	invalid_cylinder(char **split)
 {
 	if (matrixlen(split) != 6)
 		return (1);
-	if (ft_strcmp(split[0], "cy"))
+	if (my_strcmp(split[0], "cy"))
 		return (1);
 	if (invalid_coord(split[1]))
 		return (1);
 	if (invalid_vector(split[2]))
 		return (1);
-	if (!onlynumber(split[3], DOUBLE) || ft_atod(split[3]) < 0)
+	if (!onlynumber(split[3], DOUBLE) || my_atod(split[3]) < 0)
 		return (1);
-	if (!onlynumber(split[4], DOUBLE) || ft_atod(split[4]) < 0)
+	if (!onlynumber(split[4], DOUBLE) || my_atod(split[4]) < 0)
 		return (1);
 	if (invalid_rgb(split[5]))
 		return (1);
@@ -39,21 +39,21 @@ t_cylinder	*fill_cylinder(char **split)
 	cylinder = memcard(NULL, DEFAULT, MALLOC, sizeof(t_cylinder));
 	cylinder->type = CY;
 	tmp = splitline(split[1], ',');
-	cylinder->coord[0] = ft_atod(tmp[0]);
-	cylinder->coord[1] = ft_atod(tmp[1]);
-	cylinder->coord[2] = ft_atod(tmp[2]);
+	cylinder->coord[0] = my_atod(tmp[0]);
+	cylinder->coord[1] = my_atod(tmp[1]);
+	cylinder->coord[2] = my_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	tmp = splitline(split[2], ',');
-	cylinder->nvector[0] = ft_atod(tmp[0]);
-	cylinder->nvector[1] = ft_atod(tmp[1]);
-	cylinder->nvector[2] = ft_atod(tmp[2]);
+	cylinder->nvector[0] = my_atod(tmp[0]);
+	cylinder->nvector[1] = my_atod(tmp[1]);
+	cylinder->nvector[2] = my_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
-	cylinder->diameter = ft_atod(split[3]);
-	cylinder->height = ft_atod(split[4]);
+	cylinder->diameter = my_atod(split[3]);
+	cylinder->height = my_atod(split[4]);
 	tmp = splitline(split[5], ',');
-	cylinder->rgb[0] = ft_atoi(tmp[0]);
-	cylinder->rgb[1] = ft_atoi(tmp[1]);
-	cylinder->rgb[2] = ft_atoi(tmp[2]);
+	cylinder->rgb[0] = my_atoi(tmp[0]);
+	cylinder->rgb[1] = my_atoi(tmp[1]);
+	cylinder->rgb[2] = my_atoi(tmp[2]);
 	return (tmp = memcard(tmp, VECTOR, FREE, 0), cylinder);
 }
 

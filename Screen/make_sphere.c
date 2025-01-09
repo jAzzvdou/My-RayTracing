@@ -6,13 +6,13 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:16:53 by jbergfel          #+#    #+#             */
-/*   Updated: 2024/11/25 12:46:57 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:56:21 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-void draw_horizontal_line(t_minilibx *libx, int x_start, int x_end, int y, int color)
+void	draw_horizontal_line(t_minilibx *libx, int x_start, int x_end, int y, int color)
 {
 	if (y < 0 || y >= HEIGHT)
 		return;

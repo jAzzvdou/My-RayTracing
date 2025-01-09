@@ -18,13 +18,13 @@ int	invalid_light(char **split)
 
 	if (matrixlen(split) != 4)
 		return (1);
-	if (ft_strcmp(split[0], "L"))
+	if (my_strcmp(split[0], "L"))
 		return (1);
 	if (invalid_coord(split[1]))
 		return (1);
 	if (!onlynumber(split[2], DOUBLE))
 		return (1);
-	brightness = ft_atod(split[2]);
+	brightness = my_atod(split[2]);
 	if (brightness < 0 || brightness > 1)
 		return (1);
 	if (invalid_rgb(split[3]))
@@ -40,15 +40,15 @@ t_light	*fill_light(char **split)
 	light = memcard(NULL, DEFAULT, MALLOC, sizeof(t_light));
 	light->type = L;
 	tmp = splitline(split[1], ',');
-	light->coord[0] = ft_atod(tmp[0]);
-	light->coord[1] = ft_atod(tmp[1]);
-	light->coord[2] = ft_atod(tmp[2]);
+	light->coord[0] = my_atod(tmp[0]);
+	light->coord[1] = my_atod(tmp[1]);
+	light->coord[2] = my_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
-	light->brightness = ft_atod(split[2]);
+	light->brightness = my_atod(split[2]);
 	tmp = splitline(split[3], ',');
-	light->rgb[0] = ft_atoi(tmp[0]);
-	light->rgb[1] = ft_atoi(tmp[1]);
-	light->rgb[2] = ft_atoi(tmp[2]);
+	light->rgb[0] = my_atoi(tmp[0]);
+	light->rgb[1] = my_atoi(tmp[1]);
+	light->rgb[2] = my_atoi(tmp[2]);
 	return (tmp = memcard(tmp, VECTOR, FREE, 0), light);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/05 21:28:53 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:58:22 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <fcntl.h>                   //| OPEN, CLOSE
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
-# include "../Mathlib/mathlib.h"                 //| OWN MATH LIB (VECTOR, MATRIX)
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
+# include "./Mathlib/mathlib.h"       //| OWN MATH LIB (VECTOR, MATRIX)
 
 //----------| DEFINES |----------//
 //__________ getnextline __________
@@ -58,7 +58,7 @@
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
 # define FILENAME "Error! File Is Not '.rt'.\n"
 # define INVALID_FILE "Error! Invalid File.\n"
-# define INVALID_VARIABLE "Error! Invalid Element Name.\n"
+# define INVALID_CONFIG "Error!\nInvalid Object Configuration.\n"
 
 //__________ types __________
 # define INT 2147483647
@@ -187,23 +187,23 @@ char	**splitline(char const *s, char c);
 char	*get_next_line(int fd);
 
 //__________ lib1.c __________
-size_t	ft_strlen(const char *s);
-int		ft_strcmp(const char *s1, const char *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t	my_strlen(const char *s);
+int		my_strcmp(const char *s1, const char *s2);
+int		my_strncmp(const char *s1, const char *s2, size_t n);
 int		revstrncmp(char *s1, char *s2, int n);
-char	*ft_strchr(const char *s, int c);
+char	*my_strchr(const char *s, int c);
 
 //__________ lib2.c __________
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*my_strjoin(char *s1, char *s2);
+char	*my_substr(char const *s, unsigned int start, size_t len);
 
 //__________ lib3.c __________
 size_t	matrixlen(char **matrix);
-int		ft_atoi(const char *nptr);
-double	ft_atod(const char *nptr);
+int		my_atoi(const char *nptr);
+double	my_atod(const char *nptr);
 
 //__________ lib4.c __________
-int		ft_isdigit(int c);
+int		my_isdigit(int c);
 int		is_int(char *s);
 int		is_double(char *s);
 int		onlynumber(char *s, int type);

@@ -23,9 +23,9 @@ int	invalid_rgb(char *line)
 	if (!onlynumber(split[0], INT) || !onlynumber(split[1], INT)
 		|| !onlynumber(split[2], INT))
 		return (split = memcard(split, VECTOR, FREE, 0), 1);
-	rgb[0] = ft_atoi(split[0]);
-	rgb[1] = ft_atoi(split[1]);
-	rgb[2] = ft_atoi(split[2]);
+	rgb[0] = my_atoi(split[0]);
+	rgb[1] = my_atoi(split[1]);
+	rgb[2] = my_atoi(split[2]);
 	split = memcard(split, VECTOR, FREE, 0);
 	if (rgb[0] > 255 || rgb[0] < 0
 		|| rgb[1] > 255 || rgb[1] < 0
@@ -58,9 +58,9 @@ int	invalid_vector(char *line)
 	if (!onlynumber(split[0], DOUBLE) || !onlynumber(split[1], DOUBLE)
 		|| !onlynumber(split[2], DOUBLE))
 		return (split = memcard(split, VECTOR, FREE, 0), 1);
-	xyz[0] = ft_atod(split[0]);
-	xyz[1] = ft_atod(split[1]);
-	xyz[2] = ft_atod(split[2]);
+	xyz[0] = my_atod(split[0]);
+	xyz[1] = my_atod(split[1]);
+	xyz[2] = my_atod(split[2]);
 	if (xyz[0] < -1 || xyz[0] > 1
 		|| xyz[1] < -1 || xyz[1] > 1
 		|| xyz[2] < -1 || xyz[2] > 1)

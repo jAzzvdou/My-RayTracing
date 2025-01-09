@@ -24,7 +24,7 @@ size_t	matrixlen(char **matrix)
 	return (i);
 }
 
-int	ft_atoi(const char *nptr)
+int	my_atoi(const char *nptr)
 {
 	int	nb;
 	int	mult;
@@ -58,7 +58,7 @@ int	power(int base, int exp)
 	return (result);
 }
 
-double	ft_atod(const char *nptr)
+double	my_atod(const char *nptr)
 {
 	int		i;
 	double	nb;

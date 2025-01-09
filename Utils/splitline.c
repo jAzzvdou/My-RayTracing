@@ -48,7 +48,7 @@ char	**split_with_c(char const *s, char c)
 		wordsize = 0;
 		while (s[wordsize] && s[wordsize] != c)
 			wordsize++;
-		final[i] = ft_substr(s, 0, wordsize);
+		final[i] = my_substr(s, 0, wordsize);
 		if (!final[i])
 			return (final = memcard(final, VECTOR, FREE, 0), NULL);
 		s += wordsize;
@@ -92,7 +92,7 @@ char	**split_without_c(char const *s)
 		wordsize = 0;
 		while (s[wordsize] && !is_space(s[wordsize]))
 			wordsize++;
-		final[i] = ft_substr(s, 0, wordsize);
+		final[i] = my_substr(s, 0, wordsize);
 		if (!final[i])
 			return (final = memcard(final, VECTOR, FREE, 0), NULL);
 		s += wordsize;

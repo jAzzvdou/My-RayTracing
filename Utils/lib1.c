@@ -12,7 +12,7 @@
 
 #include "../Includes/minirt.h"
 
-size_t	ft_strlen(const char *s)
+size_t	my_strlen(const char *s)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	my_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
@@ -35,7 +35,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	my_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -68,7 +68,7 @@ int	revstrncmp(char *s1, char *s2, int n)
 	return (0);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*my_strchr(const char *s, int c)
 {
 	char	ch;
 

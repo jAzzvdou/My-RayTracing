@@ -16,7 +16,7 @@ char	*free_function(char *wardrobe, char *buffer)
 {
 	char	*temp;
 
-	temp = ft_strjoin(wardrobe, buffer);
+	temp = my_strjoin(wardrobe, buffer);
 	wardrobe = memcard(wardrobe, STRING, FREE, 0);
 	return (temp);
 }
@@ -53,7 +53,7 @@ char	*remover(char *wardrobe)
 		end++;
 	if (wardrobe[end] == '\0')
 		return (wardrobe = memcard(wardrobe, STRING, FREE, 0), NULL);
-	size = ft_strlen(wardrobe + end);
+	size = my_strlen(wardrobe + end);
 	new_wardrobe = memcard(wardrobe + end, STRING, MALLOC, size);
 	wardrobe = memcard(wardrobe, STRING, FREE, 0);
 	return (new_wardrobe);
@@ -68,7 +68,7 @@ char	*reader(int fd)
 
 	bytes = 1;
 	buffer = memcard(NULL, STRING, MALLOC, BUFFER_SIZE);
-	while (bytes > 0 && (!wardrobe || !ft_strchr(wardrobe, '\n')))
+	while (bytes > 0 && (!wardrobe || !my_strchr(wardrobe, '\n')))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes == -1)

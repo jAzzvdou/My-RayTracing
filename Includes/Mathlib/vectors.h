@@ -6,14 +6,14 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 20:53:45 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/01/05 21:28:35 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:46:33 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTORS_H
 # define VECTORS_H
 
-# include "mathlib.h"
+# include <math.h>
 
 typedef struct s_vector
 {
