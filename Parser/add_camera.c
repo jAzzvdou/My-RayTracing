@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_camera.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 12:47:03 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/20 12:42:10 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/14 06:06:31 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,18 @@ t_cam	*fill_camera(char **split)
 	cam = memcard(NULL, DEFAULT, MALLOC, sizeof(t_cam));
 	cam->type = C;
 	tmp = splitline(split[1], ',');
-	cam->coord[0] = ft_atod(tmp[0]);
-	cam->coord[1] = ft_atod(tmp[1]);
-	cam->coord[2] = ft_atod(tmp[2]);
+	cam->coord.x = ft_atod(tmp[0]);
+	cam->coord.y = ft_atod(tmp[1]);
+	cam->coord.z = ft_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	tmp = splitline(split[2], ',');
-	cam->nvector[0] = ft_atod(tmp[0]);
-	cam->nvector[1] = ft_atod(tmp[1]);
-	cam->nvector[2] = ft_atod(tmp[2]);
+	cam->orientation.x = ft_atod(tmp[0]);
+	cam->orientation.y = ft_atod(tmp[1]);
+	cam->orientation.z = ft_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	cam->fov = ft_atoi(split[3]);
+	cam->scale = tan((cam->fov / 2) * PI / 180.0);
+	cam->aspect_ratio = (double)WIDTH / (double)HEIGHT;
 	return (cam);
 }
 

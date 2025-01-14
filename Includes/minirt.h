@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/05 21:28:53 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/14 06:10:03 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>                   //| OPEN, CLOSE
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
-# include "../Mathlib/mathlib.h"                 //| OWN MATH LIB (VECTOR, MATRIX)
+# include "../Mathlib/mathlib.h"      //| OWN MATH LIB (VECTOR, MATRIX)
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
 
@@ -84,10 +84,12 @@ typedef struct s_amb
 
 typedef struct s_cam
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	int		fov;
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	double		fov;
+	double		scale;
+	double		aspect_ratio;
 }	t_cam;
 
 typedef struct s_light
@@ -168,6 +170,7 @@ t_map	*readfile(char *file);
 void	make_sphere(t_main *main, int x_center, int y_center, int radius);
 void	draw_pixel(t_minilibx *libx, int x, int y, int color);
 void	screen(t_main *main);
+void	render_graphics(t_main *main);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

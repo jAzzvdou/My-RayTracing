@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:58:25 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:49:46 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/14 06:17:17 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ void	print_nvector(double *nvector)
 	printf("Vector Z: %lf |\n", nvector[2]);
 }
 
+void	print_coord_vec(t_vector *coord)
+{
+	printf("vec Coord X: %lf | ", coord->x);
+	printf("vec Coord Y: %lf | ", coord->y);
+	printf("vec Coord Z: %lf |\n", coord->z);
+}
+
+void	print_orientation(t_vector *ori)
+{
+	printf("Ori X: %lf | ", ori->x);
+	printf("Ori Y: %lf | ", ori->y);
+	printf("Ori Z: %lf |\n", ori->z);
+}
+
 void	print_amb(t_amb *amb)
 {
 	print_type(amb->type);
@@ -62,9 +76,11 @@ void	print_amb(t_amb *amb)
 void	print_cam(t_cam *cam)
 {
 	print_type(cam->type);
-	print_coord(cam->coord);
-	print_nvector(cam->nvector);
-	printf("FOV: %d.\n", cam->fov);
+	print_coord_vec(&cam->coord);
+	print_orientation(&cam->orientation);
+	printf("FOV: %lf.\n", cam->fov);
+	printf("SCALE: %lf.\n", cam->scale);
+	printf("ASPECT RATIO: %lf.\n", cam->aspect_ratio);
 	printf("\n");
 }
 
