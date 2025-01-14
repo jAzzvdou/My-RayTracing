@@ -94,36 +94,36 @@ typedef struct s_cam
 
 typedef struct s_light
 {
-	t_type	type;
-	double	coord[3];
-	double	brightness;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	double		brightness;
+	int			rgb[3];
 }	t_light;
 
 typedef struct s_sphere
 {
-	t_type	type;
-	double	coord[3];
-	double	diameter;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	double		diameter;
+	int			rgb[3];
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	int			rgb[3];
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	double	diameter;
-	double	height;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	double		diameter;
+	double		height;
+	int			rgb[3];
 }	t_cylinder;
 
 typedef struct s_map

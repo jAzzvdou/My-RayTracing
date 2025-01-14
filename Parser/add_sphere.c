@@ -35,9 +35,9 @@ t_sphere	*fill_sphere(char **split)
 	sphere = memcard(NULL, DEFAULT, MALLOC, sizeof(t_sphere));
 	sphere->type = SP;
 	tmp = splitline(split[1], ',');
-	sphere->coord[0] = ft_atod(tmp[0]);
-	sphere->coord[1] = ft_atod(tmp[1]);
-	sphere->coord[2] = ft_atod(tmp[2]);
+	sphere->coord.x = ft_atod(tmp[0]);
+	sphere->coord.y = ft_atod(tmp[1]);
+	sphere->coord.z = ft_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	sphere->diameter = ft_atod(split[2]);
 	tmp = splitline(split[3], ',');
@@ -56,4 +56,4 @@ int	add_sphere(t_map *map, char *line)
 		return (split = memcard(split, VECTOR, FREE, 0), 0);
 	map->sp = fill_sphere(split);
 	return (split = memcard(split, VECTOR, FREE, 0), 1);
-}	
+}

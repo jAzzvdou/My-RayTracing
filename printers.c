@@ -87,7 +87,7 @@ void	print_cam(t_cam *cam)
 void	print_light(t_light *light)
 {
 	print_type(light->type);
-	print_coord(light->coord);
+	print_coord_vec(&light->coord);
 	printf("Brightness: %lf.\n", light->brightness);
 	print_rgb(light->rgb);
 	printf("\n");
@@ -96,7 +96,7 @@ void	print_light(t_light *light)
 void	print_sphere(t_sphere *sphere)
 {
 	print_type(sphere->type);
-	print_coord(sphere->coord);
+	print_coord_vec(&sphere->coord);
 	printf("Diameter: %lf.\n", sphere->diameter);
 	print_rgb(sphere->rgb);
 	printf("\n");
@@ -105,8 +105,8 @@ void	print_sphere(t_sphere *sphere)
 void	print_plane(t_plane *plane)
 {
 	print_type(plane->type);
-	print_coord(plane->coord);
-	print_nvector(plane->nvector);
+	print_coord_vec(&plane->coord);
+	print_orientation(&plane->orientation);
 	print_rgb(plane->rgb);
 	printf("\n");
 }
@@ -114,8 +114,8 @@ void	print_plane(t_plane *plane)
 void	print_cylinder(t_cylinder *cylinder)
 {
 	print_type(cylinder->type);
-	print_coord(cylinder->coord);
-	print_nvector(cylinder->nvector);
+	print_coord_vec(&cylinder->coord);
+	print_orientation(&cylinder->orientation);
 	printf("Diameter: %lf.\n", cylinder->diameter);
 	printf("Height: %lf.\n", cylinder->height);
 	print_rgb(cylinder->rgb);

@@ -51,7 +51,7 @@ void	screen(t_main *main)
 	//make_sphere(main, 640, 360, main->map->sp->diameter);
 	render_graphics(main);
 	//| Aqui dá pra colocar um menu na tela se a gente quiser.
-	mlx_key_hook(main->libx->mlx, &key_hook, &main->libx);
+	mlx_key_hook(main->libx->win, &key_hook, main->libx);
 	mlx_loop(main->libx->mlx);
 }
 

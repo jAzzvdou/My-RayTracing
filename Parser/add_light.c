@@ -40,9 +40,9 @@ t_light	*fill_light(char **split)
 	light = memcard(NULL, DEFAULT, MALLOC, sizeof(t_light));
 	light->type = L;
 	tmp = splitline(split[1], ',');
-	light->coord[0] = ft_atod(tmp[0]);
-	light->coord[1] = ft_atod(tmp[1]);
-	light->coord[2] = ft_atod(tmp[2]);
+	light->coord.x = ft_atod(tmp[0]);
+	light->coord.y = ft_atod(tmp[1]);
+	light->coord.z = ft_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	light->brightness = ft_atod(split[2]);
 	tmp = splitline(split[3], ',');
