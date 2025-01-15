@@ -43,6 +43,7 @@ t_vector	vector_subtract(t_vector a, t_vector b);
 t_vector	vector_multiply(t_vector a, t_vector b);
 t_vector	vector_double_add(t_vector a, double d);
 t_vector	vector_scalar_multiply(t_vector a, double scalar);
+t_vector	vector_cross(t_vector a, t_vector b);
 t_vector	vector_normalize(t_vector v);
 double		vector_len(t_vector a);
 double		vector_dot(t_vector a, t_vector b);

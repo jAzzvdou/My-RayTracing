@@ -74,12 +74,18 @@ double	vector_len(t_vector v)
 
 t_vector	vector_normalize(t_vector v)
 {
-	double	w;
-	t_vector result;
+	double	len;
+	double	inv_len;
 
-	w = vector_len(v);
-	result = copy_vector(v.x / w, v.y / w, v.z / w);
-	return (result);
+	len = vector_len(v);
+	if (len > 1e-6)
+	{
+		inv_len = 1.0 / len;
+		v.x *= inv_len;
+		v.y *= inv_len;
+		v.z *= inv_len;
+	}
+	return (v);
 }
 
 double	vector_dot(t_vector a, t_vector b)

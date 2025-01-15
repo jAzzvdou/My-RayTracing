@@ -50,6 +50,8 @@ t_cam	*fill_camera(char **split)
 	cam->fov = ft_atoi(split[3]);
 	cam->scale = tan((cam->fov / 2) * PI / 180.0);
 	cam->aspect_ratio = (double)WIDTH / (double)HEIGHT;
+	cam->right = vector_normalize(vector_cross(copy_vector(0, 1, 0), cam->orientation));
+	cam->up = vector_normalize(vector_cross(cam->orientation, cam->right));
 	return (cam);
 }
 

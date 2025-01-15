@@ -87,6 +87,8 @@ typedef struct s_cam
 	t_type		type;
 	t_vector	coord;
 	t_vector	orientation;
+	t_vector	right;
+	t_vector	up;
 	double		fov;
 	double		scale;
 	double		aspect_ratio;

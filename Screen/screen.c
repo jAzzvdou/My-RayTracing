@@ -60,15 +60,15 @@ static t_vector	start_ray(t_cam *cam, int x, int y)
 	double		norm_x;
 	double		norm_y;
 	t_vector	cam_ray;
-	//t_vector	world_ray;
+	t_vector	world_ray;
 
 	norm_x = ((2.0 * (x + 0.5) / WIDTH) - 1.0) * cam->aspect_ratio * cam->scale;
 	norm_y = (1.0 - (2.0 * (y + 0.5) / HEIGHT)) * cam->scale;
 
 	cam_ray = copy_vector(norm_x, norm_y, 1.0);
-	//world_ray =
+	world_ray = vector_add(vector_add(vector_scalar_multiply(cam->right, cam_ray.x), vector_scalar_multiply(cam->up, cam_ray.y)), vector_scalar_multiply(cam->orientation, cam_ray.z));
 
-	return (cam_ray);
+	return (world_ray);
 }
 
 static void	render_pixels(t_main *main, int x, int y)
