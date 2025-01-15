@@ -19,8 +19,8 @@ SRCS	=	main.c            \
 		Utils/lib3.c          \
 		Utils/lib4.c          \
 		Screen/make_sphere.c  \
-		Mathlib/vectors.c     \
-		Mathlib/matrix.c      \
+		Includes/Mathlib/vectors.c     \
+		Includes/Mathlib/matrix.c      \
 
 OBJDIR	=	Objects
 
