@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/09 11:58:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/14 06:10:03 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>                   //| OPEN, CLOSE
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
+# include "./Mathlib/mathlib.h"      //| OWN MATH LIB (VECTOR, MATRIX)
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
 # include "./Mathlib/mathlib.h"       //| OWN MATH LIB (VECTOR, MATRIX)
@@ -84,44 +85,48 @@ typedef struct s_amb
 
 typedef struct s_cam
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	int		fov;
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	t_vector	right;
+	t_vector	up;
+	double		fov;
+	double		scale;
+	double		aspect_ratio;
 }	t_cam;
 
 typedef struct s_light
 {
-	t_type	type;
-	double	coord[3];
-	double	brightness;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	double		brightness;
+	int			rgb[3];
 }	t_light;
 
 typedef struct s_sphere
 {
-	t_type	type;
-	double	coord[3];
-	double	diameter;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	double		diameter;
+	int			rgb[3];
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	int			rgb[3];
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_type	type;
-	double	coord[3];
-	double	nvector[3];
-	double	diameter;
-	double	height;
-	int		rgb[3];
+	t_type		type;
+	t_vector	coord;
+	t_vector	orientation;
+	double		diameter;
+	double		height;
+	int			rgb[3];
 }	t_cylinder;
 
 typedef struct s_map
@@ -168,6 +173,7 @@ t_map	*readfile(char *file);
 void	make_sphere(t_main *main, int x_center, int y_center, int radius);
 void	draw_pixel(t_minilibx *libx, int x, int y, int color);
 void	screen(t_main *main);
+void	render_graphics(t_main *main);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/05 20:53:40 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/01/05 20:55:42 by jbergfel         ###   ########.fr       */
+/*   Created: 2025-01-08 15:52:57 by jbergfel          #+#    #+#             */
+/*   Updated: 2025-01-08 15:52:57 by jbergfel         ###   ########.rio      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vectors.h"
+#include "mathlib.h"
 
 t_vector	copy_vector(double x, double y, double z)
 {
@@ -74,12 +74,18 @@ double	vector_len(t_vector v)
 
 t_vector	vector_normalize(t_vector v)
 {
-	double	w;
-	t_vector result;
+	double	len;
+	double	inv_len;
 
-	w = vector_len(v);
-	result = copy_vector(v.x / w, v.y / w, v.z / w);
-	return (result);
+	len = vector_len(v);
+	if (len > 1e-6)
+	{
+		inv_len = 1.0 / len;
+		v.x *= inv_len;
+		v.y *= inv_len;
+		v.z *= inv_len;
+	}
+	return (v);
 }
 
 double	vector_dot(t_vector a, t_vector b)

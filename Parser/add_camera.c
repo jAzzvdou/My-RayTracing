@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_camera.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 12:47:03 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/20 12:42:10 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/14 06:06:31 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,20 @@ t_cam	*fill_camera(char **split)
 	cam = memcard(NULL, DEFAULT, MALLOC, sizeof(t_cam));
 	cam->type = C;
 	tmp = splitline(split[1], ',');
-	cam->coord[0] = my_atod(tmp[0]);
-	cam->coord[1] = my_atod(tmp[1]);
-	cam->coord[2] = my_atod(tmp[2]);
+	cam->coord.x = my_atod(tmp[0]);
+	cam->coord.y = my_atod(tmp[1]);
+	cam->coord.z = my_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
 	tmp = splitline(split[2], ',');
-	cam->nvector[0] = my_atod(tmp[0]);
-	cam->nvector[1] = my_atod(tmp[1]);
-	cam->nvector[2] = my_atod(tmp[2]);
+	cam->orientation.x = my_atod(tmp[0]);
+	cam->orientation.y = my_atod(tmp[1]);
+	cam->orientation.z = my_atod(tmp[2]);
 	tmp = memcard(tmp, VECTOR, FREE, 0);
-	cam->fov = my_atoi(split[3]);
+	cam->fov = my_atod(split[3]);
+	cam->scale = tan((cam->fov / 2) * PI / 180.0);
+	cam->aspect_ratio = (double)WIDTH / (double)HEIGHT;
+	cam->right = vector_normalize(vector_cross(copy_vector(0, 1, 0), cam->orientation));
+	cam->up = vector_normalize(vector_cross(cam->orientation, cam->right));
 	return (cam);
 }
 
