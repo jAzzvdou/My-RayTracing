@@ -68,16 +68,21 @@ static t_vector	start_ray(t_cam *cam, int x, int y)
 	cam_ray = copy_vector(norm_x, norm_y, 1.0);
 	world_ray = vector_add(vector_add(vector_scalar_multiply(cam->right, cam_ray.x), vector_scalar_multiply(cam->up, cam_ray.y)), vector_scalar_multiply(cam->orientation, cam_ray.z));
 
-	return (world_ray);
+	return (vector_normalize(world_ray));
+}
+
+static int	pixel_intersection(t_vector rays, t_main *main)
+{
+	return (1);
 }
 
 static void	render_pixels(t_main *main, int x, int y)
 {
 	t_vector	rays;
-	//int			pixel_rgb;
+	int			pixel_rgb;
 
 	rays = start_ray(main->map->c, x, y);
-
+	pixel_rgb = pixel_intersection(rays, main);
 	(void) rays;
 }
 
