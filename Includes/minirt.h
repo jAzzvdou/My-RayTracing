@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/22 21:56:41 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/23 00:16:04 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,9 @@ int		my_isdigit(int c);
 int		is_int(char *s);
 int		is_double(char *s);
 int		onlynumber(char *s, int type);
+
+//__________ lib5.c __________
+char	*my_strdup(const char *s);
+char	*my_itoa(int n);
 
 #endif //| MINIRT_H
