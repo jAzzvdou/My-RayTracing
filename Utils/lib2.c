@@ -6,7 +6,7 @@
 /*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 09:52:20 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/18 11:46:27 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:48:38 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,13 @@ char	*my_substr(char const *s, unsigned int start, size_t len)
 		new_s[i] = s[i];
 	new_s[i] = '\0';
 	return (new_s);
+}
+
+void	my_bzero(void *s, size_t n)
+{
+	char	*zero_s;
+
+	zero_s = s;
+	while (n--)
+		zero_s[n] = 0;
 }

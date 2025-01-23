@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/14 06:10:03 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:56:41 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 # include <fcntl.h>                   //| OPEN, CLOSE
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
-# include "./Mathlib/mathlib.h"      //| OWN MATH LIB (VECTOR, MATRIX)
+# include <math.h>                    //| SQRT, POW, TAN, COS, SIN
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
-# include "./Mathlib/mathlib.h"       //| OWN MATH LIB (VECTOR, MATRIX)
 
 //----------| DEFINES |----------//
 //__________ getnextline __________
@@ -58,8 +57,6 @@
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
 # define FILENAME "Error! File Is Not '.rt'.\n"
-# define INVALID_FILE "Error! Invalid File.\n"
-# define INVALID_CONFIG "Error!\nInvalid Object Configuration.\n"
 
 //__________ types __________
 # define INT 2147483647
@@ -76,67 +73,48 @@ typedef enum e_type
 	CY
 }	t_type;
 
-typedef struct s_amb
+typedef struct s_color
 {
-	t_type	type;
-	double	amblight;
-	int		rgb[3];
-}	t_amb;
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
 
-typedef struct s_cam
+typedef struct s_tuple	t_tuple;
+typedef struct s_tuple	t_point;
+typedef struct s_tuple	t_vector;
+
+struct s_tuple
 {
-	t_type		type;
-	t_vector	coord;
-	t_vector	orientation;
-	t_vector	right;
-	t_vector	up;
-	double		fov;
-	double		scale;
-	double		aspect_ratio;
-}	t_cam;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
+};
 
 typedef struct s_light
 {
-	t_type		type;
-	t_vector	coord;
-	double		brightness;
-	int			rgb[3];
+	t_color	intensity;
+	t_point	position;
+	struct s_light	*next;
 }	t_light;
 
-typedef struct s_sphere
+typedef struct s_object
 {
-	t_type		type;
-	t_vector	coord;
-	double		diameter;
-	int			rgb[3];
-}	t_sphere;
-
-typedef struct s_plane
-{
-	t_type		type;
-	t_vector	coord;
-	t_vector	orientation;
-	int			rgb[3];
-}	t_plane;
-
-typedef struct s_cylinder
-{
-	t_type		type;
-	t_vector	coord;
-	t_vector	orientation;
-	double		diameter;
-	double		height;
-	int			rgb[3];
-}	t_cylinder;
+	t_type	type;
+	t_point	origin;
+	t_vector	normal;
+	double	radius;
+	double	height;
+	t_color	color;
+	struct s_object	*next;
+}	t_object;
 
 typedef struct s_map
 {
-	t_amb		*a;
-	t_cam		*c;
-	t_light		*l;
-	t_sphere	*sp;
-	t_plane		*pl;
-	t_cylinder	*cy;
+	t_light		*light;
+	t_object	*object;
+	t_scene		scene; //| Fazer
 }	t_map;
 
 typedef struct s_minilibx
@@ -148,32 +126,44 @@ typedef struct s_minilibx
 	void	*mlx;
 	void	*win;
 	void	*img;
+	t_map		*map; // TEMPORÁRIO
 }	t_minilibx;
 
-typedef struct s_main
+typedef struct s_canvas
 {
-	t_map		*map;
-	t_minilibx	*libx;
-}	t_main;
+	int		width;
+	int		height;
+	t_color	**pixel; //| Pixel da tela, todos começam em 0.
+}	t_canvas;
 
 //----------| FUNCTIONS |----------//
-//__________ parser __________
-int		invalid_rgb(char *line);
-int		invalid_coord(char *line);
-int		invalid_vector(char *line);
-int		add_ambient(t_map *map, char *line);
-int		add_camera(t_map *map, char *line);
-int		add_light(t_map *map, char *line);
-int		add_sphere(t_map *map, char *line);
-int		add_plane(t_map *map, char *line);
-int		add_cylinder(t_map *map, char *line);
-t_map	*readfile(char *file);
 
-//__________ screen __________
-void	make_sphere(t_main *main, int x_center, int y_center, int radius);
-void	draw_pixel(t_minilibx *libx, int x, int y, int color);
-void	screen(t_main *main);
-void	render_graphics(t_main *main);
+//__________ color __________
+t_color	color(double r, double g, double b);
+t_color	add_color(t_color a, t_color b);
+t_color	sub_color(t_color a, t_color b);
+t_color	mult_color(t_color a, double b);
+t_color	average_color(t_color a, t_color b);
+t_color convert_color(t_color a);
+int	color_to_int(t_color a);
+
+//__________ tuple __________
+t_tuple	tuple(double x, double y, double z, double w);
+t_tuple	add_tuple(t_tuple a, t_tuple b);
+t_tuple	sub_tuple(t_tuple a, t_tuple b);
+t_tuple	mult_tuple(t_tuple a, double b);
+t_tuple inverse_tuple(t_tuple a);
+int	comp_tuple(t_tuple a, t_tuple b);
+
+//__________ point __________
+t_point	point(double x, double y, double z);
+
+//__________ vector __________
+t_vector	vector(double x, double y, double z);
+t_vector	normalize(t_vector a);
+t_vector	cross(t_vector a, t_vector b);
+double	magnitude(t_vector a);
+double	dot(t_vector a, t_vector b);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
@@ -202,6 +192,7 @@ char	*my_strchr(const char *s, int c);
 //__________ lib2.c __________
 char	*my_strjoin(char *s1, char *s2);
 char	*my_substr(char const *s, unsigned int start, size_t len);
+void	my_bzero(void *s, size_t n);
 
 //__________ lib3.c __________
 size_t	matrixlen(char **matrix);
@@ -213,7 +204,5 @@ int		my_isdigit(int c);
 int		is_int(char *s);
 int		is_double(char *s);
 int		onlynumber(char *s, int type);
-
-void	print_map(t_map *map);
 
 #endif //| MINIRT_H
