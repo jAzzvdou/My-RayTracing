@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/23 00:16:04 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:00:18 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,15 @@ typedef struct s_canvas
 {
 	int		width;
 	int		height;
-	t_color	**pixel; //| Pixel da tela, todos começam em 0.
+	t_color	*pixel; //| Pixel da tela, todos começam em 0.
 }	t_canvas;
+
+typedef struct s_matrix
+{
+	int		rows;
+	int		cols;
+	double	matrix[16];
+}	t_matrix;
 
 //----------| FUNCTIONS |----------//
 
