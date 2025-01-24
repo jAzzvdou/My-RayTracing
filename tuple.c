@@ -21,7 +21,7 @@ t_tuple sub_tuple(t_tuple a, t_tuple b)
 	return (tuple(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w));
 }
 
-t_tuple mul_tuple(t_tuple a, double b)
+t_tuple mult_tuple(t_tuple a, double b)
 {
 	return (tuple(a.x * b, a.y * b, a.z * b, a.w * b));
 }

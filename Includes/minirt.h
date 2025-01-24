@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/23 23:40:05 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:38:16 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,31 @@ struct s_tuple
 
 typedef struct s_light
 {
-	t_color	intensity;
-	t_point	position;
+	t_color		intensity;
+	t_point		position;
 	struct s_light	*next;
 }	t_light;
 
+typedef struct s_matrix
+{
+	int		rows;
+	int		cols;
+	double	matrix[16];
+}	t_matrix;
+
 typedef struct s_object
 {
-	t_type	type;
-	t_point	origin;
-	t_vector	normal;
-	double	radius;
-	double	height;
-	t_color	color;
+	t_type		type;
+	int		id;
+	//| Objects
+	t_point		origin; //| Para esfera, plano e cilindro.
+	t_vector	normal; //| Para plano e cilindro.
+	double		radius; //| Para esfera e cilindro.
+	double		height; //| Para cilindro.
+	//| Ver se o objeto foi modificado ou permanece original.
+	t_matrix	transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
+	t_matrix	inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
+	t_matrix	transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
 	struct s_object	*next;
 }	t_object;
 
@@ -114,7 +126,7 @@ typedef struct s_map
 {
 	t_light		*light;
 	t_object	*object;
-	t_scene		scene; //| Fazer
+	//t_scene		scene; //| Fazer
 }	t_map;
 
 typedef struct s_minilibx
@@ -126,7 +138,7 @@ typedef struct s_minilibx
 	void	*mlx;
 	void	*win;
 	void	*img;
-	t_map		*map; // TEMPORÁRIO
+	t_map	map; // TEMPORÁRIO
 }	t_minilibx;
 
 typedef struct s_canvas
@@ -136,12 +148,11 @@ typedef struct s_canvas
 	t_color	*pixel; //| Pixel da tela, todos começam em 0.
 }	t_canvas;
 
-typedef struct s_matrix
+typedef struct s_ray
 {
-	int		rows;
-	int		cols;
-	double	matrix[16];
-}	t_matrix;
+	t_point		origin;
+	t_vector	direction;
+}	t_ray;
 
 //----------| FUNCTIONS |----------//
 
