@@ -58,7 +58,7 @@ void	draw_canvas(t_minilibx *libx, t_canvas *canvas)
 	}
 }
 
-void	write_fd(int fd, char *s)
+static void	write_fd(int fd, char *s)
 {
 	write(fd, s, my_strlen(s));
 }

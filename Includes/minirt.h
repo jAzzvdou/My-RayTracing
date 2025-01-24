@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/23 21:00:18 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/23 23:40:05 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,37 @@ t_vector	normalize(t_vector a);
 t_vector	cross(t_vector a, t_vector b);
 double	magnitude(t_vector a);
 double	dot(t_vector a, t_vector b);
+
+//__________ canvas __________
+t_canvas	create_canvas(int width, int height);
+void	draw_pixel(t_minilibx *libx, int x, int y, int color);
+void	set_canvas_pixel(t_canvas *canvas, int x, int y, t_color color);
+t_color	pixel_at(t_canvas *canvas, int x, int y);
+void	draw_canvas(t_minilibx *libx, t_canvas *canvas);
+void	canvas_to_ppm(t_canvas canvas, char *filename);
+
+//__________ matrix __________
+void	set_index(t_matrix *a, int x, int y, double value);
+double	get_index(t_matrix *a, int x, int y);
+t_matrix	mult_matrix(t_matrix a, t_matrix b);
+t_tuple	mult_matrix_tuple(t_matrix a, t_tuple b);
+t_matrix	identity(void);
+t_matrix	transpose(t_matrix a);
+t_matrix	submatrix(t_matrix a, int x, int y);
+double	minor(t_matrix a, int x, int y);
+double	cofactor(t_matrix a, int x, int y);
+t_matrix	inverse(t_matrix a);
+double	determinant(t_matrix a);
+
+//__________ transformations __________
+t_matrix	translation(double x, double y, double z);
+t_matrix	scaling(double x, double y, double z);
+t_matrix	shearing(double *x, double *y, double *z);
+
+//__________ rotations __________
+t_matrix	rotationx(double rad);
+t_matrix	rotationy(double rad);
+t_matrix	rotationz(double rad);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
