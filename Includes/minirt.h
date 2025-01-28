@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/28 12:59:16 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:04:57 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@
 # define KEY_EVENT 02
 
 //__________ image __________
-# define WIDTH  1281
-# define HEIGHT 721
+# define WIDTH  720
+# define HEIGHT 720
 
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
