@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/28 12:25:48 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:59:16 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ double	bhaskara(t_object o, t_ray r);
 t_intersections intersect(t_object o, t_ray r);
 t_intersection intersection(t_object o, double t);
 t_intersections intersections(t_intersection i1, t_intersection i2);
-t_intersection *hit(t_intersections inter);
+t_intersection	hit(t_intersections inter);
 
 //__________ intersections __________
 

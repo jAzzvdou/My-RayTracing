@@ -71,19 +71,20 @@ t_intersections intersecitons(t_intersection i1, t_intersection i2)
 	return (inter);
 }
 
-t_intersection *hit(t_intersections inter)
+t_intersection hit(t_intersections inter)
 {
 	int				i;
-	t_intersection	*hit;
+	t_intersection	hit;
 
-	hit = NULL;
+	my_bzero(&hit, sizeof(t_intersection));
+	hit.t = -1;
 	i = 0;
 	while (i < inter.count)
 	{
-		if (inter.intersection[i].t >= 0)
+		if (inter.intersection[i].t > 0)
 		{
-			if (!hit || inter.intersection[i].t < hit->t)
-				hit = &inter.intersection[i];
+			if (hit.t < 0 || inter.intersection[i].t < hit.t)
+				hit = inter.intersection[i];
 		}
 		i++;
 	}

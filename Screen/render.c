@@ -18,7 +18,8 @@ void	render_sphere(t_canvas *canvas)
 								(canvas->height / 2.0 - xy[1]) / (double)canvas->height,
 								1.0)));
 			inter = intersect(sphere, r);
-			if (hit(inter))
+			t_intersection h = hit(inter);
+			if (h.t > 0)
 				set_canvas_pixel(canvas, xy[0], xy[1], color(1, 1, 1));
 			xy[0]++;
 		}

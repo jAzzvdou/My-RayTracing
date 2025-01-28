@@ -6,7 +6,7 @@ t_canvas	create_canvas(int width, int height)
 
 	canvas.width = width;
 	canvas.height = height;
-	canvas.pixel = (t_color *)memcard(NULL, DEFAULT, MALLOC, sizeof(t_color *) * width * height);
+	canvas.pixel = (t_color *)memcard(NULL, DEFAULT, MALLOC, sizeof(t_color) * width * height);
 	my_bzero(canvas.pixel, sizeof(t_color *) * width * height);
 	if (!canvas.pixel)
 	{
