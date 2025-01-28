@@ -18,12 +18,9 @@ t_canvas	create_canvas(int width, int height)
 
 void	draw_pixel(t_minilibx *libx, int x, int y, int color)
 {
-	char	*pixel;
-
 	if (y >= HEIGHT || x >= WIDTH || x < 0 || y < 0)
 		return ;
-	pixel = libx->addr + (y * libx->linelen + x * (libx->bpp / 8));
-	*(unsigned int *)pixel = color;
+	mlx_pixel_put(libx->mlx, libx->win, (unsigned int)x, (unsigned int)y, color);
 }
 
 void	set_canvas_pixel(t_canvas *canvas, int x, int y, t_color color)
