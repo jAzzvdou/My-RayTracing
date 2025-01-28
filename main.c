@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/22 21:57:33 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:36:49 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	memlist_holder(start_memlist(), 0);
 	//NOSSO PARSER NO FUTURO
-	screen(map);
+	screen();
 
 	memcard(NULL, 0, FREEALL, 0); //POR SEGURANÇA, UM GARBADE COLLECTOR
 	return (0);

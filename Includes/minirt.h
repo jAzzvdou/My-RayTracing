@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/24 10:38:16 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:25:48 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef enum e_type
 	L,
 	SP,
 	PL,
-	CY
+	CY,
+	NONE
 }	t_type;
 
 typedef struct s_color
@@ -154,7 +155,22 @@ typedef struct s_ray
 	t_vector	direction;
 }	t_ray;
 
+typedef struct s_intersection
+{
+	double		t;
+	t_object	object;
+}	t_intersection;
+
+//| Essa struct tá funcionando só pra esferas! MUDAR DEPOIS.
+typedef struct s_intersections
+{
+	int		count;
+	t_intersection	intersection[2];
+}	t_intersections;
+
 //----------| FUNCTIONS |----------//
+void screen(void);
+void render(t_minilibx *libx);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -213,6 +229,20 @@ t_matrix	shearing(double *x, double *y, double *z);
 t_matrix	rotationx(double rad);
 t_matrix	rotationy(double rad);
 t_matrix	rotationz(double rad);
+
+//__________ rays __________
+t_ray	ray(t_point p, t_vector v);
+t_point	position(t_ray r, double t);
+double	bhaskara(t_object o, t_ray r);
+t_intersections intersect(t_object o, t_ray r);
+t_intersection intersection(t_object o, double t);
+t_intersections intersections(t_intersection i1, t_intersection i2);
+t_intersection *hit(t_intersections inter);
+
+//__________ intersections __________
+
+//__________ objects __________
+t_object	new_object(t_type type);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

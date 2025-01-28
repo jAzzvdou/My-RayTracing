@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/22 21:57:46 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:38:07 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	key_hook(int key, t_minilibx *libx)
 	return (0);
 }
 
-void	screen(t_map *map)
+void	screen(void)
 {
 	t_minilibx	libx;
 
-	libx.map = map;
+	//libx.map = map;
 	libx.mlx = mlx_init();
 	libx.win = mlx_new_window(libx.mlx, WIDTH, HEIGHT, "| MiniRT |");
 	libx.img = mlx_new_image(libx.mlx, WIDTH, HEIGHT);

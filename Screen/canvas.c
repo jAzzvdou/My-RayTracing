@@ -1,4 +1,4 @@
-#include "Includes/minirt.h"
+#include "../Includes/minirt.h"
 
 t_canvas	create_canvas(int width, int height)
 {

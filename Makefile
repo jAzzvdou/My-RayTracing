@@ -1,26 +1,25 @@
 NAME	=	miniRT
 
-SRCS	=	main.c            \
-		printers.c            \
-		Parser/add_ambient.c  \
-		Parser/add_camera.c   \
-		Parser/add_light.c    \
-		Parser/add_sphere.c   \
-		Parser/add_plane.c    \
-		Parser/add_cylinder.c \
-		Parser/invalids.c     \
-		Parser/readfile.c     \
-		Screen/screen.c       \
-		Utils/get_next_line.c \
-		Utils/space.c         \
-		Utils/splitline.c     \
-		Utils/lib1.c          \
-		Utils/lib2.c          \
-		Utils/lib3.c          \
-		Utils/lib4.c          \
-		Screen/make_sphere.c  \
-		Includes/Mathlib/vectors.c     \
-		Includes/Mathlib/matrix.c      \
+SRCS	=	main.c                  \
+		Forms/objects.c         \
+		Math/color.c            \
+		Math/matrix.c           \
+		Math/rotations.c        \
+		Math/transformations.c  \
+		Math/tuple.c            \
+		Math/vector_and_point.c \
+		Screen/canvas.c         \
+		Screen/ray.c            \
+		Screen/render.c         \
+		Screen/screen.c         \
+		Utils/get_next_line.c   \
+		Utils/lib1.c            \
+		Utils/lib2.c            \
+		Utils/lib3.c            \
+		Utils/lib4.c            \
+		Utils/lib5.c            \
+		Utils/space.c           \
+		Utils/splitline.c       \
 
 OBJDIR	=	Objects
 

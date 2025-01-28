@@ -1,4 +1,4 @@
-#include "Includes/minirt.h"
+#include "../Includes/minirt.h"
 
 t_matrix	rotationx(double rad)
 {

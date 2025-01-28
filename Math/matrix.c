@@ -1,4 +1,4 @@
-#include "Includes/minirt.h"
+#include "../Includes/minirt.h"
 
 void	set_index(t_matrix *a, int x, int y, double value)
 {
@@ -132,6 +132,7 @@ t_matrix	submatrix(t_matrix a, int x, int y)
 		}
 		y1[1]++;
 	}
+	return (matrix);
 }
 
 double	minor(t_matrix a, int x, int y)
@@ -154,7 +155,6 @@ t_matrix	inverse(t_matrix a)
 	int		x;
 	int		y;
 	double		det;
-	double		cof;
 	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
@@ -163,7 +163,6 @@ t_matrix	inverse(t_matrix a)
 	det = determinant(a);
 	if (det == 0)
 		return (identity());
-	cof = 0;
 	y = 0;
 	while (y < matrix.rows)
 	{
