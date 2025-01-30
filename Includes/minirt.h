@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/29 21:42:26 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:52:50 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,10 +249,14 @@ t_intersection intersection(t_object o, double t);
 t_intersections intersections(t_intersection i1, t_intersection i2);
 t_intersection	hit(t_intersections inter);
 
-//__________ intersections __________
-
 //__________ objects __________
 t_object	new_object(t_type type);
+
+//__________ light __________
+t_vector	normal_at(t_object o, t_point p);
+t_vector	reflect(t_vector in, t_vector normal);
+t_light	point_light(t_point p, t_color c);
+t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

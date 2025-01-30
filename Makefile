@@ -1,25 +1,26 @@
 NAME	=	miniRT
 
-SRCS	=	main.c                  \
-		Forms/objects.c         \
-		Math/color.c            \
-		Math/matrix.c           \
-		Math/rotations.c        \
-		Math/transformations.c  \
-		Math/tuple.c            \
-		Math/vector_and_point.c \
-		Screen/canvas.c         \
-		Screen/ray.c            \
-		Screen/render.c         \
-		Screen/screen.c         \
-		Utils/get_next_line.c   \
-		Utils/lib1.c            \
-		Utils/lib2.c            \
-		Utils/lib3.c            \
-		Utils/lib4.c            \
-		Utils/lib5.c            \
-		Utils/space.c           \
-		Utils/splitline.c       \
+SRCS	=	main.c                   \
+		Forms/objects.c          \
+		Math/color.c             \
+		Math/light_and_shading.c \
+		Math/matrix.c            \
+		Math/rotations.c         \
+		Math/transformations.c   \
+		Math/tuple.c             \
+		Math/vector_and_point.c  \
+		Screen/canvas.c          \
+		Screen/ray.c             \
+		Screen/render.c          \
+		Screen/screen.c          \
+		Utils/get_next_line.c    \
+		Utils/lib1.c             \
+		Utils/lib2.c             \
+		Utils/lib3.c             \
+		Utils/lib4.c             \
+		Utils/lib5.c             \
+		Utils/space.c            \
+		Utils/splitline.c        \
 
 OBJDIR	=	Objects
 
