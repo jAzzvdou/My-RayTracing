@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/28 14:04:57 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/01/29 21:42:26 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,29 @@ typedef struct s_matrix
 	double	matrix[16];
 }	t_matrix;
 
+typedef struct s_material
+{
+	t_color	color;
+	double	amb;	//| ambient
+	double	diff;	//| diffuse
+	double	spec;	//| specular
+	double	shiny;	//| shininess
+}	t_material;
+
 typedef struct s_object
 {
 	t_type		type;
 	int		id;
 	//| Objects
-	t_point		origin; //| Para esfera, plano e cilindro.
-	t_vector	normal; //| Para plano e cilindro.
-	double		radius; //| Para esfera e cilindro.
-	double		height; //| Para cilindro.
+	t_point		origin;		//| Para esfera, plano e cilindro.
+	t_vector	normal;		//| Para plano e cilindro.
+	double		radius;		//| Para esfera e cilindro.
+	double		height;		//| Para cilindro.
 	//| Ver se o objeto foi modificado ou permanece original.
 	t_matrix	transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
 	t_matrix	inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
 	t_matrix	transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
+	t_material	material;
 	struct s_object	*next;
 }	t_object;
 
@@ -177,7 +187,7 @@ t_color	color(double r, double g, double b);
 t_color	add_color(t_color a, t_color b);
 t_color	sub_color(t_color a, t_color b);
 t_color	mult_color(t_color a, double b);
-t_color	average_color(t_color a, t_color b);
+t_color hadama_color(t_color a, t_color b);
 t_color convert_color(t_color a);
 int	color_to_int(t_color a);
 

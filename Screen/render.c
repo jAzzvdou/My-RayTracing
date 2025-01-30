@@ -14,11 +14,11 @@ void	render_sphere(t_canvas *canvas)
 		xy[0] = 0;
 		while (xy[0] < canvas->width)
 		{
-			r = ray(point(0, 0, -5), normalize(vector((xy[0] - canvas->width / 2.0) / (double)canvas->width,
-								(canvas->height / 2.0 - xy[1]) / (double)canvas->height,
-								1.0)));
-			inter = intersect(sphere, r);
-			t_intersection h = hit(inter);
+			r = ray(point(0, 0, -5),
+				normalize(vector((xy[0] - canvas->width / 2.0) / (double)canvas->width,
+						(canvas->height / 2.0 - xy[1]) / (double)canvas->height,
+						1.0)));
+			t_intersection h = hit(intersect(sphere, r));
 			if (h.t > 0)
 				set_canvas_pixel(canvas, xy[0], xy[1], color(1, 1, 1));
 			xy[0]++;

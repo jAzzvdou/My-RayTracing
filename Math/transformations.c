@@ -35,3 +35,10 @@ t_matrix	shearing(double *x, double *y, double *z)
 	set_index(&matrix, 2, 1, z[1]);
 	return (matrix);
 }
+
+void	set_transform(t_object *o, t_matrix m)
+{
+	o->transformed = m;
+	o->inversed = inverse(m);
+	o->transposed = transpose(o->inversed);
+}
