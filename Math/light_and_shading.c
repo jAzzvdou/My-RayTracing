@@ -44,6 +44,14 @@ t_light	point_light(t_point p, t_color c)
 	return (light);
 }
 
+t_color	clamp_color(t_color c)
+{
+	c.r = fmin(fmax(c.r, 0), 1);
+	c.g = fmin(fmax(c.g, 0), 1);
+	c.b = fmin(fmax(c.b, 0), 1);
+	return (c);
+}
+
 t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv)
 {
 	double	d[3];		//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
@@ -55,22 +63,16 @@ t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector nor
 	c[1] = mult_color(c[0], m.amb);
 	d[0] = dot(v[0], normalv);
 	if (d[0] < 0)
-	{
-		c[2] = color(0, 0, 0);
+		return (c[1]);
+	c[2] = mult_color(c[0], m.diff * d[0]);
+	v[1] = reflect(inverse_tuple(v[0]), normalv);
+	d[1] = dot(v[1], eyev);
+	if (d[1] <= 0)
 		c[3] = color(0, 0, 0);
-	}
 	else
 	{
-		c[2] = mult_color(c[0], m.diff * d[0]);
-		v[1] = reflect(inverse_tuple(v[0]), normalv);
-		d[1] = dot(v[1], eyev);
-		if (d[1] <= 0)
-			c[3] = color(0, 0, 0);
-		else
-		{
-			d[2] = pow(d[1], m.shiny);
-			c[3] = mult_color(l.intensity, m.spec * d[2]);
-		}
+		d[2] = pow(d[1], m.shiny);
+		c[3] = mult_color(l.intensity, m.spec * d[2]);
 	}
-	return (add_color(add_color(c[1], c[2]), c[3]));
+	return (clamp_color(add_color(add_color(c[1], c[2]), c[3])));
 }
