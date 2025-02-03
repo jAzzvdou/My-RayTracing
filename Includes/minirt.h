@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/02 20:00:14 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/02/02 21:06:59 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,13 @@ typedef struct s_canvas
 	t_color	*pixel; //| Pixel da tela, todos começam em 0.
 }	t_canvas;
 
+typedef struct s_world
+{
+	t_object	*obj;
+	t_light		*light;
+}	t_world;
+
+
 typedef struct s_ray
 {
 	t_point		origin;
@@ -244,10 +251,11 @@ t_matrix	rotationz(double rad);
 t_ray	ray(t_point p, t_vector v);
 t_point	position(t_ray r, double t);
 double	bhaskara(t_object o, t_ray r);
-t_intersections intersect(t_object o, t_ray r);
-t_intersection intersection(t_object o, double t);
-t_intersections intersections(t_intersection i1, t_intersection i2);
+t_intersections	intersect(t_object o, t_ray r);
+t_intersection	intersection(t_object o, double t);
+t_intersections intersecitons(t_intersection i1, t_intersection i2);
 t_intersection	hit(t_intersections inter);
+void			set_transform(t_object *o, t_matrix m);
 
 //__________ objects __________
 t_object	new_object(t_type type);

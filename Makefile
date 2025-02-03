@@ -12,7 +12,7 @@ SRCS	=	main.c                   \
 		5RayIntersections/ray.c             \
 		6LightAndShading/light_and_shading.c \
 		6LightAndShading/normal.c   \
-		7Scene/word.c            \
+		7Scene/world.c            \
 		Screen/render.c          \
 		Screen/screen.c          \
 		Utils/get_next_line.c    \
