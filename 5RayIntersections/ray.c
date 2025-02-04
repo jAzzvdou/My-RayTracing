@@ -14,7 +14,6 @@ t_point	position(t_ray r, double t)
 	return (add_tuple(r.origin, mult_tuple(r.direction, t)));
 }
 
-//| JOGAR ESSA FUNÇÃO NA PASTA UTILS
 double  bhaskara(t_object o, t_ray r)
 {
 	double		abc[3];
@@ -27,66 +26,90 @@ double  bhaskara(t_object o, t_ray r)
 	return ((abc[1] * abc[1]) - (4 * abc[0] * abc[2]));
 }
 
-//| ESTÁ SÓ PARA A ESFERA, MAS DEVE SER ALTERADO PARA FUNCIONAR PARA TODOS OS OBJETOS DEPOIS
-t_intersections intersect(t_object o, t_ray r)
-{
-	double		discriminant;
-	double		ab[2];
-	double		t[2];
-	t_intersections	inter;
-
-	inter.count = 0;
-	discriminant = bhaskara(o, r);
-	if (discriminant < 0)
-		return (inter);
-	ab[0] = dot(r.direction, r.direction);
-	ab[1] = 2 * dot(r.direction, sub_tuple(r.origin, o.origin));
-	t[0] = (-ab[1] - sqrt(discriminant)) / (2 * ab[0]);
-	t[1] = (-ab[1] + sqrt(discriminant)) / (2 * ab[0]);
-	//| ESFERA
-	inter.count = 2;
-	inter.intersection[0].t = t[0];
-	inter.intersection[0].object = o;
-	inter.intersection[1].t = t[1];
-	inter.intersection[1].object = o;
-	return (inter);
-}
-
-t_intersection  intersection(t_object o, double t)
+t_intersection	intersection(t_object o, double t)
 {
 	t_intersection	inter;
 
-	inter.t = t;
 	inter.object = o;
+	inter.t = t;
+	inter.next = NULL;
 	return (inter);
 }
 
-t_intersections intersecitons(t_intersection i1, t_intersection i2)
+void	add_intersection(t_intersection **list, t_intersection inter)
 {
-	t_intersections	inter;
+	t_intersection	*new;
+	t_intersection	*tmp;
+	t_intersection	*prev;
 
-	inter.count = 2;
-	inter.intersection[0] = i1;
-	inter.intersection[1] = i2;
-	return (inter);
+	new = memcard(NULL, DEFAULT, MALLOC, sizeof(t_intersection));
+	*new = inter;
+	prev = NULL;
+	tmp = *list;
+	while (tmp && tmp->t < inter.t)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (prev)
+	{
+		prev->next = new;
+		new->next = tmp;
+		return ;
+	}
+	new->next = *list;
+	*list = new;
 }
 
-t_intersection hit(t_intersections inter)
+void	intersect_sphere(t_intersection **list, t_object o, t_ray r)
 {
-	int				i;
+	double		t1;
+	double		t2;
+	double		discriminant;
+
+	discriminant = bhaskara(o, r);
+	if (discriminant < 0)
+		return ;
+	t1 = (-dot(r.direction, sub_tuple(r.origin, o.origin)) + sqrt(discriminant)) / (2 * dot(r.direction, r.direction));
+	t2 = (-dot(r.direction, sub_tuple(r.origin, o.origin)) - sqrt(discriminant)) / (2 * dot(r.direction, r.direction));
+	add_intersection(list, intersection(o, t1));
+	add_intersection(list, intersection(o, t2));
+}
+
+
+//| Testes
+t_ray	ray_transform(t_ray r, t_matrix m)
+{
+	t_ray	new;
+
+	new.origin = mult_matrix_tuple(m, r.origin);
+	new.direction = mult_matrix_tuple(m, r.direction);
+	return (new);
+}
+
+void	intersect(t_intersection **list, t_object o, t_ray ray)
+{
+	//t_ray	r;
+
+	//r = ray_transform(ray, o.inversed);
+	if (o.type == SP)
+		intersect_sphere(list, o, ray);
+	//| Adicionar outros depois
+}
+
+t_intersection	hit(t_intersection *inter)
+{
 	t_intersection	hit;
+	t_intersection	*tmp;
 
 	my_bzero(&hit, sizeof(t_intersection));
 	hit.t = -1;
-	i = 0;
-	while (i < inter.count)
+	tmp = inter;
+	while (tmp)
 	{
-		if (inter.intersection[i].t > 0)
-		{
-			if (hit.t < 0 || inter.intersection[i].t < hit.t)
-				hit = inter.intersection[i];
-		}
-		i++;
+		if (tmp->t > 0 && (hit.t < 0 || tmp->t < hit.t))
+			hit = *tmp;
+		tmp = tmp->next;
 	}
 	return (hit);
 }

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/02 20:00:14 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:28:45 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,11 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
-typedef struct s_map
+typedef struct s_world
 {
 	t_light		*light;
 	t_object	*object;
-	//t_scene		scene; //| Fazer
-}	t_map;
+}	t_world;
 
 typedef struct s_minilibx
 {
@@ -149,7 +148,6 @@ typedef struct s_minilibx
 	void	*mlx;
 	void	*win;
 	void	*img;
-	t_map	map; // TEMPORÁRIO
 }	t_minilibx;
 
 typedef struct s_canvas
@@ -169,14 +167,8 @@ typedef struct s_intersection
 {
 	double		t;
 	t_object	object;
+	struct s_intersection	*next;
 }	t_intersection;
-
-//| Essa struct tá funcionando só pra esferas! MUDAR DEPOIS.
-typedef struct s_intersections
-{
-	int		count;
-	t_intersection	intersection[2];
-}	t_intersections;
 
 //----------| FUNCTIONS |----------//
 void screen(void);
@@ -244,10 +236,10 @@ t_matrix	rotationz(double rad);
 t_ray	ray(t_point p, t_vector v);
 t_point	position(t_ray r, double t);
 double	bhaskara(t_object o, t_ray r);
-t_intersections intersect(t_object o, t_ray r);
-t_intersection intersection(t_object o, double t);
-t_intersections intersections(t_intersection i1, t_intersection i2);
-t_intersection	hit(t_intersections inter);
+void intersect(t_intersection **list, t_object o, t_ray r);
+t_intersection	intersection(t_object o, double t);
+t_intersection	hit(t_intersection *inter);
+void	set_transform(t_object *o, t_matrix m);
 
 //__________ objects __________
 t_object	new_object(t_type type);
@@ -258,6 +250,12 @@ t_vector	reflect(t_vector in, t_vector normal);
 t_light	point_light(t_point p, t_color c);
 t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv);
 t_material	material(void);
+
+//__________ world __________
+t_world	world(void);
+t_world	default_world(void);
+void	add_light(t_light **l1, t_light l2);
+void	add_object(t_object **obj1, t_object obj2);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
