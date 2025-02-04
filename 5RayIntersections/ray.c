@@ -63,19 +63,20 @@ void	add_intersection(t_intersection **list, t_intersection inter)
 
 void	intersect_sphere(t_intersection **list, t_object o, t_ray r)
 {
-	double		t1;
-	double		t2;
 	double		discriminant;
+	double		ab[2];
+	double		t[2];
 
 	discriminant = bhaskara(o, r);
 	if (discriminant < 0)
 		return ;
-	t1 = (-dot(r.direction, sub_tuple(r.origin, o.origin)) + sqrt(discriminant)) / (2 * dot(r.direction, r.direction));
-	t2 = (-dot(r.direction, sub_tuple(r.origin, o.origin)) - sqrt(discriminant)) / (2 * dot(r.direction, r.direction));
-	add_intersection(list, intersection(o, t1));
-	add_intersection(list, intersection(o, t2));
+	ab[0] = dot(r.direction, r.direction);
+	ab[1] = 2 * dot(r.direction, sub_tuple(r.origin, o.origin));
+	t[0] = (-ab[1] - sqrt(discriminant)) / (2 * ab[0]);
+	t[1] = (-ab[1] + sqrt(discriminant)) / (2 * ab[0]);
+	add_intersection(list, intersection(o, t[0]));
+	add_intersection(list, intersection(o, t[1]));
 }
-
 
 //| Testes
 t_ray	ray_transform(t_ray r, t_matrix m)
@@ -97,21 +98,14 @@ void	intersect(t_intersection **list, t_object o, t_ray ray)
 	//| Adicionar outros depois
 }
 
-t_intersection	hit(t_intersection *inter)
+t_intersection	*hit(t_intersection *inter)
 {
-	t_intersection	hit;
 	t_intersection	*tmp;
 
-	my_bzero(&hit, sizeof(t_intersection));
-	hit.t = -1;
 	tmp = inter;
-	while (tmp)
-	{
-		if (tmp->t > 0 && (hit.t < 0 || tmp->t < hit.t))
-			hit = *tmp;
+	while (tmp && tmp->t < 0)
 		tmp = tmp->next;
-	}
-	return (hit);
+	return (tmp);
 }
 
 void	set_transform(t_object *o, t_matrix m)
