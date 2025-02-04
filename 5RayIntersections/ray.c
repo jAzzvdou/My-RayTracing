@@ -36,6 +36,21 @@ t_intersection	intersection(t_object o, double t)
 	return (inter);
 }
 
+int	count_intersection(t_intersection *list)
+{
+	int				count;
+	t_intersection	*tmp;
+
+	count = 0;
+	tmp = list;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return (count);
+}
+
 void	add_intersection(t_intersection **list, t_intersection inter)
 {
 	t_intersection	*new;

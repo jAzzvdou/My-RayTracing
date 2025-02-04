@@ -47,5 +47,21 @@ void	render(t_minilibx *libx)
 
 	canvas = create_canvas(WIDTH, HEIGHT);
 	render_sphere(&canvas);
+
+	// TESTES DE MUNDO
+	t_world w = default_world();
+
+	t_intersection *list = NULL;
+	add_intersection(&list, intersection(*w.object, 4));
+	add_intersection(&list, intersection(*w.object->next, 4.5));
+	add_intersection(&list, intersection(*w.object->next, 5.5));
+	add_intersection(&list, intersection(*w.object, 6));
+
+	t_intersection *w_inters;
+	w_inters = intersect_world(w, ray(point(0, 0, -5), vector(0, 0, 1)));
+	int count = count_intersections(w_inters);
+	printf("count: %d\n", count);
+	//
+
 	draw_canvas(libx, &canvas);
 }
