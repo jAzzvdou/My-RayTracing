@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/04 18:29:41 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/05 00:23:35 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
 # include <math.h>                    //| SQRT, POW, TAN, COS, SIN
+# include <stdbool.h>                 //| TRUE, FALSE
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
 
@@ -170,6 +171,16 @@ typedef struct s_intersection
 	struct s_intersection	*next;
 }	t_intersection;
 
+typedef struct s_comps
+{
+	double	t;
+	t_object object;
+	t_point	point;
+	t_vector eyev;
+	t_vector normalv;
+	bool	inside;
+}	t_comps;
+
 //----------| FUNCTIONS |----------//
 void screen(void);
 void render(t_minilibx *libx);
@@ -239,7 +250,7 @@ double	bhaskara(t_object o, t_ray r);
 void intersect(t_intersection **list, t_object o, t_ray r);
 void	add_intersection(t_intersection **list, t_intersection inter);
 t_intersection	intersection(t_object o, double t);
-int	count_intersections(t_intersection *list);
+int	count_intersection(t_intersection *list);
 t_intersection	*hit(t_intersection *inter);
 void	set_transform(t_object *o, t_matrix m);
 
@@ -259,6 +270,8 @@ t_world	default_world(void);
 void	add_light(t_light **l1, t_light l2);
 void	add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
+t_comps	prepare_computations(t_intersection *inter, t_ray ray);
+t_color	shade_hit(t_world w, t_comps comps);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

@@ -79,3 +79,65 @@ t_intersection	*intersect_world(t_world w, t_ray r)
 	}
 	return (list);
 }
+
+t_comps	prepare_computations(t_intersection *inter, t_ray ray)
+{
+	t_comps	comps;
+
+	comps.t = inter->t;
+	comps.object = inter->object;
+	comps.point = position(ray, comps.t);
+	comps.eyev = inverse_tuple(ray.direction);
+	comps.normalv = normal_at(comps.object, comps.point);
+	if (dot(comps.normalv, comps.eyev) < 0)
+	{
+		comps.inside = true;
+		comps.normalv = inverse_tuple(comps.normalv);
+	}
+	else
+		comps.inside = false;
+	return (comps);
+}
+
+bool	is_shadowed(t_world w, t_point p)
+{
+	t_vector	lightv;
+	t_ray		shadow_ray;
+	t_intersection	*inters;
+	t_intersection	*result;
+
+	lightv = sub_tuple(w.light->position, p);
+	shadow_ray = ray(p, normalize(lightv));
+	inters = intersect_world(w, shadow_ray);
+	result = hit(inters);
+	if (result != NULL && result->t > 0 && result->t < magnitude(lightv))
+		return (true);
+	return (false);
+}
+
+t_color	shade_hit(t_world w, t_comps comps)
+{
+	t_color color;
+	bool	shadowed;
+
+	shadowed = is_shadowed(w, comps.point);
+	if (shadowed)
+		color = mult_color(comps.object.material.color, comps.object.material.amb);
+	else
+		color = lighting(comps.object.material, *w.light, comps.point, comps.eyev, comps.normalv);
+	return (color);
+}
+
+/*
+t_color	color_at(t_world w, t_ray r)
+{
+	t_intersection *hit;
+	t_comps	comps;
+
+	hit = hit(intersect_world(w, r));
+	if (!hit)
+		return (color(0, 0, 0));
+	comps = prepare_computations(hit, r);
+	return (shade_hit(w, comps));
+}
+*/

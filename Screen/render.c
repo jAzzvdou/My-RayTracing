@@ -59,7 +59,7 @@ void	render(t_minilibx *libx)
 
 	t_intersection *w_inters;
 	w_inters = intersect_world(w, ray(point(0, 0, -5), vector(0, 0, 1)));
-	int count = count_intersections(w_inters);
+	int count = count_intersection(w_inters);
 	printf("count: %d\n", count);
 	//
 
