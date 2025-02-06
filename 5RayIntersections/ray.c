@@ -105,11 +105,11 @@ t_ray	ray_transform(t_ray r, t_matrix m)
 
 void	intersect(t_intersection **list, t_object o, t_ray ray)
 {
-	//t_ray	r;
+	t_ray	r;
 
-	//r = ray_transform(ray, o.inversed);
+	r = ray_transform(ray, o.inversed);
 	if (o.type == SP)
-		intersect_sphere(list, o, ray);
+		intersect_sphere(list, o, r);
 	//| Adicionar outros depois
 }
 

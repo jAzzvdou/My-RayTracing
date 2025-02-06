@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/06 00:47:23 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:37:22 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@
 //__________ types __________
 # define INT 2147483647
 # define DOUBLE 179769308
+
+//__________ epsilon __________
+# define EPSILON 0.00001
 
 //----------| STRUCTS |----------//
 typedef enum e_type
@@ -281,7 +284,7 @@ t_world	default_world(void);
 void	add_light(t_light **l1, t_light l2);
 void	add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
-t_comps	prepare_computations(t_intersection *inter, t_ray ray);
+t_comps	prepare_computations(t_intersection inter, t_ray ray);
 t_color	shade_hit(t_world w, t_comps comps);
 t_color	color_at(t_world w, t_ray r);
 t_matrix	view_transform(t_point from, t_point to, t_vector up);
