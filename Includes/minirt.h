@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/05 00:23:35 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/06 00:47:23 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,20 @@ typedef struct s_comps
 	bool	inside;
 }	t_comps;
 
+typedef struct s_camera
+{
+	double	hsize;
+	double	vsize;
+	double	fov;
+	double	half_width;
+	double	half_height;
+	double	pixel_size;
+	t_matrix	transform;
+}	t_camera;
+
 //----------| FUNCTIONS |----------//
 void screen(void);
-void render(t_minilibx *libx);
+void render_tests(t_minilibx *libx);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -272,6 +283,10 @@ void	add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
 t_comps	prepare_computations(t_intersection *inter, t_ray ray);
 t_color	shade_hit(t_world w, t_comps comps);
+t_color	color_at(t_world w, t_ray r);
+t_matrix	view_transform(t_point from, t_point to, t_vector up);
+t_camera	camera(int hsize, int vsize, double fov);
+t_ray	ray_for_pixel(t_camera c, int x, int y);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
