@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/06 11:37:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:02:52 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,17 +235,19 @@ void	draw_canvas(t_minilibx *libx, t_canvas *canvas);
 void	canvas_to_ppm(t_canvas canvas, char *filename);
 
 //__________ matrix __________
-void	set_index(t_matrix *a, int x, int y, double value);
-double	get_index(t_matrix *a, int x, int y);
+void		set_index(t_matrix *a, int x, int y, double value);
+double		get_index(t_matrix *a, int x, int y);
 t_matrix	mult_matrix(t_matrix a, t_matrix b);
-t_tuple	mult_matrix_tuple(t_matrix a, t_tuple b);
+t_tuple		mult_matrix_tuple(t_matrix a, t_tuple b);
 t_matrix	identity(void);
 t_matrix	transpose(t_matrix a);
 t_matrix	submatrix(t_matrix a, int x, int y);
-double	minor(t_matrix a, int x, int y);
-double	cofactor(t_matrix a, int x, int y);
+double		minor(t_matrix a, int x, int y);
+double		cofactor(t_matrix a, int x, int y);
 t_matrix	inverse(t_matrix a);
-double	determinant(t_matrix a);
+double		determinant(t_matrix a);
+bool		matrix_equal(t_matrix a, t_matrix b);
+void		print_matrix(t_matrix m);
 
 //__________ transformations __________
 t_matrix	translation(double x, double y, double z);

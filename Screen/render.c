@@ -167,6 +167,7 @@ void	render_tests(t_minilibx *libx)
 	}
 	printf("Objetos: %i.\n", i);
 */
+
 	//| TESTE PREPARE_COMPUTATIONS()
 /*	(void)libx;
 	t_ray r = ray(point(0, 0, 0), vector(0, 0, 1));
@@ -181,6 +182,7 @@ void	render_tests(t_minilibx *libx)
 		in = 1;
 	printf("inside: %i.\n", in);
 */
+
 	//| TESTE DE SHADE_HIT()
 /*	(void)libx;
 	t_world w = default_world();
@@ -191,6 +193,7 @@ void	render_tests(t_minilibx *libx)
 	t_color c = shade_hit(w, comps);
 	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
 */
+
 	//| TESTE DE COLOR_AT()
 /*	(void)libx;
 	t_world w = default_world();
@@ -204,9 +207,10 @@ void	render_tests(t_minilibx *libx)
 	o2->material.amb = 1;
 	r = ray(point(0, 0, 0.75), vector(0, 0, -1));
 	c = color_at(w, r);
-	printf("\nr: %f g: %f b: %f.\n", o2->material.color.r, o2->material.color.g, o2->material.color.b); 
+	printf("\nr: %f g: %f b: %f.\n", o2->material.color.r, o2->material.color.g, o2->material.color.b);
 	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
 */
+
 	//| TESTE DE RAY_FOR_PIXEL()
 /*	(void)libx;
 	t_camera cam = camera(201, 101, M_PI / 2);
@@ -214,12 +218,30 @@ void	render_tests(t_minilibx *libx)
 	printf("x: %f y: %f z: %f.\n", r.origin.x, r.origin.y, r.origin.z);
 	printf("x: %f y: %f z: %f.\n", r.direction.x, r.direction.y, r.direction.z);
 */
+
+	//| TESTE DE
+
+
+	//| TESTE DE VIEW_TRANSFORM()
 	(void)libx;
+	t_matrix	iden = identity();
+	t_camera	cam = camera(11, 11, M_PI / 2);
+	cam.transform = view_transform(/*from*/point(1, 3, 2), /*to*/point(4, -2, 8), /*up*/vector(1, 1, 0));
+	if (matrix_equal(iden, cam.transform))
+		printf("Teste_ViewTransform: OK\n");
+	else
+		printf("Teste_ViewTransform: FAIL\n");
+	print_matrix(cam.transform);
+
+
+
+
+/*	(void)libx;
 	t_world w = default_world();
 	t_camera cam = camera(11, 11, M_PI / 2);
 	cam.transform = view_transform(point(0, 0, -5), point(0, 0, 0), vector(0, 1, 0));
 	t_canvas canvas = render(w, cam);
 	t_color c = pixel_at(&canvas, 5, 5);
-	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
-	/* ACHO QUE VIEW_TRANSFORM() ESTÁ ERRADA */
-}	
+	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);*/
+
+}
