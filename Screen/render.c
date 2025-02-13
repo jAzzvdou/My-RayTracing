@@ -32,7 +32,7 @@ void	render_sphere(t_canvas *canvas)
 				point_inter = position(r, h->t);
 				normalv = normal_at(h->object, point_inter);
 				eyev = inverse_tuple(r.direction);
-				pixel_color = lighting(h->object.material, light, point_inter, eyev, normalv);
+				pixel_color = lighting(h->object.material, light, point_inter, eyev, normalv, false);
 				set_canvas_pixel(canvas, xy[0], xy[1], pixel_color);
 			}
 			xy[0]++;
@@ -67,7 +67,7 @@ t_canvas	render(t_world w, t_camera cam)
 
 void	render_scene1(t_minilibx *libx)
 {
-	t_object floor;
+	/*t_object floor;
 	floor = new_object(SP);
 	floor.transformed = scaling(10, 0.01, 10);
 	floor.material = material();
@@ -101,7 +101,7 @@ void	render_scene1(t_minilibx *libx)
 	right.material = material();
 	right.material.color = color(0.5, 1, 0.1);
 	right.material.diff = 0.7;
-	right.material.spec = 0.3;
+	right.material.spec = 0.3;*/
 
 	t_object left;
 	left = new_object(SP);
@@ -116,16 +116,16 @@ void	render_scene1(t_minilibx *libx)
 
 	t_world w;
 	w = world();
-	add_light(&w.light, light);
-	add_object(&w.object, floor);
-	add_object(&w.object, left_wall);
-	add_object(&w.object, right_wall);
-	add_object(&w.object, middle);
-	add_object(&w.object, right);
+	add_light(&w.light, light);	
+	//add_object(&w.object, floor);
+	//add_object(&w.object, left_wall);
+	//add_object(&w.object, right_wall);
+	//add_object(&w.object, middle);
+	//add_object(&w.object, right);
 	add_object(&w.object, left);
 
 	t_camera cam;
-	cam = camera(100, 50, M_PI / 3);
+	cam = camera(100, 100, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
 	t_canvas canvas;
@@ -133,6 +133,24 @@ void	render_scene1(t_minilibx *libx)
 	//canvas = render(default_world(), cam);
 
 	draw_canvas(libx, &canvas);
+}
+
+void	print_point(t_tuple t)
+{
+	printf("x: %f y: %f z: %f w: %f\n", t.x, t.y, t.z, t.w);
+}
+
+void	print_color(t_color c)
+{
+	printf("r: %f g: %f b: %f\n", c.r, c.g, c.b);
+}
+
+void	print_matrix(t_matrix m)
+{
+	printf("%f %f %f %f\n", get_index(&m, 0, 0), get_index(&m, 1, 0), get_index(&m, 2, 0), get_index(&m, 3, 0));
+	printf("%f %f %f %f\n", get_index(&m, 0, 1), get_index(&m, 1, 1), get_index(&m, 2, 1), get_index(&m, 3, 1));
+	printf("%f %f %f %f\n", get_index(&m, 0, 2), get_index(&m, 1, 2), get_index(&m, 2, 2), get_index(&m, 3, 2));
+	printf("%f %f %f %f\n", get_index(&m, 0, 3), get_index(&m, 1, 3), get_index(&m, 2, 3), get_index(&m, 3, 3));
 }
 
 void	render_tests(t_minilibx *libx)
@@ -144,82 +162,5 @@ void	render_tests(t_minilibx *libx)
 	draw_canvas(libx, &canvas);
 */
 	//| TESTE PRIMEIRA CENA
-	//render_scene1(libx);
-
-	//| TESTE INTERSECT_WORLD()
-/*	(void)libx;
-	t_world w = default_world();
-	t_ray r = ray(point(0, 0, -5), vector(0, 0, 1));
-	t_intersection *xs = intersect_world(w, r);
-	int count = count_intersection(xs);
-	printf("count: %i.\n", count);
-	while (xs)
-	{
-		printf("xs->t: %f.\n", xs->t);
-		xs = xs->next;
-	}
-	int i = 0;
-	t_object *tmp = w.object;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	printf("Objetos: %i.\n", i);
-*/
-	//| TESTE PREPARE_COMPUTATIONS()
-/*	(void)libx;
-	t_ray r = ray(point(0, 0, 0), vector(0, 0, 1));
-	t_object sphere = new_object(SP);
-	t_intersection i = intersection(sphere, 1);
-	t_comps comps = prepare_computations(i, r);
-	printf("x: %f y: %f z: %f.\n", comps.point.x, comps.point.y, comps.point.z);
-	printf("x: %f y: %f z: %f.\n", comps.eyev.x, comps.eyev.y, comps.eyev.z);
-	printf("x: %f y: %f z: %f.\n", comps.normalv.x, comps.normalv.y, comps.normalv.z);
-	int in = 0;
-	if (comps.inside == true)
-		in = 1;
-	printf("inside: %i.\n", in);
-*/
-	//| TESTE DE SHADE_HIT()
-/*	(void)libx;
-	t_world w = default_world();
-	t_ray r = ray(point(0, 0, 0), vector(0, 0, 1));
-	t_object *sphere = w.object->next;
-	t_intersection i = intersection(*sphere, 0.5);
-	t_comps comps = prepare_computations(i, r);
-	t_color c = shade_hit(w, comps);
-	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
-*/
-	//| TESTE DE COLOR_AT()
-/*	(void)libx;
-	t_world w = default_world();
-	t_ray r = ray(point(0, 0, -5), vector(0, 0, 1));
-	t_color c = color_at(w, r);
-	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
-
-	t_object *o1 = w.object;
-	o1->material.amb = 1;
-	t_object *o2 = w.object->next;
-	o2->material.amb = 1;
-	r = ray(point(0, 0, 0.75), vector(0, 0, -1));
-	c = color_at(w, r);
-	printf("\nr: %f g: %f b: %f.\n", o2->material.color.r, o2->material.color.g, o2->material.color.b); 
-	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
-*/
-	//| TESTE DE RAY_FOR_PIXEL()
-/*	(void)libx;
-	t_camera cam = camera(201, 101, M_PI / 2);
-	t_ray r = ray_for_pixel(cam, 0, 0);
-	printf("x: %f y: %f z: %f.\n", r.origin.x, r.origin.y, r.origin.z);
-	printf("x: %f y: %f z: %f.\n", r.direction.x, r.direction.y, r.direction.z);
-*/
-	(void)libx;
-	t_world w = default_world();
-	t_camera cam = camera(11, 11, M_PI / 2);
-	cam.transform = view_transform(point(0, 0, -5), point(0, 0, 0), vector(0, 1, 0));
-	t_canvas canvas = render(w, cam);
-	t_color c = pixel_at(&canvas, 5, 5);
-	printf("r: %f g: %f b: %f.\n", c.r, c.g, c.b);
-	/* ACHO QUE VIEW_TRANSFORM() ESTÁ ERRADA */
+	render_scene1(libx);
 }	

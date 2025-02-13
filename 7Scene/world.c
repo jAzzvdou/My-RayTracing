@@ -40,7 +40,7 @@ void	add_light(t_light **l1, t_light l2)
 	tmp = *l1;
 	while(tmp && tmp->next)
 		tmp = tmp->next;
-	if(tmp)
+	if (tmp)
 		tmp->next = new;
 	else
 		*l1 = new;
@@ -54,7 +54,7 @@ void	add_object(t_object **obj1, t_object obj2)
 	new = memcard(NULL, DEFAULT, MALLOC, sizeof(t_object));
 	*new = obj2;
 	tmp = *obj1;
-	while(tmp && tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if(tmp)
 		tmp->next = new;
@@ -81,6 +81,7 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray)
 {
 	t_comps	comps;
 
+	my_bzero(&comps, sizeof(t_comps));
 	comps.t = inter.t;
 	comps.object = inter.object;
 	comps.point = position(ray, comps.t);
@@ -107,21 +108,24 @@ bool	is_shadowed(t_world w, t_point p)
 	shadow_ray = ray(p, normalize(lightv));
 	inters = intersect_world(w, shadow_ray);
 	result = hit(inters);
-	if (result != NULL && result->t > 0 && result->t < magnitude(lightv))
+	if (result != NULL && result->t > EPSILON && result->t < magnitude(lightv))
 		return (true);
 	return (false);
 }
 
 t_color	shade_hit(t_world w, t_comps comps)
 {
-	t_color color;
 	bool	shadowed;
+	t_color color;
+	t_light *tmp;
 
-	shadowed = is_shadowed(w, comps.point);
-	if (shadowed)
-		color = mult_color(comps.object.material.color, comps.object.material.amb);
-	else
-		color = lighting(comps.object.material, *w.light, comps.point, comps.eyev, comps.normalv);
+	tmp = w.light;
+	while (tmp)
+	{
+		shadowed = is_shadowed(w, comps.point);
+		color = lighting(comps.object.material, *w.light, comps.point, comps.eyev, comps.normalv, shadowed);
+		tmp = tmp->next;
+	}
 	return (color);
 }
 
@@ -143,13 +147,13 @@ t_matrix	get_orientation(t_vector v[3])
 
 	orientation = identity();
 	set_index(&orientation, 0, 0, v[1].x);  //| left
-	set_index(&orientation, 0, 1, v[1].y);
-	set_index(&orientation, 0, 2, v[1].z);
-	set_index(&orientation, 1, 0, v[2].x);  //| true_up
+	set_index(&orientation, 1, 0, v[1].y);
+	set_index(&orientation, 2, 0, v[1].z);
+	set_index(&orientation, 0, 1, v[2].x);  //| true_up
 	set_index(&orientation, 1, 1, v[2].y);
-	set_index(&orientation, 1, 2, v[2].z);
-	set_index(&orientation, 2, 0, -v[0].x); //| forward
-	set_index(&orientation, 2, 1, -v[0].y);
+	set_index(&orientation, 2, 1, v[2].z);
+	set_index(&orientation, 0, 2, -v[0].x); //| forward
+	set_index(&orientation, 1, 2, -v[0].y);
 	set_index(&orientation, 2, 2, -v[0].z);
 	return (orientation);
 }

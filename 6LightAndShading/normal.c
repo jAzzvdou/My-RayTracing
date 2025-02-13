@@ -29,5 +29,3 @@ t_vector	normal_at(t_object o, t_point p)
 	world_normal.w = 0;
 	return (normalize(world_normal));
 }
-
-
