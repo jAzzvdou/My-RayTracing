@@ -186,6 +186,8 @@ double determinant(t_matrix a)
 	{
 		result = get_index(&a, 0, 0) * get_index(&a, 1, 1);
 		result -= get_index(&a, 0, 1) * get_index(&a, 1, 0);
+		result = get_index(&a, 0, 0) * get_index(&a, 1, 1)
+			- get_index(&a, 0, 1) * get_index(&a, 1, 0);
 		return (result);
 	}
 	result = 0;
@@ -211,7 +213,7 @@ bool matrix_equal(t_matrix a, t_matrix b)
 	return (true);
 }
 
-void print_matrix(t_matrix m)
+/*void print_matrix(t_matrix m)
 {
 	for (int i = 0; i < m.rows; i++)
 	{
@@ -219,4 +221,4 @@ void print_matrix(t_matrix m)
 			printf("%f |", m.matrix[i * m.cols + j]);
 		printf("\n");
 	}
-}
+}*/
