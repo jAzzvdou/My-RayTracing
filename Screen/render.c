@@ -103,13 +103,34 @@ void	render_scene1(t_minilibx *libx)
 	right.material.diff = 0.7;
 	right.material.spec = 0.3;*/
 
+
+	/*t_object middle;
+	middle = new_object(SP);
+	middle.transformed = translation(-0.5, 1, 0.5);
+	middle.material = material();
+	middle.material.color = color(0.1, 1, 0.5);
+	middle.material.diff = 0.7;
+	middle.material.spec = 0.3;*/
+
+	t_object right;
+	right = new_object(SP);
+	right.transformed = mult_matrix(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5));
+	right.material = material();
+	right.material.color = color(0.1, 0.1, 0.1);
+	right.material.diff = 0.7;
+	right.material.spec = 0.3;
+
 	t_object left;
 	left = new_object(SP);
-	left.transformed = mult_matrix(translation(0.5, 1, 0.5), scaling(0.5, 0.5, 0.5));
+	left.transformed = mult_matrix(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33));
 	left.material = material();
-	left.material.color = color(1, 0.8, 0.1);
+	left.material.color = color(1, 1, 1);
 	left.material.diff = 0.7;
 	left.material.spec = 0.3;
+
+	right.next = &left;
+
+	left.next = NULL;
 
 	t_light light;
 	light = point_light(point(-10, 10, -10), color(1, 1, 1));
@@ -117,12 +138,12 @@ void	render_scene1(t_minilibx *libx)
 	t_world w;
 	w = world();
 	add_light(&w.light, light);
+	add_object(&w.object, right);
 	//add_object(&w.object, floor);
 	//add_object(&w.object, left_wall);
 	//add_object(&w.object, right_wall);
-	//add_object(&w.object, middle);
-	//add_object(&w.object, right);
-	add_object(&w.object, left);
+	//add_object(&w.object, left);
+//	add_object(&w.object, middle);
 
 	t_camera cam;
 	cam = camera(100, 100, M_PI / 3);
