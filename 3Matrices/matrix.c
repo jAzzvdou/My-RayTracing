@@ -1,23 +1,23 @@
 #include "../Includes/minirt.h"
 
-void set_index(t_matrix *a, int x, int y, double value)
+void	set_index(t_matrix *a, int x, int y, double value)
 {
 	if (x < 0 || x >= a->cols || y < 0 || y >= a->rows)
-		return;
+		return ;
 	a->matrix[y * a->cols + x] = value;
 }
 
-double get_index(t_matrix *a, int x, int y)
+double	get_index(t_matrix *a, int x, int y)
 {
 	if (x < 0 || x >= a->cols || y < 0 || y >= a->rows)
 		return (0);
 	return (a->matrix[y * a->cols + x]);
 }
 
-static double mult_index(t_matrix a, t_matrix b, int x, int y)
+static double	mult_index(t_matrix a, t_matrix b, int x, int y)
 {
-	int i;
-	double result;
+	int	i;
+	double	result;
 
 	result = 0;
 	i = 0;
@@ -29,11 +29,11 @@ static double mult_index(t_matrix a, t_matrix b, int x, int y)
 	return (result);
 }
 
-t_matrix mult_matrix(t_matrix a, t_matrix b)
+t_matrix	mult_matrix(t_matrix a, t_matrix b)
 {
-	int x;
-	int y;
-	t_matrix matrix;
+	int		x;
+	int		y;
+	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
 	if (a.rows != b.rows || a.cols != b.cols)
@@ -54,9 +54,9 @@ t_matrix mult_matrix(t_matrix a, t_matrix b)
 	return (matrix);
 }
 
-t_tuple mult_matrix_tuple(t_matrix a, t_tuple b)
+t_tuple	mult_matrix_tuple(t_matrix a, t_tuple b)
 {
-	t_tuple result;
+	t_tuple	result;
 
 	result.x = get_index(&a, 0, 0) * b.x + get_index(&a, 1, 0) * b.y;
 	result.x += get_index(&a, 2, 0) * b.z + get_index(&a, 3, 0) * b.w;
@@ -69,9 +69,9 @@ t_tuple mult_matrix_tuple(t_matrix a, t_tuple b)
 	return (result);
 }
 
-t_matrix identity(void)
+t_matrix	identity(void)
 {
-	t_matrix matrix;
+	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
 	matrix.rows = 4;
@@ -83,11 +83,11 @@ t_matrix identity(void)
 	return (matrix);
 }
 
-t_matrix transpose(t_matrix a)
+t_matrix	transpose(t_matrix a)
 {
-	int x;
-	int y;
-	t_matrix matrix;
+	int			x;
+	int			y;
+	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
 	matrix.rows = a.cols;
@@ -106,11 +106,11 @@ t_matrix transpose(t_matrix a)
 	return (matrix);
 }
 
-t_matrix submatrix(t_matrix a, int x, int y)
+t_matrix	submatrix(t_matrix a, int x, int y)
 {
-	int x1[2];
-	int y1[2];
-	t_matrix matrix;
+	int		x1[2];
+	int		y1[2];
+	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
 	matrix.rows = a.rows - 1;
@@ -120,13 +120,13 @@ t_matrix submatrix(t_matrix a, int x, int y)
 	while (++y1[0] < a.rows)
 	{
 		if (y1[0] == y)
-			continue;
+			continue ;
 		x1[0] = -1;
 		x1[1] = 0;
 		while (++x1[0] < a.cols)
 		{
 			if (x1[0] == x)
-				continue;
+				continue ;
 			set_index(&matrix, x1[1], y1[1], get_index(&a, x1[0], y1[0]));
 			x1[1]++;
 		}
@@ -135,14 +135,14 @@ t_matrix submatrix(t_matrix a, int x, int y)
 	return (matrix);
 }
 
-double minor(t_matrix a, int x, int y)
+double	minor(t_matrix a, int x, int y)
 {
 	return (determinant(submatrix(a, x, y)));
 }
 
-double cofactor(t_matrix a, int x, int y)
+double	cofactor(t_matrix a, int x, int y)
 {
-	double submatrix;
+	double		submatrix;
 
 	submatrix = minor(a, x, y);
 	if ((x + y) % 2 == 0)
@@ -150,12 +150,12 @@ double cofactor(t_matrix a, int x, int y)
 	return (-submatrix);
 }
 
-t_matrix inverse(t_matrix a)
+t_matrix	inverse(t_matrix a)
 {
-	int x;
-	int y;
-	double det;
-	t_matrix matrix;
+	int		x;
+	int		y;
+	double		det;
+	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
 	matrix.rows = a.rows;
@@ -177,15 +177,13 @@ t_matrix inverse(t_matrix a)
 	return (matrix);
 }
 
-double determinant(t_matrix a)
+double	determinant(t_matrix a)
 {
-	double result;
-	int i;
+	double		result;
+	int			i;
 
 	if (a.rows == 2 && a.cols == 2)
 	{
-		result = get_index(&a, 0, 0) * get_index(&a, 1, 1);
-		result -= get_index(&a, 0, 1) * get_index(&a, 1, 0);
 		result = get_index(&a, 0, 0) * get_index(&a, 1, 1)
 			- get_index(&a, 0, 1) * get_index(&a, 1, 0);
 		return (result);
@@ -199,26 +197,3 @@ double determinant(t_matrix a)
 	}
 	return (result);
 }
-
-bool matrix_equal(t_matrix a, t_matrix b)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (fabs(a.matrix[i * a.cols + j] - b.matrix[i * b.cols + j]) > EPSILON)
-				return (false);
-		}
-	}
-	return (true);
-}
-
-/*void print_matrix(t_matrix m)
-{
-	for (int i = 0; i < m.rows; i++)
-	{
-		for (int j = 0; j < m.cols; j++)
-			printf("%f |", m.matrix[i * m.cols + j]);
-		printf("\n");
-	}
-}*/

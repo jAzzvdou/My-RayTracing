@@ -35,4 +35,3 @@ t_matrix	shearing(double *x, double *y, double *z)
 	set_index(&matrix, 1, 2, z[1]);
 	return (matrix);
 }
-

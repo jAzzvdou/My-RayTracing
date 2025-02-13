@@ -1,6 +1,6 @@
 #include "../Includes/minirt.h"
 
-t_world world(void)
+t_world	world(void)
 {
 	t_world w;
 
@@ -8,16 +8,16 @@ t_world world(void)
 	return (w);
 }
 
-t_world default_world(void)
+t_world	default_world(void)
 {
-	t_world dworld;
-	t_object sphere1;
-	t_object sphere2;
-	t_light light;
+	t_world		dworld;
+	t_object	sphere1;
+	t_object	sphere2;
+	t_light		light;
 
 	dworld = world();
 	light = point_light(point(-10, 10, -10), color(1, 1, 1));
-	// light = point_light(point(0, 0.25, 0), color(1, 1, 1));
+	//light = point_light(point(0, 0.25, 0), color(1, 1, 1));
 	add_light(&dworld.light, light);
 	sphere1 = new_object(SP);
 	sphere1.material.color = color(0.8, 1, 0.6);
@@ -30,15 +30,15 @@ t_world default_world(void)
 	return (dworld);
 }
 
-void add_light(t_light **l1, t_light l2)
+void	add_light(t_light **l1, t_light l2)
 {
-	t_light *new;
-	t_light *tmp;
+	t_light	*new;
+	t_light	*tmp;
 
 	new = memcard(NULL, DEFAULT, MALLOC, sizeof(t_light));
 	*new = l2;
 	tmp = *l1;
-	while (tmp && tmp->next)
+	while(tmp && tmp->next)
 		tmp = tmp->next;
 	if (tmp)
 		tmp->next = new;
@@ -46,30 +46,30 @@ void add_light(t_light **l1, t_light l2)
 		*l1 = new;
 }
 
-void add_object(t_object **obj1, t_object obj2)
+void	add_object(t_object **obj1, t_object obj2)
 {
-	t_object *new;
-	t_object *tmp;
+	t_object	*new;
+	t_object	*tmp;
 
 	new = memcard(NULL, DEFAULT, MALLOC, sizeof(t_object));
 	*new = obj2;
 	tmp = *obj1;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
-	if (tmp)
+	if(tmp)
 		tmp->next = new;
 	else
 		*obj1 = new;
 }
 
-t_intersection *intersect_world(t_world w, t_ray r)
+t_intersection	*intersect_world(t_world w, t_ray r)
 {
-	t_object *tmp;
-	t_intersection *list;
+	t_object	*tmp;
+	t_intersection	*list;
 
 	list = NULL;
 	tmp = w.object;
-	while (tmp)
+	while(tmp)
 	{
 		intersect(&list, *tmp, r);
 		tmp = tmp->next;
@@ -77,9 +77,9 @@ t_intersection *intersect_world(t_world w, t_ray r)
 	return (list);
 }
 
-t_comps prepare_computations(t_intersection inter, t_ray ray)
+t_comps	prepare_computations(t_intersection inter, t_ray ray)
 {
-	t_comps comps;
+	t_comps	comps;
 
 	my_bzero(&comps, sizeof(t_comps));
 	comps.t = inter.t;
@@ -97,12 +97,12 @@ t_comps prepare_computations(t_intersection inter, t_ray ray)
 	return (comps);
 }
 
-bool is_shadowed(t_world w, t_point p)
+bool	is_shadowed(t_world w, t_point p)
 {
-	t_vector lightv;
-	t_ray shadow_ray;
-	t_intersection *inters;
-	t_intersection *result;
+	t_vector	lightv;
+	t_ray		shadow_ray;
+	t_intersection	*inters;
+	t_intersection	*result;
 
 	lightv = sub_tuple(w.light->position, p);
 	shadow_ray = ray(p, normalize(lightv));
@@ -113,7 +113,7 @@ bool is_shadowed(t_world w, t_point p)
 	return (false);
 }
 
-t_color shade_hit(t_world w, t_comps comps)
+t_color	shade_hit(t_world w, t_comps comps)
 {
 	bool	shadowed;
 	t_color color;
@@ -129,10 +129,10 @@ t_color shade_hit(t_world w, t_comps comps)
 	return (color);
 }
 
-t_color color_at(t_world w, t_ray r)
+t_color	color_at(t_world w, t_ray r)
 {
 	t_intersection *h;
-	t_comps comps;
+	t_comps	comps;
 
 	h = hit(intersect_world(w, r));
 	if (!h)
@@ -141,9 +141,9 @@ t_color color_at(t_world w, t_ray r)
 	return (shade_hit(w, comps));
 }
 
-t_matrix get_orientation(t_vector v[3])
+t_matrix	get_orientation(t_vector v[3])
 {
-	t_matrix orientation;
+	t_matrix	orientation;
 
 	orientation = identity();
 	set_index(&orientation, 0, 0, v[1].x);  //| left
@@ -158,43 +158,24 @@ t_matrix get_orientation(t_vector v[3])
 	return (orientation);
 }
 
-t_matrix view_transform(t_point from, t_point to, t_vector up)
+t_matrix	view_transform(t_point from, t_point to, t_vector up)
 {
-	t_vector forward, left, true_up;
-	t_matrix orientation;
+	t_vector	v[3]; //| 0: forward, 1: left, 2: true_up
 
-	// Calcula os vetores base para a transformação
-	forward = normalize(sub_tuple(to, from));
-	left = normalize(cross(forward, normalize(up)));
-	true_up = cross(left, forward);
-
-	// Construindo a matriz de orientação manualmente
-	orientation = identity(); // Inicializa como identidade
-
-	set_index(&orientation, 0, 0, left.x);
-	set_index(&orientation, 0, 1, left.y);
-	set_index(&orientation, 0, 2, left.z);
-
-	set_index(&orientation, 1, 0, true_up.x);
-	set_index(&orientation, 1, 1, true_up.y);
-	set_index(&orientation, 1, 2, true_up.z);
-
-	set_index(&orientation, 2, 0, -forward.x);
-	set_index(&orientation, 2, 1, -forward.y);
-	set_index(&orientation, 2, 2, -forward.z);
-
-	set_index(&orientation, 0, 3, -dot(left, from));
-	set_index(&orientation, 1, 3, -dot(true_up, from));
-	set_index(&orientation, 2, 3, dot(forward, from));
-
-	return (orientation);
+	v[0] = normalize(sub_tuple(to, from)); //| forward
+	if (1 - fabs(dot(v[0], up)) < EPSILON)
+		v[1] = vector(-1, 0, 0);       //| left
+	else
+		v[1] = cross(v[0], normalize(up));
+	v[2] = cross(v[1], v[0]);              //| true_up
+	return (mult_matrix(get_orientation(v), translation(-from.x, -from.y, -from.z)));
 }
 
-t_camera camera(int hsize, int vsize, double fov)
+t_camera	camera(int hsize, int vsize, double fov)
 {
-	double half_view;
-	double aspect;
-	t_camera c;
+	double	half_view;
+	double	aspect;
+	t_camera	c;
 
 	c.hsize = hsize;
 	c.vsize = vsize;
@@ -212,12 +193,12 @@ t_camera camera(int hsize, int vsize, double fov)
 	return (c);
 }
 
-t_ray ray_for_pixel(t_camera c, int px, int py)
+t_ray	ray_for_pixel(t_camera c, int px, int py)
 {
-	double d[4]; //| xoffset, yoffset, world_x, world_y
-	t_point pixel;
-	t_point origin;
-	t_vector direction;
+	double	d[4]; //| xoffset, yoffset, world_x, world_y
+	t_point	pixel;
+	t_point	origin;
+	t_vector	direction;
 
 	d[0] = (px + 0.5) * c.pixel_size;
 	d[1] = (py + 0.5) * c.pixel_size;
