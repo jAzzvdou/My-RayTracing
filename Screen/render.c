@@ -67,7 +67,7 @@ t_canvas	render(t_world w, t_camera cam)
 
 void	render_scene1(t_minilibx *libx)
 {
-	/*t_object floor;
+	t_object floor;
 	floor = new_object(SP);
 	floor.transformed = scaling(10, 0.01, 10);
 	floor.material = material();
@@ -101,7 +101,7 @@ void	render_scene1(t_minilibx *libx)
 	right.material = material();
 	right.material.color = color(0.5, 1, 0.1);
 	right.material.diff = 0.7;
-	right.material.spec = 0.3;*/
+	right.material.spec = 0.3;
 
 	t_object left;
 	left = new_object(SP);
@@ -117,11 +117,11 @@ void	render_scene1(t_minilibx *libx)
 	t_world w;
 	w = world();
 	add_light(&w.light, light);	
-	//add_object(&w.object, floor);
-	//add_object(&w.object, left_wall);
-	//add_object(&w.object, right_wall);
-	//add_object(&w.object, middle);
-	//add_object(&w.object, right);
+	add_object(&w.object, floor);
+	add_object(&w.object, left_wall);
+	add_object(&w.object, right_wall);
+	add_object(&w.object, middle);
+	add_object(&w.object, right);
 	add_object(&w.object, left);
 
 	t_camera cam;
