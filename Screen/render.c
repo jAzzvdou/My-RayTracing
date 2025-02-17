@@ -69,54 +69,70 @@ void	render_scene1(t_minilibx *libx)
 {
 	t_object floor;
 	floor = new_object(SP);
-	floor.transformed = scaling(10, 0.01, 10);
+	set_transform(&floor, scaling(10, 0.01, 10));
 	floor.material = material();
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.spec = 0;
 
 	t_object left_wall;
 	left_wall = new_object(SP);
-	left_wall.transformed = mult_matrix(translation(0, 0, 5), rotationy(-M_PI / 4));
-	left_wall.transformed = mult_matrix(left_wall.transformed, rotationx(M_PI / 2));
-	left_wall.transformed = mult_matrix(left_wall.transformed, scaling(10, 0.01, 10));
+	set_transform(&left_wall,
+			mult_matrix(
+				mult_matrix(
+					mult_matrix(
+						translation(0, 0, 5),
+						rotationy(-M_PI / 4)
+						),
+					rotationx(M_PI / 2)
+					),
+				scaling(10, 0.01, 10)
+				));
 	left_wall.material = floor.material;
 
 	t_object right_wall;
 	right_wall = new_object(SP);
-	right_wall.transformed = mult_matrix(translation(0, 0, 5), rotationy(M_PI / 4));
-	right_wall.transformed = mult_matrix(right_wall.transformed, rotationx(M_PI / 2));
-	right_wall.transformed = mult_matrix(right_wall.transformed, scaling(10, 0.01, 10));
+	set_transform(&right_wall,
+			mult_matrix(
+				mult_matrix(
+					mult_matrix(
+						translation(0, 0, 5),
+						rotationy(M_PI / 4)
+						),
+					rotationx(M_PI / 2)
+					),
+				scaling(10, 0.01, 10)
+				));
 
 	t_object middle;
 	middle = new_object(SP);
-	middle.transformed = translation(-0.5, 1, 0.5);
+	set_transform(&middle, translation(-0.5, 1, 0.5));
 	middle.material = material();
-	middle.material.color = color(0.1, 1, 0.5);
+	middle.material.color = color(1, 0, 0);
 	middle.material.diff = 0.7;
 	middle.material.spec = 0.3;
 
 	t_object right;
 	right = new_object(SP);
-	right.transformed = mult_matrix(translation(-0.5, 1, 0.5), scaling(0.5, 0.5, 0.5));
+	set_transform(&right, mult_matrix(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5)));
 	right.material = material();
-	right.material.color = color(0.5, 1, 0.1);
+	right.material.color = color(0, 1, 0);
 	right.material.diff = 0.7;
 	right.material.spec = 0.3;
 
 	t_object left;
 	left = new_object(SP);
-	left.transformed = mult_matrix(translation(0.5, 1, 0.5), scaling(0.5, 0.5, 0.5));
+	set_transform(&left, mult_matrix(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33)));
 	left.material = material();
-	left.material.color = color(1, 0.8, 0.1);
+	left.material.color = color(0, 0, 1);
 	left.material.diff = 0.7;
 	left.material.spec = 0.3;
 
-	t_light light;
-	light = point_light(point(-10, 10, -10), color(1, 1, 1));
+	t_light light1;
+	light1 = point_light(point(-10, 10, -10), color(1, 1, 1));
 
 	t_world w;
 	w = world();
-	add_light(&w.light, light);	
+	add_light(&w.light, light1);	
 	add_object(&w.object, floor);
 	add_object(&w.object, left_wall);
 	add_object(&w.object, right_wall);
@@ -125,12 +141,11 @@ void	render_scene1(t_minilibx *libx)
 	add_object(&w.object, left);
 
 	t_camera cam;
-	cam = camera(100, 100, M_PI / 3);
+	cam = camera(WIDTH, HEIGHT, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
 	t_canvas canvas;
 	canvas = render(w, cam);
-	//canvas = render(default_world(), cam);
 
 	draw_canvas(libx, &canvas);
 }
