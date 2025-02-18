@@ -17,7 +17,6 @@ t_world	default_world(void)
 
 	dworld = world();
 	light = point_light(point(-10, 10, -10), color(1, 1, 1));
-	//light = point_light(point(0, 0.25, 0), color(1, 1, 1));
 	add_light(&dworld.light, light);
 	sphere1 = new_object(SP);
 	sphere1.material.color = color(0.8, 1, 0.6);
@@ -94,6 +93,7 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray)
 	}
 	else
 		comps.inside = false;
+	comps.over_point = add_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
 	return (comps);
 }
 
@@ -122,8 +122,8 @@ t_color	shade_hit(t_world w, t_comps comps)
 	tmp = w.light;
 	while (tmp)
 	{
-		shadowed = is_shadowed(w, comps.point);
-		color = lighting(comps.object.material, *w.light, comps.point, comps.eyev, comps.normalv, shadowed);
+		shadowed = is_shadowed(w, comps.over_point);
+		color = lighting(comps.object.material, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
 		tmp = tmp->next;
 	}
 	return (color);

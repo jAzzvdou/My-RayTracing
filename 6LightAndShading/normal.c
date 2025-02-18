@@ -9,10 +9,18 @@ t_vector	sphere_normal_at(t_point p)
 	return (normalize(normal));
 }
 
+t_vector	plane_normal_at(t_point p)
+{
+	(void)p;
+	return (vector(0, 1, 0));
+}
+
 t_vector	object_normal_at(t_object o, t_point p)
 {
 	if (o.type == SP)
 		return (sphere_normal_at(p));
+	else if (o.type == PL)
+		return (plane_normal_at(p));
 	//Adicionar if else para todos os objetos
 	return ((t_vector){0, 0, 0, 0});
 }

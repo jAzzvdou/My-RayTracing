@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/13 00:30:18 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:16:37 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ typedef struct s_comps
 	double	t;
 	t_object object;
 	t_point	point;
+	t_point over_point;
 	t_vector eyev;
 	t_vector normalv;
 	bool	inside;
@@ -196,8 +197,9 @@ typedef struct s_camera
 }	t_camera;
 
 //----------| FUNCTIONS |----------//
-void screen(void);
-void render_tests(t_minilibx *libx);
+void		screen(void);
+t_canvas	render(t_world w, t_camera cam);
+void		render_tests(t_minilibx *libx);
 
 //__________ color __________
 t_color	color(double r, double g, double b);

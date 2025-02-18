@@ -93,7 +93,17 @@ void	intersect_sphere(t_intersection **list, t_object o, t_ray r)
 	add_intersection(list, intersection(o, t[1]));
 }
 
-//| Testes
+void	intersect_plane(t_intersection **list, t_object o, t_ray r)
+{
+	double	t;
+
+	if (fabs(r.direction.y) < EPSILON)
+		return ;
+	t = -r.origin.y / r.direction.y;
+	if (fabs(t) > EPSILON)
+		add_intersection(list, intersection(o, t));
+}
+
 t_ray	ray_transform(t_ray r, t_matrix m)
 {
 	t_ray	new;
@@ -110,6 +120,8 @@ void	intersect(t_intersection **list, t_object o, t_ray ray)
 	r = ray_transform(ray, o.inversed);
 	if (o.type == SP)
 		intersect_sphere(list, o, r);
+	else if (o.type == PL)
+		intersect_plane(list, o, r);
 	//| Adicionar outros depois
 }
 
@@ -138,6 +150,13 @@ t_object	fill_sphere(t_object obj)
 	return (obj);
 }
 
+t_object	fill_plane(t_object obj)
+{
+	obj.type = PL;
+	obj.origin = point(0, 0, 0);
+	return (obj);
+}
+
 t_object	new_object(t_type type)
 {
 	static int	id;
@@ -152,9 +171,9 @@ t_object	new_object(t_type type)
 	obj.next = NULL;
 	if (type == SP)
 		return (fill_sphere(obj));
-	/*else if (type == PL)
-		fill_plane(&obj);
-	else if (type == CY)
+	else if (type == PL)
+		return (fill_plane(obj));
+	/*else if (type == CY)
 		fill_cylinder(&obj);*/
 	obj.type = NONE;
 	return (obj);
