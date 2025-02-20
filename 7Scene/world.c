@@ -123,7 +123,7 @@ t_color	shade_hit(t_world w, t_comps comps)
 	while (tmp)
 	{
 		shadowed = is_shadowed(w, comps.over_point);
-		color = lighting(comps.object.material, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
+		color = lighting(comps.object, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
 		tmp = tmp->next;
 	}
 	return (color);

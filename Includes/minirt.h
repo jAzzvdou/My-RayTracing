@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/17 23:16:37 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:50:45 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,19 @@
 //----------| STRUCTS |----------//
 typedef enum e_type
 {
-	A,
-	C,
-	L,
 	SP,
 	PL,
 	CY,
 	NONE
 }	t_type;
+
+typedef enum e_pattern_type
+{
+	STRIPE,
+	GRADIENT,
+	RING,
+	NO_TYPE
+}	t_pattern_type;
 
 typedef struct s_color
 {
@@ -111,6 +116,16 @@ typedef struct s_matrix
 	double	matrix[16];
 }	t_matrix;
 
+typedef struct s_pattern
+{
+	bool	has_pattern;
+	t_pattern_type	type;
+	t_color	a;
+	t_color	b;
+	t_matrix	inversed;
+	t_matrix	transformed;
+}	t_pattern;
+
 typedef struct s_material
 {
 	t_color	color;
@@ -118,6 +133,7 @@ typedef struct s_material
 	double	diff;	//| diffuse
 	double	spec;	//| specular
 	double	shiny;	//| shininess
+	t_pattern	pattern;
 }	t_material;
 
 typedef struct s_object
@@ -277,7 +293,7 @@ t_object	new_object(t_type type);
 t_vector	normal_at(t_object o, t_point p);
 t_vector	reflect(t_vector in, t_vector normal);
 t_light	point_light(t_point p, t_color c);
-t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow);
+t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow);
 t_material	material(void);
 
 //__________ world __________
@@ -292,6 +308,11 @@ t_color	color_at(t_world w, t_ray r);
 t_matrix	view_transform(t_point from, t_point to, t_vector up);
 t_camera	camera(int hsize, int vsize, double fov);
 t_ray	ray_for_pixel(t_camera c, int x, int y);
+
+//__________ pattern __________
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
+t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
+void	set_pattern_transform(t_pattern *p, t_matrix transform);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

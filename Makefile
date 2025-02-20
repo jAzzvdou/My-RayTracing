@@ -13,6 +13,7 @@ SRCS	=	main.c                                  \
 		6LightAndShading/light_and_shading.c    \
 		6LightAndShading/normal.c               \
 		7Scene/world.c                          \
+		10Patterns/pattern.c                    \
 		Screen/render.c                         \
 		Screen/screen.c                         \
 		Utils/get_next_line.c                   \

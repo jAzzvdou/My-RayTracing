@@ -23,13 +23,18 @@ t_color	clamp_color(t_color c)
 	return (c);
 }
 
-t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow)
+t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow)
 {
 	double	d[3];		//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
-	t_color	c[4];		//| 0: effective_color, 1: ambient, 2: diffuse, 3: specular
+	t_color	c[5];		//| 0: effective_color, 1: ambient, 2: diffuse, 3: specular, 4: color
 	t_vector	v[2];	//| 0: lightv, 1: reflectv
+	t_material	m;
 
-	c[0] = hadama_color(m.color, l.intensity);
+	m = o.material;
+	c[4] = m.color;
+	if (m.pattern.has_pattern)
+		c[4] = pattern_at_object(m.pattern, o, p);
+	c[0] = hadama_color(c[4], l.intensity);
 	v[0] = normalize(sub_tuple(l.position, p));
 	c[1] = mult_color(c[0], m.amb);
 	if (shadow)
@@ -60,6 +65,7 @@ t_material	material(void)
 {
 	t_material	m;
 
+	my_bzero(&m, sizeof(t_material));
 	m.color = color(1, 1, 1);
 	m.amb = 0.1;
 	m.diff = 0.9;
