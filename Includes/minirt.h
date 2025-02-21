@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/21 00:46:22 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/21 01:34:44 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_material
 	double	diff;	//| diffuse
 	double	spec;	//| specular
 	double	shiny;	//| shininess
+	double	reflective; //| vai de 0 até 1, sendo 0 totalmente opaco e 1 totalmente espelhado
 	t_pattern	pattern;
 }	t_material;
 
@@ -198,6 +199,7 @@ typedef struct s_comps
 	t_point over_point;
 	t_vector eyev;
 	t_vector normalv;
+	t_vector reflectv;
 	bool	inside;
 }	t_comps;
 
@@ -303,8 +305,8 @@ void	add_light(t_light **l1, t_light l2);
 void	add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
 t_comps	prepare_computations(t_intersection inter, t_ray ray);
-t_color	shade_hit(t_world w, t_comps comps);
-t_color	color_at(t_world w, t_ray r);
+t_color	shade_hit(t_world w, t_comps comps, int remaining);
+t_color	color_at(t_world w, t_ray r, int remaining);
 t_matrix	view_transform(t_point from, t_point to, t_vector up);
 t_camera	camera(int hsize, int vsize, double fov);
 t_ray	ray_for_pixel(t_camera c, int x, int y);
@@ -316,6 +318,9 @@ void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);
 t_color	gradient_at(t_pattern p, t_point pt);
 t_color	ring_at(t_pattern p, t_point pt);
+
+//__________ reflection __________
+t_color	reflected_color(t_world w, t_comps comps, int remaining);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

@@ -94,6 +94,7 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray)
 	else
 		comps.inside = false;
 	comps.over_point = add_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
+	comps.reflectv = reflect(ray.direction, comps.normalv);
 	return (comps);
 }
 
@@ -113,10 +114,11 @@ bool	is_shadowed(t_world w, t_point p)
 	return (false);
 }
 
-t_color	shade_hit(t_world w, t_comps comps)
+t_color	shade_hit(t_world w, t_comps comps, int remaining)
 {
 	bool	shadowed;
 	t_color color;
+	t_color reflected;
 	t_light *tmp;
 
 	tmp = w.light;
@@ -126,10 +128,11 @@ t_color	shade_hit(t_world w, t_comps comps)
 		color = lighting(comps.object, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
 		tmp = tmp->next;
 	}
-	return (color);
+	reflected = reflected_color(w, comps, remaining);	
+	return (add_color(color, reflected));
 }
 
-t_color	color_at(t_world w, t_ray r)
+t_color	color_at(t_world w, t_ray r, int remaining)
 {
 	t_intersection *h;
 	t_comps	comps;
@@ -138,7 +141,7 @@ t_color	color_at(t_world w, t_ray r)
 	if (!h)
 		return (color(0, 0, 0));
 	comps = prepare_computations(*h, r);
-	return (shade_hit(w, comps));
+	return (shade_hit(w, comps, remaining));
 }
 
 t_matrix	get_orientation(t_vector v[3])

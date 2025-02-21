@@ -17,7 +17,6 @@ void	render_scene(t_minilibx *libx)
 	middle.material.pattern = new_pattern(RING, color (1, 1, 0), color(1, 0, 1));
 	set_pattern_transform(&middle.material.pattern, scaling(0.2, 0.2, 0.2));
 
-
 	t_object right;
 	right = new_object(SP);
 	set_transform(&right, mult_matrix(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5)));
@@ -92,7 +91,7 @@ t_canvas	render(t_world w, t_camera cam)
 		while (xy[0] < cam.hsize)
 		{
 			r = ray_for_pixel(cam, xy[0], xy[1]);
-			c = color_at(w, r);
+			c = color_at(w, r, 4);
 			set_canvas_pixel(&image, xy[0], xy[1], c);
 			xy[0]++;
 		}
@@ -103,5 +102,11 @@ t_canvas	render(t_world w, t_camera cam)
 
 void	render_tests(t_minilibx *libx)
 {
-	render_scene(libx);
+	//render_scene(libx);
+	(void)libx;
+	t_object pl = new_object(PL);
+	t_ray r = ray(point(0, 1, -1), vector(0, -0.708, 0.708));
+	t_intersection i = intersection(pl, 0.708);
+	t_comps comps = prepare_computations(i, r);
+	print_point(comps.reflectv);
 }	
