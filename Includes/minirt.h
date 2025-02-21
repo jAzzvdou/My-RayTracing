@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/20 11:50:45 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/02/21 00:46:22 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,9 @@ t_ray	ray_for_pixel(t_camera c, int x, int y);
 t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 void	set_pattern_transform(t_pattern *p, t_matrix transform);
+t_color	stripe_at(t_pattern p, t_point pt);
+t_color	gradient_at(t_pattern p, t_point pt);
+t_color	ring_at(t_pattern p, t_point pt);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

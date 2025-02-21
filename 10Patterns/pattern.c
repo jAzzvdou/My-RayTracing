@@ -16,7 +16,8 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 		p.type = GRADIENT;
 	else if (type == RING)
 		type = RING;
-	p.type = NO_TYPE;
+	else
+		p.type = NO_TYPE;
 	return (p);
 }
 

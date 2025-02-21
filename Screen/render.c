@@ -3,6 +3,9 @@
 void	render_scene(t_minilibx *libx)
 {
 	t_object floor = new_object(PL);
+	floor.material.pattern = new_pattern(RING, color(1, 1, 0), color(0, 1, 1));
+	set_pattern_transform(&floor.material.pattern, mult_matrix(scaling(2, 2, 2), rotationy(30 * M_PI / 180)));
+	floor.material.color = color(0.3, 0.3, 0.3);
 
 	t_object middle;
 	middle = new_object(SP);
@@ -11,7 +14,9 @@ void	render_scene(t_minilibx *libx)
 	middle.material.color = color(1, 0, 0);
 	middle.material.diff = 0.7;
 	middle.material.spec = 0.3;
-	middle.material.pattern = new_pattern(STRIPE, color(1, 1, 0), color(0, 1, 1));
+	middle.material.pattern = new_pattern(RING, color (1, 1, 0), color(1, 0, 1));
+	set_pattern_transform(&middle.material.pattern, scaling(0.2, 0.2, 0.2));
+
 
 	t_object right;
 	right = new_object(SP);
@@ -20,6 +25,8 @@ void	render_scene(t_minilibx *libx)
 	right.material.color = color(0, 1, 0);
 	right.material.diff = 0.7;
 	right.material.spec = 0.3;
+	right.material.pattern = new_pattern(STRIPE, color (1, 1, 0), color(0, 1, 1));
+	set_pattern_transform(&right.material.pattern, scaling(0.5, 0.5, 0.5));
 
 	t_object left;
 	left = new_object(SP);
@@ -28,6 +35,8 @@ void	render_scene(t_minilibx *libx)
 	left.material.color = color(0, 0, 1);
 	left.material.diff = 0.7;
 	left.material.spec = 0.3;
+	left.material.pattern = new_pattern(GRADIENT, color (1, 0, 1), color(1, 1, 1));
+	set_pattern_transform(&left.material.pattern, scaling(2, 2, 2));
 
 	t_light light1;
 	light1 = point_light(point(-10, 10, -10), color(1, 1, 1));
