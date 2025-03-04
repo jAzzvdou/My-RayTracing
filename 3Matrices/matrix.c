@@ -184,8 +184,8 @@ double	determinant(t_matrix a)
 
 	if (a.rows == 2 && a.cols == 2)
 	{
-		result = get_index(&a, 0, 0) * get_index(&a, 1, 1);
-		result -= get_index(&a, 0, 1) * get_index(&a, 1, 0); 
+		result = get_index(&a, 0, 0) * get_index(&a, 1, 1)
+			- get_index(&a, 0, 1) * get_index(&a, 1, 0); 
 		return (result);
 	}
 	result = 0;

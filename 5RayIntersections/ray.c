@@ -14,7 +14,6 @@ t_point	position(t_ray r, double t)
 	return (add_tuple(r.origin, mult_tuple(r.direction, t)));
 }
 
-//| JOGAR ESSA FUNÇÃO NA PASTA UTILS
 double  bhaskara(t_object o, t_ray r)
 {
 	double		abc[3];
@@ -27,68 +26,113 @@ double  bhaskara(t_object o, t_ray r)
 	return ((abc[1] * abc[1]) - (4 * abc[0] * abc[2]));
 }
 
-//| ESTÁ SÓ PARA A ESFERA, MAS DEVE SER ALTERADO PARA FUNCIONAR PARA TODOS OS OBJETOS DEPOIS
-t_intersections intersect(t_object o, t_ray r)
+t_intersection	intersection(t_object o, double t)
+{
+	t_intersection	inter;
+
+	inter.object = o;
+	inter.t = t;
+	inter.next = NULL;
+	return (inter);
+}
+
+int	count_intersection(t_intersection *list)
+{
+	int				count;
+	t_intersection	*tmp;
+
+	count = 0;
+	tmp = list;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return (count);
+}
+
+void	add_intersection(t_intersection **list, t_intersection inter)
+{
+	t_intersection	*new;
+	t_intersection	*tmp;
+	t_intersection	*prev;
+
+	new = memcard(NULL, DEFAULT, MALLOC, sizeof(t_intersection));
+	*new = inter;
+	prev = NULL;
+	tmp = *list;
+	while (tmp && tmp->t < inter.t)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (prev)
+	{
+		prev->next = new;
+		new->next = tmp;
+		return ;
+	}
+	new->next = *list;
+	*list = new;
+}
+
+void	intersect_sphere(t_intersection **list, t_object o, t_ray r)
 {
 	double		discriminant;
 	double		ab[2];
 	double		t[2];
-	t_intersections	inter;
 
-	inter.count = 0;
 	discriminant = bhaskara(o, r);
 	if (discriminant < 0)
-		return (inter);
+		return ;
 	ab[0] = dot(r.direction, r.direction);
 	ab[1] = 2 * dot(r.direction, sub_tuple(r.origin, o.origin));
 	t[0] = (-ab[1] - sqrt(discriminant)) / (2 * ab[0]);
 	t[1] = (-ab[1] + sqrt(discriminant)) / (2 * ab[0]);
-	//| ESFERA
-	inter.count = 2;
-	inter.intersection[0].t = t[0];
-	inter.intersection[0].object = o;
-	inter.intersection[1].t = t[1];
-	inter.intersection[1].object = o;
-	return (inter);
+	add_intersection(list, intersection(o, t[0]));
+	add_intersection(list, intersection(o, t[1]));
 }
 
-t_intersection  intersection(t_object o, double t)
+void	intersect_plane(t_intersection **list, t_object o, t_ray r)
 {
-	t_intersection	inter;
+	double	t;
 
-	inter.t = t;
-	inter.object = o;
-	return (inter);
+	if (fabs(r.direction.y) < EPSILON)
+		return ;
+	t = -r.origin.y / r.direction.y;
+	if (fabs(t) > EPSILON)
+		add_intersection(list, intersection(o, t));
 }
 
-t_intersections intersecitons(t_intersection i1, t_intersection i2)
+t_ray	ray_transform(t_ray r, t_matrix m)
 {
-	t_intersections	inter;
+	t_ray	new;
 
-	inter.count = 2;
-	inter.intersection[0] = i1;
-	inter.intersection[1] = i2;
-	return (inter);
+	new.origin = mult_matrix_tuple(m, r.origin);
+	new.direction = mult_matrix_tuple(m, r.direction);
+	return (new);
 }
 
-t_intersection hit(t_intersections inter)
+void	intersect(t_intersection **list, t_object o, t_ray ray)
 {
-	int				i;
-	t_intersection	hit;
+	t_ray	r;
 
-	my_bzero(&hit, sizeof(t_intersection));
-	hit.t = -1;
-	i = 0;
-	while (i < inter.count)
-	{
-		if (inter.intersection[i].t > 0)
-		{
-			if (hit.t < 0 || inter.intersection[i].t < hit.t)
-				hit = inter.intersection[i];
-		}
-		i++;
-	}
-	return (hit);
+	r = ray_transform(ray, o.inversed);
+	if (o.type == SP)
+		intersect_sphere(list, o, r);
+	else if (o.type == PL)
+		intersect_plane(list, o, r);
+	//| Adicionar outros depois
+}
+
+t_intersection	*hit(t_intersection *inter)
+{
+	t_intersection	*tmp;
+
+	tmp = inter;
+	while (tmp && tmp->t < 0)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	set_transform(t_object *o, t_matrix m)
@@ -106,6 +150,13 @@ t_object	fill_sphere(t_object obj)
 	return (obj);
 }
 
+t_object	fill_plane(t_object obj)
+{
+	obj.type = PL;
+	obj.origin = point(0, 0, 0);
+	return (obj);
+}
+
 t_object	new_object(t_type type)
 {
 	static int	id;
@@ -120,9 +171,9 @@ t_object	new_object(t_type type)
 	obj.next = NULL;
 	if (type == SP)
 		return (fill_sphere(obj));
-	/*else if (type == PL)
-		fill_plane(&obj);
-	else if (type == CY)
+	else if (type == PL)
+		return (fill_plane(obj));
+	/*else if (type == CY)
 		fill_cylinder(&obj);*/
 	obj.type = NONE;
 	return (obj);

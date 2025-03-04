@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/02 21:06:59 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:04:56 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>                   //| PRINTF
 # include <limits.h>                  //| INTMAX, INTMIN
 # include <math.h>                    //| SQRT, POW, TAN, COS, SIN
+# include <stdbool.h>                 //| TRUE, FALSE
 # include "./minilibx-linux/mlx.h"    //| MiniLibX
 # include "./MemoryCard/memorycard.h" //| MEMORYCARD
 
@@ -62,17 +63,25 @@
 # define INT 2147483647
 # define DOUBLE 179769308
 
+//__________ epsilon __________
+# define EPSILON 0.00001
+
 //----------| STRUCTS |----------//
 typedef enum e_type
 {
-	A,
-	C,
-	L,
 	SP,
 	PL,
 	CY,
 	NONE
 }	t_type;
+
+typedef enum e_pattern_type
+{
+	STRIPE,
+	GRADIENT,
+	RING,
+	NO_TYPE
+}	t_pattern_type;
 
 typedef struct s_color
 {
@@ -107,6 +116,16 @@ typedef struct s_matrix
 	double	matrix[16];
 }	t_matrix;
 
+typedef struct s_pattern
+{
+	bool	has_pattern;
+	t_pattern_type	type;
+	t_color	a;
+	t_color	b;
+	t_matrix	inversed;
+	t_matrix	transformed;
+}	t_pattern;
+
 typedef struct s_material
 {
 	t_color	color;
@@ -114,6 +133,10 @@ typedef struct s_material
 	double	diff;	//| diffuse
 	double	spec;	//| specular
 	double	shiny;	//| shininess
+	double	reflective; //| vai de 0 até 1, sendo 0 totalmente opaco e 1 totalmente espelhado
+	double	transparency;
+	double	refractive_index;
+	t_pattern	pattern;
 }	t_material;
 
 typedef struct s_object
@@ -133,12 +156,11 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
-typedef struct s_map
+typedef struct s_world
 {
 	t_light		*light;
 	t_object	*object;
-	//t_scene		scene; //| Fazer
-}	t_map;
+}	t_world;
 
 typedef struct s_minilibx
 {
@@ -149,7 +171,6 @@ typedef struct s_minilibx
 	void	*mlx;
 	void	*win;
 	void	*img;
-	t_map	map; // TEMPORÁRIO
 }	t_minilibx;
 
 typedef struct s_canvas
@@ -158,13 +179,6 @@ typedef struct s_canvas
 	int		height;
 	t_color	*pixel; //| Pixel da tela, todos começam em 0.
 }	t_canvas;
-
-typedef struct s_world
-{
-	t_object	*obj;
-	t_light		*light;
-}	t_world;
-
 
 typedef struct s_ray
 {
@@ -176,18 +190,38 @@ typedef struct s_intersection
 {
 	double		t;
 	t_object	object;
+	struct s_intersection	*next;
 }	t_intersection;
 
-//| Essa struct tá funcionando só pra esferas! MUDAR DEPOIS.
-typedef struct s_intersections
+typedef struct s_comps
 {
-	int		count;
-	t_intersection	intersection[2];
-}	t_intersections;
+	double	t;
+	double	n1;
+	double	n2;
+	t_object object;
+	t_point	point;
+	t_point over_point;
+	t_vector eyev;
+	t_vector normalv;
+	t_vector reflectv;
+	bool	inside;
+}	t_comps;
+
+typedef struct s_camera
+{
+	double	hsize;
+	double	vsize;
+	double	fov;
+	double	half_width;
+	double	half_height;
+	double	pixel_size;
+	t_matrix	transform;
+}	t_camera;
 
 //----------| FUNCTIONS |----------//
-void screen(void);
-void render(t_minilibx *libx);
+void		screen(void);
+t_canvas	render(t_world w, t_camera cam);
+void		render_tests(t_minilibx *libx);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -251,11 +285,12 @@ t_matrix	rotationz(double rad);
 t_ray	ray(t_point p, t_vector v);
 t_point	position(t_ray r, double t);
 double	bhaskara(t_object o, t_ray r);
-t_intersections	intersect(t_object o, t_ray r);
+void intersect(t_intersection **list, t_object o, t_ray r);
+void	add_intersection(t_intersection **list, t_intersection inter);
 t_intersection	intersection(t_object o, double t);
-t_intersections intersecitons(t_intersection i1, t_intersection i2);
-t_intersection	hit(t_intersections inter);
-void			set_transform(t_object *o, t_matrix m);
+int	count_intersection(t_intersection *list);
+t_intersection	*hit(t_intersection *inter);
+void	set_transform(t_object *o, t_matrix m);
 
 //__________ objects __________
 t_object	new_object(t_type type);
@@ -264,8 +299,33 @@ t_object	new_object(t_type type);
 t_vector	normal_at(t_object o, t_point p);
 t_vector	reflect(t_vector in, t_vector normal);
 t_light	point_light(t_point p, t_color c);
-t_color	lighting(t_material m, t_light l, t_point p, t_vector eyev, t_vector normalv);
+t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow);
 t_material	material(void);
+
+//__________ world __________
+t_world	world(void);
+t_world	default_world(void);
+void	add_light(t_light **l1, t_light l2);
+void	add_object(t_object **obj1, t_object obj2);
+t_intersection	*intersect_world(t_world w, t_ray r);
+t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs);
+void	calculate_index(t_comps *comps, t_intersection *xs);
+t_color	shade_hit(t_world w, t_comps comps, int remaining);
+t_color	color_at(t_world w, t_ray r, int remaining);
+t_matrix	view_transform(t_point from, t_point to, t_vector up);
+t_camera	camera(int hsize, int vsize, double fov);
+t_ray	ray_for_pixel(t_camera c, int x, int y);
+
+//__________ pattern __________
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
+t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
+void	set_pattern_transform(t_pattern *p, t_matrix transform);
+t_color	stripe_at(t_pattern p, t_point pt);
+t_color	gradient_at(t_pattern p, t_point pt);
+t_color	ring_at(t_pattern p, t_point pt);
+
+//__________ reflection __________
+t_color	reflected_color(t_world w, t_comps comps, int remaining);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
