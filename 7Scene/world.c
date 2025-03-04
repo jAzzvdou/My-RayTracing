@@ -76,7 +76,7 @@ t_intersection	*intersect_world(t_world w, t_ray r)
 	return (list);
 }
 
-t_comps	prepare_computations(t_intersection inter, t_ray ray)
+t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs)
 {
 	t_comps	comps;
 
@@ -95,6 +95,7 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray)
 		comps.inside = false;
 	comps.over_point = add_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
 	comps.reflectv = reflect(ray.direction, comps.normalv);
+	calculate_index(&comps, xs);
 	return (comps);
 }
 
@@ -117,7 +118,7 @@ bool	is_shadowed(t_world w, t_point p)
 t_color	shade_hit(t_world w, t_comps comps, int remaining)
 {
 	bool	shadowed;
-	t_color color;
+	t_color surface;
 	t_color reflected;
 	t_light *tmp;
 
@@ -125,11 +126,11 @@ t_color	shade_hit(t_world w, t_comps comps, int remaining)
 	while (tmp)
 	{
 		shadowed = is_shadowed(w, comps.over_point);
-		color = lighting(comps.object, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
+		surface = lighting(comps.object, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
 		tmp = tmp->next;
 	}
-	reflected = reflected_color(w, comps, remaining);	
-	return (add_color(color, reflected));
+	reflected = reflected_color(w, comps, remaining);
+	return (add_color(surface, reflected));
 }
 
 t_color	color_at(t_world w, t_ray r, int remaining)
@@ -140,7 +141,7 @@ t_color	color_at(t_world w, t_ray r, int remaining)
 	h = hit(intersect_world(w, r));
 	if (!h)
 		return (color(0, 0, 0));
-	comps = prepare_computations(*h, r);
+	comps = prepare_computations(*h, r, NULL);
 	return (shade_hit(w, comps, remaining));
 }
 

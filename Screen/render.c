@@ -42,7 +42,7 @@ void	render_scene(t_minilibx *libx)
 
 	t_world w;
 	w = world();
-	add_light(&w.light, light1);	
+	add_light(&w.light, light1);
 	add_object(&w.object, floor);
 	add_object(&w.object, middle);
 	add_object(&w.object, right);
@@ -100,13 +100,67 @@ t_canvas	render(t_world w, t_camera cam)
 	return (image);
 }
 
+t_object	glass_sphere(void)
+{
+	t_object sp = new_object(SP);
+	sp.material.transparency = 1.0;
+	sp.material.refractive_index = 1.5;
+	return (sp);
+}
+
+t_intersection	*inter_index(t_intersection *inter, int index)
+{
+	int		i;
+	t_intersection	*aux;
+
+	i = 0;
+	aux = inter;
+	while (aux && i < index)
+	{
+		aux = aux->next;
+		i++;
+	}
+	return (aux);
+}
+
 void	render_tests(t_minilibx *libx)
 {
 	//render_scene(libx);
 	(void)libx;
-	t_object pl = new_object(PL);
-	t_ray r = ray(point(0, 1, -1), vector(0, -0.708, 0.708));
-	t_intersection i = intersection(pl, 0.708);
-	t_comps comps = prepare_computations(i, r);
-	print_point(comps.reflectv);
-}	
+	//t_world w = default_world();
+	t_object a = glass_sphere();
+	set_transform(&a, scaling(2, 2, 2));
+	a.material.refractive_index = 1.5;
+
+	t_object b = glass_sphere();
+	set_transform(&b, translation(0, 0, -0.25));
+	b.material.refractive_index = 2.0;
+
+	t_object c = glass_sphere();
+	set_transform(&c, translation(0, 0, 0.25));
+	c.material.refractive_index = 2.5;
+
+	t_ray r = ray(point(0, 0, -4), vector(0, 0, 1));
+	t_intersection *xs = NULL;
+	add_intersection(&xs, intersection(a, 2));
+	add_intersection(&xs, intersection(b, 2.75));
+	add_intersection(&xs, intersection(c, 3.25));
+	add_intersection(&xs, intersection(b, 4.75));
+	add_intersection(&xs, intersection(c, 5.25));
+	add_intersection(&xs, intersection(a, 6));
+
+	//double n1_expected[] = {1.0, 1.5, 2.0, 2.5, 2.5, 1.5};
+	//double n2_expected[] = {1.5, 2.0, 2.5, 2.5, 1.5, 1.0};
+
+	t_comps comps;
+	t_intersection *hit;
+
+	for (int i = 0; i < 6; i++)
+	{
+		hit = inter_index(xs, i);
+		comps = prepare_computations(*hit, r, xs);
+		printf("Index: %i | comps.n1-> %f\n", i + 1, comps.n1);
+		printf("Index: %i | comps.n2-> %f\n", i + 1, comps.n2);
+		printf("\n");
+	}
+}

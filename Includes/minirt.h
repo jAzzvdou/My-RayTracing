@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/02/21 01:34:44 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:53:05 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ typedef struct s_material
 	double	spec;	//| specular
 	double	shiny;	//| shininess
 	double	reflective; //| vai de 0 até 1, sendo 0 totalmente opaco e 1 totalmente espelhado
+	double	transparency;
+	double	refractive_index;
 	t_pattern	pattern;
 }	t_material;
 
@@ -194,6 +196,8 @@ typedef struct s_intersection
 typedef struct s_comps
 {
 	double	t;
+	double	n1;
+	double	n2;
 	t_object object;
 	t_point	point;
 	t_point over_point;
@@ -304,7 +308,8 @@ t_world	default_world(void);
 void	add_light(t_light **l1, t_light l2);
 void	add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
-t_comps	prepare_computations(t_intersection inter, t_ray ray);
+t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs);
+void	calculate_index(t_comps *comps, t_intersection *xs);
 t_color	shade_hit(t_world w, t_comps comps, int remaining);
 t_color	color_at(t_world w, t_ray r, int remaining);
 t_matrix	view_transform(t_point from, t_point to, t_vector up);

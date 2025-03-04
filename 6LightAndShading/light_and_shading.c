@@ -71,5 +71,7 @@ t_material	material(void)
 	m.diff = 0.9;
 	m.spec = 0.9;
 	m.shiny = 200.0;
+	m.transparency = 0.0;
+	m.refractive_index = 1.0;
 	return (m);
 }
