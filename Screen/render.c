@@ -127,18 +127,19 @@ void	render_tests(t_minilibx *libx)
 {
 	//render_scene(libx);
 	(void)libx;
-	//t_world w = default_world();
-	t_object a = glass_sphere();
-	set_transform(&a, translation(0, 0, 1));
-
+	t_world w = default_world();
+	t_object a = *w.object->next;
 	t_ray r = ray(point(0, 0, -5), vector(0, 0, 1));
-	t_intersection i = intersection(a, 5);
-	t_intersection *inter_list = NULL;
-	add_intersection(&inter_list, i);
+	t_intersection *xs = NULL;
 
-	t_comps comps = prepare_computations(i, r, inter_list);
+	add_intersection(&xs, intersection(a, 4));
+	add_intersection(&xs, intersection(a, 6));
+	t_comps comps;
 
-	int	res = comps.under_point.z > EPSILON / 2;
+	comps = prepare_computations(*xs, r, xs);
+	t_color res;
 
-	printf("Expected -> 1 -- Result -> %i\n", res);
+	res = refracted_color(w, comps, 5);
+
+	printf("Expected -> 1 -- Result -> R: %f G: %f B: %f\n", res.r, res.g, res.b);
 }

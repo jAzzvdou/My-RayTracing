@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/06 14:10:53 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:38:15 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,13 @@ typedef struct s_intersection
 	struct s_intersection	*next;
 }	t_intersection;
 
+typedef struct s_vision
+{
+	t_vector	eye;
+	t_vector	normal;
+	bool		in_shadow;
+}	t_vision;
+
 typedef struct s_comps
 {
 	double		t;
@@ -205,6 +212,7 @@ typedef struct s_comps
 	t_vector	eyev;
 	t_vector	normalv;
 	t_vector	reflectv;
+	t_vision	vision;
 	bool		inside;
 }	t_comps;
 
@@ -327,6 +335,7 @@ t_color	ring_at(t_pattern p, t_point pt);
 
 //__________ reflection __________
 t_color	reflected_color(t_world w, t_comps comps, int remaining);
+t_color	refracted_color(t_world w, t_comps comps, int depth);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

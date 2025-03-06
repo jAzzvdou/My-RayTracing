@@ -12,6 +12,25 @@ t_color	reflected_color(t_world w, t_comps comps, int remaining)
 	return (mult_color(c, comps.object.material.reflective));
 }
 
+t_color	refracted_color(t_world w, t_comps comps, int depth)
+{
+	t_ray	refracted_ray;
+	double	n_ratio;
+	double	cos_i;
+	double	cos_t;
+	double	sin2_t;
+
+	n_ratio = comps.n1 / comps.n2;
+	cos_i = dot(comps.vision.eye, comps.vision.normal);
+	sin2_t = pow(n_ratio, 2) * (1 - pow(cos_i, 2));
+	if (comps.object.material.transparency == 0 || depth == 0 || sin2_t > 1)
+		return (color(0, 0, 0));
+	cos_t = sqrt(1.0 - sin2_t);
+	refracted_ray = ray(comps.under_point, sub_tuple(mult_tuple(comps.vision.normal, (n_ratio * cos_i) - cos_t),
+													mult_tuple(comps.vision.eye, n_ratio)));
+	return (mult_color(color_at(w, refracted_ray, depth - 1), comps.object.material.transparency));
+}
+
 /* --------------------------------------------------------- */
 
 int	is_same_object(t_object object1, t_object object2)
