@@ -16,21 +16,14 @@ void render_scene(t_minilibx *libx)
 	floor.material = material();
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.spec = 0;
+	floor.material.refractive_index = 10;
+	floor.material.reflective = 1;
 	set_transform(&floor, translation(0, -1, 0));
-	floor.material.pattern = new_pattern(STRIPE, color(1, 0, 0), color(0, 1, 1));
-	set_pattern_transform(&floor.material.pattern, scaling(0.3, 0.3, 0.3));
-
-	// Criar esfera de vidro
-	t_object glass = new_object(SP);
-	glass.material.transparency = 0.9;
-	glass.material.refractive_index = 1;
-	set_transform(&glass, translation(0, 1, 3));// No centro
 
 	// Criar esfera opaca atrás da esfera de vidro
 	t_object opaque_sphere = new_object(SP);
-	//opaque_sphere.transformed = translation(0, 1, 3);
-	opaque_sphere.material.color = color(1, 0, 0); // Vermelha
-	set_transform(&opaque_sphere, scaling(0.5, 0.5, 0.5));
+	opaque_sphere.material.color = color(0, 1, 0); // Vermelha
+	set_transform(&opaque_sphere, translation(0, 0, 3));
 
 	// Criar mundo e câmera
 	t_world w = world();
@@ -38,7 +31,6 @@ void render_scene(t_minilibx *libx)
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
 	add_object(&w.object, opaque_sphere);
-	add_object(&w.object, glass);
 	add_object(&w.object, floor);
 
 	// Criar luz
@@ -109,8 +101,8 @@ t_intersection *inter_index(t_intersection *inter, int index)
 
 void render_tests(t_minilibx *libx)
 {
-	//render_scene(libx);
-	(void)libx;
+	render_scene(libx);
+	/*(void)libx;
 	t_world w = default_world();
 
 	t_object plane = new_object(PL);
@@ -133,6 +125,6 @@ void render_tests(t_minilibx *libx)
 	t_color result = shade_hit(w, comps, 5);
 
 	printf("Expected: R -> 0.93642 | G -> 0.68642 | B -> 0.68642 \n");
-	printf("Result: R -> %f| G -> %f| B -> %f\n", result.r, result.g, result.b);
+	printf("Result: R -> %f| G -> %f| B -> %f\n", result.r, result.g, result.b);*/
 
 }
