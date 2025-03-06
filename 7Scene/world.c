@@ -145,7 +145,7 @@ t_color	color_at(t_world w, t_ray r, int remaining)
 	h = hit(intersect_world(w, r));
 	if (!h)
 		return (color(0, 0, 0));
-	comps = prepare_computations(*h, r, NULL);
+	comps = prepare_computations(*h, r, h);
 	return (shade_hit(w, comps, remaining));
 }
 
