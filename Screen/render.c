@@ -113,18 +113,24 @@ void render_tests(t_minilibx *libx)
 	(void)libx;
 	t_world w = default_world();
 
-	t_object b = new_object(SP);
-	b.material.transparency = 1.0;
-	b.material.refractive_index = 1.5;
-	add_object(&w.object, b);
+	t_object plane = new_object(PL);
+	plane.material.transparency = 0.5;
+	plane.material.refractive_index = 1.5;
+	set_transform(&plane, translation(0, -1, 0));
+	add_object(&w.object, plane);
 
-	t_ray r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_object ball = new_object(SP);
+	ball.material.color = color(1, 0, 0);
+	ball.material.amb = 0.5;
+	set_transform(&ball, translation(0, -3.5, -0.5));
+	add_object(&w.object, ball);
+
+	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	t_intersection *xs = NULL;
-	add_intersection(&xs, intersection(b, 4));
-	add_intersection(&xs, intersection(b, 6));
+	add_intersection(&xs, intersection(plane, sqrt(2)));
 
-	t_comps comps = prepare_computations(*xs, r, xs);
-	t_color result = refracted_color(w, comps, 5);
+	t_comps comps = prepare_computations(xs[0], r, xs);
+	t_color result = shade_hit(w, comps, 5);
 
 	printf("Expected: R -> 0.93642 | G -> 0.68642 | B -> 0.68642 \n");
 	printf("Result: R -> %f| G -> %f| B -> %f\n", result.r, result.g, result.b);
