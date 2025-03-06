@@ -129,38 +129,16 @@ void	render_tests(t_minilibx *libx)
 	(void)libx;
 	//t_world w = default_world();
 	t_object a = glass_sphere();
-	set_transform(&a, scaling(2, 2, 2));
-	a.material.refractive_index = 1.5;
+	set_transform(&a, translation(0, 0, 1));
 
-	t_object b = glass_sphere();
-	set_transform(&b, translation(0, 0, -0.25));
-	b.material.refractive_index = 2.0;
+	t_ray r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_intersection i = intersection(a, 5);
+	t_intersection *inter_list = NULL;
+	add_intersection(&inter_list, i);
 
-	t_object c = glass_sphere();
-	set_transform(&c, translation(0, 0, 0.25));
-	c.material.refractive_index = 2.5;
+	t_comps comps = prepare_computations(i, r, inter_list);
 
-	t_ray r = ray(point(0, 0, -4), vector(0, 0, 1));
-	t_intersection *xs = NULL;
-	add_intersection(&xs, intersection(a, 2));
-	add_intersection(&xs, intersection(b, 2.75));
-	add_intersection(&xs, intersection(c, 3.25));
-	add_intersection(&xs, intersection(b, 4.75));
-	add_intersection(&xs, intersection(c, 5.25));
-	add_intersection(&xs, intersection(a, 6));
+	int	res = comps.under_point.z > EPSILON / 2;
 
-	//double n1_expected[] = {1.0, 1.5, 2.0, 2.5, 2.5, 1.5};
-	//double n2_expected[] = {1.5, 2.0, 2.5, 2.5, 1.5, 1.0};
-
-	t_comps comps;
-	t_intersection *hit;
-
-	for (int i = 0; i < 6; i++)
-	{
-		hit = inter_index(xs, i);
-		comps = prepare_computations(*hit, r, xs);
-		printf("Index: %i | comps.n1-> %f\n", i + 1, comps.n1);
-		printf("Index: %i | comps.n2-> %f\n", i + 1, comps.n2);
-		printf("\n");
-	}
+	printf("Expected -> 1 -- Result -> %i\n", res);
 }

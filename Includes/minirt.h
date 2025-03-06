@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/04 15:53:05 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:10:53 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,17 +142,17 @@ typedef struct s_material
 typedef struct s_object
 {
 	t_type		type;
-	int		id;
+	int			id;
 	//| Objects
-	t_point		origin;		//| Para esfera, plano e cilindro.
-	t_vector	normal;		//| Para plano e cilindro.
-	double		radius;		//| Para esfera e cilindro.
-	double		height;		//| Para cilindro.
+	t_point			origin;		//| Para esfera, plano e cilindro.
+	t_vector		normal;		//| Para plano e cilindro.
+	double			radius;		//| Para esfera e cilindro.
+	double			height;		//| Para cilindro.
 	//| Ver se o objeto foi modificado ou permanece original.
-	t_matrix	transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
-	t_matrix	inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
-	t_matrix	transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
-	t_material	material;
+	t_matrix		transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
+	t_matrix		inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
+	t_matrix		transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
+	t_material		material;
 	struct s_object	*next;
 }	t_object;
 
@@ -188,33 +188,34 @@ typedef struct s_ray
 
 typedef struct s_intersection
 {
-	double		t;
-	t_object	object;
+	double					t;
+	t_object				object;
 	struct s_intersection	*next;
 }	t_intersection;
 
 typedef struct s_comps
 {
-	double	t;
-	double	n1;
-	double	n2;
-	t_object object;
-	t_point	point;
-	t_point over_point;
-	t_vector eyev;
-	t_vector normalv;
-	t_vector reflectv;
-	bool	inside;
+	double		t;
+	double		n1;
+	double		n2;
+	t_object	object;
+	t_point		point;
+	t_point		over_point;
+	t_point		under_point;
+	t_vector	eyev;
+	t_vector	normalv;
+	t_vector	reflectv;
+	bool		inside;
 }	t_comps;
 
 typedef struct s_camera
 {
-	double	hsize;
-	double	vsize;
-	double	fov;
-	double	half_width;
-	double	half_height;
-	double	pixel_size;
+	double		hsize;
+	double		vsize;
+	double		fov;
+	double		half_width;
+	double		half_height;
+	double		pixel_size;
 	t_matrix	transform;
 }	t_camera;
 
@@ -228,17 +229,17 @@ t_color	color(double r, double g, double b);
 t_color	add_color(t_color a, t_color b);
 t_color	sub_color(t_color a, t_color b);
 t_color	mult_color(t_color a, double b);
-t_color hadama_color(t_color a, t_color b);
-t_color convert_color(t_color a);
-int	color_to_int(t_color a);
+t_color	hadama_color(t_color a, t_color b);
+t_color	convert_color(t_color a);
+int		color_to_int(t_color a);
 
 //__________ tuple __________
 t_tuple	tuple(double x, double y, double z, double w);
 t_tuple	add_tuple(t_tuple a, t_tuple b);
 t_tuple	sub_tuple(t_tuple a, t_tuple b);
 t_tuple	mult_tuple(t_tuple a, double b);
-t_tuple inverse_tuple(t_tuple a);
-int	comp_tuple(t_tuple a, t_tuple b);
+t_tuple	inverse_tuple(t_tuple a);
+int		comp_tuple(t_tuple a, t_tuple b);
 
 //__________ point __________
 t_point	point(double x, double y, double z);

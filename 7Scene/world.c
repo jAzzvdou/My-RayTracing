@@ -94,6 +94,7 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs
 	else
 		comps.inside = false;
 	comps.over_point = add_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
+	comps.under_point = sub_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
 	comps.reflectv = reflect(ray.direction, comps.normalv);
 	calculate_index(&comps, xs);
 	return (comps);
