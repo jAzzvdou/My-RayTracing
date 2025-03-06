@@ -83,16 +83,16 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs
 	my_bzero(&comps, sizeof(t_comps));
 	comps.t = inter.t;
 	comps.object = inter.object;
+	comps.inside = false;
 	comps.point = position(ray, comps.t);
 	comps.eyev = inverse_tuple(ray.direction);
 	comps.normalv = normal_at(comps.object, comps.point);
+	comps.in_shadow = false;
 	if (dot(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = true;
 		comps.normalv = inverse_tuple(comps.normalv);
 	}
-	else
-		comps.inside = false;
 	comps.over_point = add_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
 	comps.under_point = sub_tuple(comps.point, mult_tuple(comps.normalv, EPSILON));
 	comps.reflectv = reflect(ray.direction, comps.normalv);
@@ -100,38 +100,41 @@ t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs
 	return (comps);
 }
 
-bool	is_shadowed(t_world w, t_point p)
+bool	is_shadowed(t_world w, t_point p, t_light *light)
 {
 	t_vector	lightv;
-	t_ray		shadow_ray;
-	t_intersection	*inters;
-	t_intersection	*result;
+	t_intersection	*inters_list;
+	t_intersection	*i;
+	double			distance;
 
-	lightv = sub_tuple(w.light->position, p);
-	shadow_ray = ray(p, normalize(lightv));
-	inters = intersect_world(w, shadow_ray);
-	result = hit(inters);
-	if (result != NULL && result->t > EPSILON && result->t < magnitude(lightv))
+	lightv = sub_tuple(light->position, p);
+	distance = magnitude(lightv);
+	inters_list = intersect_world(w, ray(p, normalize(lightv)));
+	i = hit(inters_list);
+	if (i != NULL && (int)(i->t * 100000) < (int)(distance * 100000))
 		return (true);
-	return (false);
+	else
+		return (false);
 }
 
 t_color	shade_hit(t_world w, t_comps comps, int remaining)
 {
-	bool	shadowed;
-	t_color surface;
-	t_color reflected;
-	t_light *tmp;
+	t_color	reflected;
+	t_color	refracted;
+	t_color	shaded;
+	t_light	*tmp;
 
+	shaded = color(0, 0, 0);
 	tmp = w.light;
 	while (tmp)
 	{
-		shadowed = is_shadowed(w, comps.over_point);
-		surface = lighting(comps.object, *w.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
+		comps.in_shadow = is_shadowed(w, comps.over_point, tmp);
+		shaded = add_color(shaded, lighting(*tmp, comps));
 		tmp = tmp->next;
 	}
 	reflected = reflected_color(w, comps, remaining);
-	return (add_color(surface, reflected));
+	refracted = refracted_color(w, comps, remaining);
+	return (add_color(add_color(shaded, reflected), refracted));
 }
 
 t_color	color_at(t_world w, t_ray r, int remaining)
