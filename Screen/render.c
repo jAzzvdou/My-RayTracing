@@ -18,15 +18,22 @@ void render_scene(t_minilibx *libx)
 	floor.material.reflective = 1;
 	set_transform(&floor, translation(0, -1, 0));
 
-	t_object opaque_sphere = new_object(SP);
-	opaque_sphere.material.color = color(0, 1, 0); // Vermelha
-	set_transform(&opaque_sphere, translation(0, 0, 3));
+	//t_object opaque_sphere = new_object(SP);
+	//opaque_sphere.material.color = color(0, 1, 0); // Vermelha
+	//set_transform(&opaque_sphere, translation(0, 0, 3));
+
+	t_object cylinder = new_object(CY);
+	cylinder.minimum = -3;
+	cylinder.maximum = 3;
+	cylinder.material.color = color(0, 0, 1);
+	set_transform(&cylinder, mult_matrix(translation(0, 0, 3), rotationx(90 * M_PI/180)));
 
 	t_world w = world();
 	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
-	add_object(&w.object, opaque_sphere);
+	//add_object(&w.object, opaque_sphere);
+	add_object(&w.object, cylinder);
 	add_object(&w.object, floor);
 
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
@@ -95,14 +102,16 @@ t_intersection *inter_index(t_intersection *inter, int index)
 
 void render_tests(t_minilibx *libx)
 {
-	//render_scene(libx);
-	(void)libx;
+	render_scene(libx);
+	/*(void)libx;
 
 	t_object cy = new_object(CY);
-	t_vector dir = normalize(vector(0, 1, 0));
-	t_ray r = ray(point(0, 0, 0), dir);
-	t_intersection *inter = NULL;
-	intersect(&inter, cy, r);
-	int count = count_intersection(inter);
-	printf("Count: %d\n", count);
+	cy.minimum = 1;
+	cy.maximum = 2;
+	cy.closed = true;
+	t_vector dir = normalize(vector(0, -1, 2));
+	t_ray r = ray(point(0, 3, -2), dir);
+	t_intersection *xs = NULL;
+	intersect(&xs, cy, r);
+	printf("count = %i.\n", count_intersection(xs));*/
 }
