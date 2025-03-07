@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/07 18:42:26 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:00:05 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_object
 	double			radius;		//| Para esfera e cilindro.
 	double			minimum;	//| Para cilindro.
 	double			maximum;	//| Para cilindro.
+	bool			closed;		//| Para cilindro.
 	//| Ver se o objeto foi modificado ou permanece original.
 	t_matrix		transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
 	t_matrix		inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.

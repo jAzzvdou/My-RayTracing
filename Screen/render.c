@@ -95,30 +95,14 @@ t_intersection *inter_index(t_intersection *inter, int index)
 
 void render_tests(t_minilibx *libx)
 {
-	render_scene(libx);
-	/*(void)libx;
-	t_world w = default_world();
+	//render_scene(libx);
+	(void)libx;
 
-	t_object plane = new_object(PL);
-	plane.material.transparency = 0.5;
-	plane.material.refractive_index = 1.5;
-	set_transform(&plane, translation(0, -1, 0));
-	add_object(&w.object, plane);
-
-	t_object ball = new_object(SP);
-	ball.material.color = color(1, 0, 0);
-	ball.material.amb = 0.5;
-	set_transform(&ball, translation(0, -3.5, -0.5));
-	add_object(&w.object, ball);
-
-	t_ray r = ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
-	t_intersection *xs = NULL;
-	add_intersection(&xs, intersection(plane, sqrt(2)));
-
-	t_comps comps = prepare_computations(xs[0], r, xs);
-	t_color result = shade_hit(w, comps, 5);
-
-	printf("Expected: R -> 0.93642 | G -> 0.68642 | B -> 0.68642 \n");
-	printf("Result: R -> %f| G -> %f| B -> %f\n", result.r, result.g, result.b);*/
-
+	t_object cy = new_object(CY);
+	t_vector dir = normalize(vector(0, 1, 0));
+	t_ray r = ray(point(0, 0, 0), dir);
+	t_intersection *inter = NULL;
+	intersect(&inter, cy, r);
+	int count = count_intersection(inter);
+	printf("Count: %d\n", count);
 }

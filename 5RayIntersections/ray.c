@@ -117,7 +117,8 @@ void	intersect_cylinder(t_intersection **list, t_object o, t_ray r)
 	discriminant = pow(abc[1], 2) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
 		return ;
-	calculate_intersections();
+	add_intersection(list, intersection(o, (-abc[1] - sqrt(discriminant)) / (2 * abc[0])));
+	add_intersection(list, intersection(o, (-abc[1] + sqrt(discriminant)) / (2 * abc[0])));
 }
 
 t_ray	ray_transform(t_ray r, t_matrix m)
