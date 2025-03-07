@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/06 17:53:25 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:42:26 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ typedef struct s_object
 	t_point			origin;		//| Para esfera, plano e cilindro.
 	t_vector		normal;		//| Para plano e cilindro.
 	double			radius;		//| Para esfera e cilindro.
-	double			height;		//| Para cilindro.
+	double			minimum;	//| Para cilindro.
+	double			maximum;	//| Para cilindro.
 	//| Ver se o objeto foi modificado ou permanece original.
 	t_matrix		transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
 	t_matrix		inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
@@ -325,6 +326,7 @@ void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);
 t_color	gradient_at(t_pattern p, t_point pt);
 t_color	ring_at(t_pattern p, t_point pt);
+int	near_zero(double nb);
 
 //__________ reflection __________
 t_color	reflected_color(t_world w, t_comps comps, int remaining);

@@ -113,8 +113,7 @@ bool	is_shadowed(t_world w, t_point p, t_light *light)
 	i = hit(inters_list);
 	if (i != NULL && (int)(i->t * 100000) < (int)(distance * 100000))
 		return (true);
-	else
-		return (false);
+	return (false);
 }
 
 t_color	shade_hit(t_world w, t_comps comps, int remaining)

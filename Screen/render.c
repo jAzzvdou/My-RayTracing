@@ -10,8 +10,6 @@ t_object	glass_sphere(void)
 
 void render_scene(t_minilibx *libx)
 {
-
-	// Criar o chão
 	t_object floor = new_object(PL);
 	floor.material = material();
 	floor.material.color = color(1, 0.9, 0.9);
@@ -20,12 +18,10 @@ void render_scene(t_minilibx *libx)
 	floor.material.reflective = 1;
 	set_transform(&floor, translation(0, -1, 0));
 
-	// Criar esfera opaca atrás da esfera de vidro
 	t_object opaque_sphere = new_object(SP);
 	opaque_sphere.material.color = color(0, 1, 0); // Vermelha
 	set_transform(&opaque_sphere, translation(0, 0, 3));
 
-	// Criar mundo e câmera
 	t_world w = world();
 	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
@@ -33,11 +29,9 @@ void render_scene(t_minilibx *libx)
 	add_object(&w.object, opaque_sphere);
 	add_object(&w.object, floor);
 
-	// Criar luz
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
 	add_light(&w.light, light);
 
-	// Renderizar e desenhar
 	t_canvas canvas = render(w, cam);
 	draw_canvas(libx, &canvas);
 }

@@ -15,13 +15,19 @@ t_vector	plane_normal_at(t_point p)
 	return (vector(0, 1, 0));
 }
 
+t_vector	cylinder_normal_at(t_point p)
+{
+	return (vector(p.x, 0, p.z));
+}
+
 t_vector	object_normal_at(t_object o, t_point p)
 {
 	if (o.type == SP)
 		return (sphere_normal_at(p));
 	else if (o.type == PL)
 		return (plane_normal_at(p));
-	//Adicionar if else para todos os objetos
+	else if (o.type == CY)
+		return (cylinder_normal_at(p));
 	return ((t_vector){0, 0, 0, 0});
 }
 

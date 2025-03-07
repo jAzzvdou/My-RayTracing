@@ -104,6 +104,22 @@ void	intersect_plane(t_intersection **list, t_object o, t_ray r)
 		add_intersection(list, intersection(o, t));
 }
 
+void	intersect_cylinder(t_intersection **list, t_object o, t_ray r)
+{
+	double	abc[3]; //| 0:a, 1:b, 2:c
+	double	discriminant;
+
+	abc[0] = pow(r.direction.x, 2) + pow(r.direction.z, 2);
+	if (near_zero(abc[0]))
+		return ;
+	abc[1] = 2 * r.origin.x + r.direction.x + 2 * r.origin.z * r.direction.z;
+	abc[2] = pow(r.origin.x, 2) + pow(r.origin.z, 2) - 1;
+	discriminant = pow(abc[1], 2) - (4 * abc[0] * abc[2]);
+	if (discriminant < 0)
+		return ;
+	calculate_intersections();
+}
+
 t_ray	ray_transform(t_ray r, t_matrix m)
 {
 	t_ray	new;
@@ -122,6 +138,8 @@ void	intersect(t_intersection **list, t_object o, t_ray ray)
 		intersect_sphere(list, o, r);
 	else if (o.type == PL)
 		intersect_plane(list, o, r);
+	else if (o.type == CY)
+		intersect_cylinder(list, o, r);
 	//| Adicionar outros depois
 }
 
@@ -157,6 +175,16 @@ t_object	fill_plane(t_object obj)
 	return (obj);
 }
 
+t_object	fill_cylinder(t_object obj)
+{
+	obj.type = CY;
+	obj.origin = point(0, 0, 0);
+	obj.radius = 1;
+	obj.minimum = -INFINITY;
+	obj.maximum = INFINITY;
+	return (obj);
+}
+
 t_object	new_object(t_type type)
 {
 	static int	id;
@@ -173,8 +201,8 @@ t_object	new_object(t_type type)
 		return (fill_sphere(obj));
 	else if (type == PL)
 		return (fill_plane(obj));
-	/*else if (type == CY)
-		fill_cylinder(&obj);*/
+	else if (type == CY)
+		fill_cylinder(obj);
 	obj.type = NONE;
 	return (obj);
 }
