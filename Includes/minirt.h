@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/07 21:07:21 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/08 08:45:18 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef enum e_type
 	SP,
 	PL,
 	CY,
-	CONE,
+	CN,
 	NONE
 }	t_type;
 

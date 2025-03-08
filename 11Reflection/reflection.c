@@ -31,7 +31,7 @@ t_color	refracted_color(t_world w, t_comps comps, int depth)
 	return (mult_color(color_at(w, refracted_ray, depth - 1), comps.object.material.transparency));
 }
 
-/* --------------------------------------------------------- */
+/* ------------------------UTILS--------------------------------- */
 
 int	is_same_object(t_object object1, t_object object2)
 {

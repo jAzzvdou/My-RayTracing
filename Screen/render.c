@@ -22,11 +22,11 @@ void render_scene(t_minilibx *libx)
 	//opaque_sphere.material.color = color(0, 1, 0); // Vermelha
 	//set_transform(&opaque_sphere, translation(0, 0, 3));
 
-	t_object cylinder = new_object(CY);
+	t_object cylinder = new_object(CN);
 	cylinder.minimum = -3;
 	cylinder.maximum = 3;
 	cylinder.material.color = color(0, 0, 1);
-	set_transform(&cylinder, mult_matrix(translation(0, 0, 3), rotationx(90 * M_PI/180)));
+	set_transform(&cylinder, translation(0, 0, 0));
 
 	t_world w = world();
 	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
@@ -103,15 +103,17 @@ t_intersection *inter_index(t_intersection *inter, int index)
 void render_tests(t_minilibx *libx)
 {
 	render_scene(libx);
-	/*(void)libx;
+	(void)libx;
+/*	t_object cn = new_object(CN);
+    // Test case 1: point(0, 0, 0)
+    t_vector n1 = normal_at(cn, point(0, 0, 0));
+    printf("n1 = (%f, %f, %f)\n", n1.x, n1.y, n1.z);
 
-	t_object cy = new_object(CY);
-	cy.minimum = 1;
-	cy.maximum = 2;
-	cy.closed = true;
-	t_vector dir = normalize(vector(0, -1, 2));
-	t_ray r = ray(point(0, 3, -2), dir);
-	t_intersection *xs = NULL;
-	intersect(&xs, cy, r);
-	printf("count = %i.\n", count_intersection(xs));*/
+    // Test case 2: point(1, 1, 1)
+    t_vector n2 = normal_at(cn, point(1, 1, 1));
+    printf("n2 = (%f, %f, %f)\n", n2.x, n2.y, n2.z);
+
+    // Test case 3: point(-1, -1, 0)
+    t_vector n3 = normal_at(cn, point(-1, -1, 0));
+    printf("n3 = (%f, %f, %f)\n", n3.x, n3.y, n3.z);*/
 }
