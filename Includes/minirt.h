@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/07 19:00:05 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/07 21:07:21 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef enum e_type
 	SP,
 	PL,
 	CY,
+	CONE,
 	NONE
 }	t_type;
 
@@ -80,6 +81,7 @@ typedef enum e_pattern_type
 	STRIPE,
 	GRADIENT,
 	RING,
+	CHECKER,
 	NO_TYPE
 }	t_pattern_type;
 
