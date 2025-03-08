@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/04 20:04:56 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:25:48 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef enum e_type
 	SP,
 	PL,
 	CY,
+	CN,
 	NONE
 }	t_type;
 
@@ -80,6 +81,7 @@ typedef enum e_pattern_type
 	STRIPE,
 	GRADIENT,
 	RING,
+	CHECKER,
 	NO_TYPE
 }	t_pattern_type;
 
@@ -142,17 +144,19 @@ typedef struct s_material
 typedef struct s_object
 {
 	t_type		type;
-	int		id;
+	int			id;
 	//| Objects
-	t_point		origin;		//| Para esfera, plano e cilindro.
-	t_vector	normal;		//| Para plano e cilindro.
-	double		radius;		//| Para esfera e cilindro.
-	double		height;		//| Para cilindro.
+	t_point			origin;		//| Para esfera, plano e cilindro.
+	t_vector		normal;		//| Para plano e cilindro.
+	double			radius;		//| Para esfera e cilindro.
+	double			minimum;	//| Para cilindro.
+	double			maximum;	//| Para cilindro.
+	bool			closed;		//| Para cilindro.
 	//| Ver se o objeto foi modificado ou permanece original.
-	t_matrix	transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
-	t_matrix	inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
-	t_matrix	transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
-	t_material	material;
+	t_matrix		transformed;	//| Para transladar, rotacionar e escalar. Se for igual, então transformed = identity.
+	t_matrix		inversed;	//| Para inverter a matriz. Se for igual, então inversed = identity.
+	t_matrix		transposed;	//| Para transpor a matriz. Se for igual, então transposed = identity.
+	t_material		material;
 	struct s_object	*next;
 }	t_object;
 
@@ -188,33 +192,35 @@ typedef struct s_ray
 
 typedef struct s_intersection
 {
-	double		t;
-	t_object	object;
+	double					t;
+	t_object				object;
 	struct s_intersection	*next;
 }	t_intersection;
 
 typedef struct s_comps
 {
-	double	t;
-	double	n1;
-	double	n2;
-	t_object object;
-	t_point	point;
-	t_point over_point;
-	t_vector eyev;
-	t_vector normalv;
-	t_vector reflectv;
-	bool	inside;
+	double		t;
+	double		n1;
+	double		n2;
+	t_object	object;
+	t_point		point;
+	t_point		over_point;
+	t_point		under_point;
+	t_vector	eyev;
+	t_vector	normalv;
+	t_vector	reflectv;
+	bool		in_shadow;
+	bool		inside;
 }	t_comps;
 
 typedef struct s_camera
 {
-	double	hsize;
-	double	vsize;
-	double	fov;
-	double	half_width;
-	double	half_height;
-	double	pixel_size;
+	double		hsize;
+	double		vsize;
+	double		fov;
+	double		half_width;
+	double		half_height;
+	double		pixel_size;
 	t_matrix	transform;
 }	t_camera;
 
@@ -228,17 +234,17 @@ t_color	color(double r, double g, double b);
 t_color	add_color(t_color a, t_color b);
 t_color	sub_color(t_color a, t_color b);
 t_color	mult_color(t_color a, double b);
-t_color hadama_color(t_color a, t_color b);
-t_color convert_color(t_color a);
-int	color_to_int(t_color a);
+t_color	hadama_color(t_color a, t_color b);
+t_color	convert_color(t_color a);
+int		color_to_int(t_color a);
 
 //__________ tuple __________
 t_tuple	tuple(double x, double y, double z, double w);
 t_tuple	add_tuple(t_tuple a, t_tuple b);
 t_tuple	sub_tuple(t_tuple a, t_tuple b);
 t_tuple	mult_tuple(t_tuple a, double b);
-t_tuple inverse_tuple(t_tuple a);
-int	comp_tuple(t_tuple a, t_tuple b);
+t_tuple	inverse_tuple(t_tuple a);
+int		comp_tuple(t_tuple a, t_tuple b);
 
 //__________ point __________
 t_point	point(double x, double y, double z);
@@ -299,7 +305,7 @@ t_object	new_object(t_type type);
 t_vector	normal_at(t_object o, t_point p);
 t_vector	reflect(t_vector in, t_vector normal);
 t_light	point_light(t_point p, t_color c);
-t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow);
+t_color	lighting(t_light l, t_comps comps);
 t_material	material(void);
 
 //__________ world __________
@@ -323,9 +329,11 @@ void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);
 t_color	gradient_at(t_pattern p, t_point pt);
 t_color	ring_at(t_pattern p, t_point pt);
+int	near_zero(double nb);
 
 //__________ reflection __________
 t_color	reflected_color(t_world w, t_comps comps, int remaining);
+t_color	refracted_color(t_world w, t_comps comps, int depth);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);

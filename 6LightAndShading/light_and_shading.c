@@ -23,23 +23,23 @@ t_color	clamp_color(t_color c)
 	return (c);
 }
 
-t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector normalv, bool shadow)
+t_color	lighting(t_light l, t_comps comps)
 {
-	double	d[3];		//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
-	t_color	c[5];		//| 0: effective_color, 1: ambient, 2: diffuse, 3: specular, 4: color
+	double		d[3];	//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
+	t_color		c[5];	//| 0: effective_color, 1: ambient, 2: diffuse, 3: specular, 4: color
 	t_vector	v[2];	//| 0: lightv, 1: reflectv
 	t_material	m;
 
-	m = o.material;
+	m = comps.object.material;
 	c[4] = m.color;
 	if (m.pattern.has_pattern)
-		c[4] = pattern_at_object(m.pattern, o, p);
+		c[4] = pattern_at_object(m.pattern, comps.object, comps.point);
 	c[0] = hadama_color(c[4], l.intensity);
-	v[0] = normalize(sub_tuple(l.position, p));
+	v[0] = normalize(sub_tuple(l.position, comps.point));
 	c[1] = mult_color(c[0], m.amb);
-	if (shadow)
+	if (comps.in_shadow)
 		return (c[1]);
-	d[0] = dot(v[0], normalv);
+	d[0] = dot(v[0], comps.normalv);
 	if (d[0] < 0)
 	{
 		c[2] = color(0, 0, 0);
@@ -48,8 +48,8 @@ t_color	lighting(t_object o, t_light l, t_point p, t_vector eyev, t_vector norma
 	else
 	{
 		c[2] = mult_color(c[0], m.diff * d[0]);
-		v[1] = reflect(inverse_tuple(v[0]), normalv);
-		d[1] = dot(v[1], eyev);
+		v[1] = reflect(inverse_tuple(v[0]), comps.normalv);
+		d[1] = dot(v[1], comps.eyev);
 		if (d[1] <= 0)
 			c[3] = color(0, 0, 0);
 		else

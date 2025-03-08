@@ -16,6 +16,8 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 		p.type = GRADIENT;
 	else if (type == RING)
 		type = RING;
+	else if (type == CHECKER)
+		p.type = CHECKER;
 	else
 		p.type = NO_TYPE;
 	return (p);
@@ -55,6 +57,24 @@ t_color	ring_at(t_pattern p, t_point pt)
 	return (p.b);
 }
 
+t_color	checker_at(t_pattern p, t_point pt)
+{
+	int	mod;
+	int	sum;
+
+	mod = 1;
+	sum = (int)(pt.x + pt.y + pt.z);
+	if (sum % 2 == 0)
+		mod = 0;
+	if (pt.x < 0)
+		mod = !mod;
+	if (pt.z < 0)
+		mod = !mod;
+	if (mod)
+		return (p.a);
+	return (p.b);
+}
+
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 {
 	t_point	obj_point;
@@ -68,6 +88,8 @@ t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 		return (gradient_at(pattern, pat_point));
 	if (pattern.type == RING)
 		return (ring_at(pattern, pat_point));
+	if (pattern.type == CHECKER)
+		return (checker_at(pattern, pat_point));
 	return (pattern.a);
 }
 
