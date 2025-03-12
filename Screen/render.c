@@ -18,22 +18,15 @@ void render_scene(t_minilibx *libx)
 	floor.material.reflective = 1;
 	set_transform(&floor, translation(0, -1, 0));
 
-	//t_object opaque_sphere = new_object(SP);
-	//opaque_sphere.material.color = color(0, 1, 0); // Vermelha
-	//set_transform(&opaque_sphere, translation(0, 0, 3));
-
-	t_object cylinder = new_object(CN);
-	cylinder.minimum = -3;
-	cylinder.maximum = 3;
-	cylinder.material.color = color(0, 0, 1);
-	set_transform(&cylinder, translation(0, 0, 0));
+	t_object opaque_sphere = new_object(SP);
+	opaque_sphere.material.color = color(0.5, 0.5, 0.5);
+	set_transform(&opaque_sphere, translation(0, 0, 3));
 
 	t_world w = world();
 	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
-	//add_object(&w.object, opaque_sphere);
-	add_object(&w.object, cylinder);
+	add_object(&w.object, opaque_sphere);
 	add_object(&w.object, floor);
 
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));

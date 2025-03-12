@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/08 08:45:18 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/11 22:31:55 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ t_object	new_object(t_type type);
 t_vector	normal_at(t_object o, t_point p);
 t_vector	reflect(t_vector in, t_vector normal);
 t_light	point_light(t_point p, t_color c);
+t_color	clamp_color(t_color c);
 t_color	lighting(t_light l, t_comps comps);
 t_material	material(void);
 

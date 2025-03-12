@@ -133,7 +133,7 @@ t_color	shade_hit(t_world w, t_comps comps, int remaining)
 	}
 	reflected = reflected_color(w, comps, remaining);
 	refracted = refracted_color(w, comps, remaining);
-	return (add_color(add_color(shaded, reflected), refracted));
+	return (clamp_color(add_color(add_color(shaded, reflected), refracted)));
 }
 
 t_color	color_at(t_world w, t_ray r, int remaining)
