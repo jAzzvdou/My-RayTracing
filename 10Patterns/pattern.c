@@ -1,6 +1,20 @@
 #include "../Includes/minirt.h"
 
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
+t_texture	load_texture(void *mlx, char *path)
+{
+	t_texture	texture;
+
+	texture.img = mlx_xpm_file_to_image(mlx, path, &texture.width, &texture.height);
+	if (!texture.img)
+	{
+		err(NULL, "Error\nTexture not found", NULL);
+		exit(1);
+	}
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bpp, &texture.linelen, &texture.endian);
+	return (texture);
+}
+
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx)
 {
 	t_pattern	p;
 
@@ -10,14 +24,17 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
+	p.texture = load_texture(mlx, "texture.xpm");
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)
 		p.type = GRADIENT;
 	else if (type == RING)
-		type = RING;
+		p.type = RING;
 	else if (type == CHECKER)
 		p.type = CHECKER;
+	else if (type == TEXTURE)
+		p.type = TEXTURE;
 	else
 		p.type = NO_TYPE;
 	return (p);
@@ -75,6 +92,77 @@ t_color	checker_at(t_pattern p, t_point pt)
 	return (p.b);
 }
 
+t_color	texture_color(t_texture tex, t_uv uv)
+{
+	int x = (int)(uv.u * (tex.width - 1));
+	int y = (int)((1 - uv.v) * (tex.height - 1));
+
+	int pixel = (y * tex.linelen) + (x * (tex.bpp / 8));
+	unsigned char *color = (unsigned char *)(tex.addr + pixel);
+
+	return ((t_color){color[2] / 255.0, color[1] / 255.0, color[0] / 255.0});
+}
+
+t_color	sphere_texture(t_pattern p, t_object obj, t_point pt)
+{
+	t_uv	uv;
+	double	phi;
+	double	theta;
+
+	theta = atan2(pt.x, pt.z);
+	phi = acos(pt.y);
+	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
+	uv.v = 1 - (phi / M_PI);
+	return (texture_color(p.texture, uv));
+}
+
+t_color	plane_texture(t_pattern p, t_object obj, t_point pt)
+{
+	t_uv	uv;
+
+	uv.u = fmod(pt.x, 1);
+	uv.v = fmod(pt.z, 1);
+	return (texture_color(p.texture, uv));
+}
+
+t_color	cylinder_texture(t_pattern p, t_object obj, t_point pt)
+{
+	t_uv	uv;
+	double	theta;
+
+	theta = atan2(pt.x, pt.z);
+	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
+	uv.v = fmod(pt.y, 1);
+	return (texture_color(p.texture, uv));
+}
+
+t_color	cone_texture(t_pattern p, t_object obj, t_point pt)
+{
+	t_uv	uv;
+	double	theta;
+	double	radius;
+
+	radius = pow(pt.x, 2) + pow(pt.z, 2);
+	theta = atan2(pt.x, pt.z);
+	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
+	uv.v = fmod(sqrt(radius), 1);
+	return (texture_color(p.texture, uv));
+}
+
+
+t_color	texture_at(t_pattern p, t_object obj, t_point pt)
+{
+	if (obj.type == SP)
+		return (sphere_texture(p, obj, pt));
+	if (obj.type == PL)
+		return (plane_texture(p, obj, pt));
+	if (obj.type == CY)
+		return (cylinder_texture(p, obj, pt));
+	if (obj.type == CN)
+		return (cone_texture(p, obj, pt));
+	return (color(0, 0, 0));
+}
+
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 {
 	t_point	obj_point;
@@ -90,6 +178,8 @@ t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 		return (ring_at(pattern, pat_point));
 	if (pattern.type == CHECKER)
 		return (checker_at(pattern, pat_point));
+	if (pattern.type == TEXTURE)
+		return (texture_at(pattern, obj, obj_point));
 	return (pattern.a);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/11 22:31:55 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:15:55 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef enum e_pattern_type
 	GRADIENT,
 	RING,
 	CHECKER,
+	TEXTURE,
 	NO_TYPE
 }	t_pattern_type;
 
@@ -118,6 +119,25 @@ typedef struct s_matrix
 	double	matrix[16];
 }	t_matrix;
 
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
+typedef struct s_texture
+{
+	int		width;
+	int		height;
+	int		bpp;
+	int		linelen;
+	int		endian;
+	char	*addr;
+	void	*mlx;
+	void	*win;
+	void	*img;
+}	t_texture;
+
 typedef struct s_pattern
 {
 	bool	has_pattern;
@@ -126,6 +146,7 @@ typedef struct s_pattern
 	t_color	b;
 	t_matrix	inversed;
 	t_matrix	transformed;
+	t_texture	texture;
 }	t_pattern;
 
 typedef struct s_material
@@ -324,7 +345,7 @@ t_camera	camera(int hsize, int vsize, double fov);
 t_ray	ray_for_pixel(t_camera c, int x, int y);
 
 //__________ pattern __________
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx);
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);
