@@ -24,7 +24,7 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
-	p.texture = load_texture(mlx, "texture.xpm");
+	p.texture = load_texture(mlx, "10Patterns/Textures/snoopy.xpm");
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)
@@ -103,7 +103,7 @@ t_color	texture_color(t_texture tex, t_uv uv)
 	return ((t_color){color[2] / 255.0, color[1] / 255.0, color[0] / 255.0});
 }
 
-t_color	sphere_texture(t_pattern p, t_object obj, t_point pt)
+t_color	sphere_texture(t_pattern p, t_point pt)
 {
 	t_uv	uv;
 	double	phi;
@@ -116,7 +116,7 @@ t_color	sphere_texture(t_pattern p, t_object obj, t_point pt)
 	return (texture_color(p.texture, uv));
 }
 
-t_color	plane_texture(t_pattern p, t_object obj, t_point pt)
+t_color	plane_texture(t_pattern p, t_point pt)
 {
 	t_uv	uv;
 
@@ -125,7 +125,7 @@ t_color	plane_texture(t_pattern p, t_object obj, t_point pt)
 	return (texture_color(p.texture, uv));
 }
 
-t_color	cylinder_texture(t_pattern p, t_object obj, t_point pt)
+t_color	cylinder_texture(t_pattern p, t_point pt)
 {
 	t_uv	uv;
 	double	theta;
@@ -136,7 +136,7 @@ t_color	cylinder_texture(t_pattern p, t_object obj, t_point pt)
 	return (texture_color(p.texture, uv));
 }
 
-t_color	cone_texture(t_pattern p, t_object obj, t_point pt)
+t_color	cone_texture(t_pattern p, t_point pt)
 {
 	t_uv	uv;
 	double	theta;
@@ -149,17 +149,16 @@ t_color	cone_texture(t_pattern p, t_object obj, t_point pt)
 	return (texture_color(p.texture, uv));
 }
 
-
 t_color	texture_at(t_pattern p, t_object obj, t_point pt)
 {
 	if (obj.type == SP)
-		return (sphere_texture(p, obj, pt));
+		return (sphere_texture(p, pt));
 	if (obj.type == PL)
-		return (plane_texture(p, obj, pt));
+		return (plane_texture(p, pt));
 	if (obj.type == CY)
-		return (cylinder_texture(p, obj, pt));
+		return (cylinder_texture(p, pt));
 	if (obj.type == CN)
-		return (cone_texture(p, obj, pt));
+		return (cone_texture(p, pt));
 	return (color(0, 0, 0));
 }
 

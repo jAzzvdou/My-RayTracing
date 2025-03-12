@@ -18,16 +18,17 @@ void render_scene(t_minilibx *libx)
 	floor.material.reflective = 1;
 	set_transform(&floor, translation(0, -1, 0));
 
-	t_object opaque_sphere = new_object(SP);
-	opaque_sphere.material.color = color(0.5, 0.5, 0.5);
-	set_transform(&opaque_sphere, translation(0, 0, 3));
+	t_object sphere = new_object(SP);
+	sphere.material.pattern = new_pattern(TEXTURE, color(1, 1, 1), color(0, 0, 0), libx->mlx);
+	set_pattern_transform(&sphere.material.pattern, scaling(1, 1, 1));
+	set_transform(&sphere, translation(0, 0, 2));
 
 	t_world w = world();
 	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
 	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
-	add_object(&w.object, opaque_sphere);
-	add_object(&w.object, floor);
+	add_object(&w.object, sphere);
+	//add_object(&w.object, floor);
 
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
 	add_light(&w.light, light);
