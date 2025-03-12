@@ -25,6 +25,7 @@ SRCS	=	main.c                                  \
 		Utils/lib5.c                            \
 		Utils/space.c                           \
 		Utils/splitline.c                       \
+		Parse/parse.c                           \
 
 OBJDIR	=	Objects
 
@@ -63,6 +64,9 @@ $(OBJDIR)/%.o: %.c
 		$(eval COLOR_VALUE=$(shell echo $$((255*$(COMPILED_SRCS)/$(TOTAL_SRCS)))))
 		@echo -n "\033[38;2;$(COLOR_VALUE);$(COLOR_VALUE);$(COLOR_VALUE)m  MiniRT Is Ready!\033[0m\r"
 		@sleep 0.01
+
+test:
+	./miniRT "bonus_scene.rt"
 
 val: re
 		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./miniRT

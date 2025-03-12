@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/01/28 10:36:49 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:18:21 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,29 @@ void	err(char *color1, char *error, char *color2)
 		write(2, color2, my_strlen(color2));
 }
 
-int	invalid_arguments(int argc, char **argv)
+int	invalid_arguments(int ac, char **av)
 {
-	if (argc != 2)
+	if (ac != 2)
 		return (err(RED, ARGV, RESET), 1);
-	if (revstrncmp(".rt", argv[1], 4))
+	if (revstrncmp(".rt", av[1], 4))
 		return (err(RED, FILENAME, RESET), 1);
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
-	(void) argv;
-	if (invalid_arguments(argc, argv))
+	t_world w;
+	int fd;
+
+	if (invalid_arguments(ac, av))
 		return (-1);
 	memlist_holder(start_memlist(), 0);
-	//NOSSO PARSER NO FUTURO
-	screen();
+	w = world();
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		perror(av[1]);
+	if (fd < 0 || !parse(fd, &w))
+		printf("invalid map!");
 
 	memcard(NULL, 0, FREEALL, 0); //POR SEGURANÇA, UM GARBADE COLLECTOR
 	return (0);

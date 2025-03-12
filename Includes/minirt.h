@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/12 11:15:55 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:34:41 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,15 @@
 //----------| STRUCTS |----------//
 typedef enum e_type
 {
-	SP,
-	PL,
-	CY,
-	CN,
+	A,		//Ambient Light
+	C,		//Camera
+	L,		//Light
+	SP,		//Sphere
+	PL,		//Plane
+	CY,		//Cilynder
+	CN,		//Cone
+	MT,		//Material
+	P,		//Pattern
 	NONE
 }	t_type;
 
@@ -249,6 +254,9 @@ typedef struct s_camera
 void		screen(void);
 t_canvas	render(t_world w, t_camera cam);
 void		render_tests(t_minilibx *libx);
+
+//___________Parse_________________
+int	parse(int fd, t_world *w);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
