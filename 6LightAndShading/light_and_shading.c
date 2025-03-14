@@ -23,18 +23,6 @@ t_color	clamp_color(t_color c)
 	return (c);
 }
 
-t_vector	bump_mapping(t_texture tex, t_uv uv, t_vector n)
-{
-	t_color c = texture_color(tex, uv);
-
-	double bx = (c.r * 2.0) - 1.0;
-	double by = (c.g * 2.0) - 1.0;
-	double bz = (c.b * 2.0) - 1.0;
-
-	t_vector bump = normalize(vector(bx, by, bz));
-	return (normalize(add_tuple(n, bump)));
-}
-
 t_color	lighting(t_light l, t_comps comps)
 {
 	double		d[3];	//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
@@ -51,8 +39,6 @@ t_color	lighting(t_light l, t_comps comps)
 	c[1] = mult_color(c[0], m.amb);
 	if (comps.in_shadow)
 		return (c[1]);
-	if (m.pattern.texture.addr)
-		comps.normalv = bump_mapping(m.pattern.texture, (t_uv){comps.point.x, comps.point.z},comps.normalv);
 	d[0] = dot(v[0], comps.normalv);
 	if (d[0] < 0)
 	{
