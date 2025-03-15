@@ -23,9 +23,13 @@ SRCS	=	main.c                                  \
 		Utils/lib3.c                            \
 		Utils/lib4.c                            \
 		Utils/lib5.c                            \
+		Utils/lib6.c                            \
 		Utils/space.c                           \
 		Utils/splitline.c                       \
 		Parse/parse.c                           \
+		Parse/amb_parse.c \
+		Parse/cam_parse.c \
+		Parse/parse_utils.c \
 
 OBJDIR	=	Objects
 

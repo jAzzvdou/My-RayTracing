@@ -5,28 +5,8 @@ t_world	world(void)
 	t_world w;
 
 	my_bzero(&w, sizeof(t_world));
+	w.amb.has_cam = 0;
 	return (w);
-}
-
-t_world	default_world(void)
-{
-	t_world		dworld;
-	t_object	sphere1;
-	t_object	sphere2;
-	t_light		light;
-
-	dworld = world();
-	light = point_light(point(-10, 10, -10), color(1, 1, 1));
-	add_light(&dworld.light, light);
-	sphere1 = new_object(SP);
-	sphere1.material.color = color(0.8, 1, 0.6);
-	sphere1.material.diff = 0.7;
-	sphere1.material.spec = 0.2;
-	sphere2 = new_object(SP);
-	set_transform(&sphere2, scaling(0.5, 0.5, 0.5));
-	add_object(&dworld.object, sphere1);
-	add_object(&dworld.object, sphere2);
-	return (dworld);
 }
 
 void	add_light(t_light **l1, t_light l2)

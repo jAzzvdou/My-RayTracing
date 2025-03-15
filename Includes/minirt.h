@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/12 19:34:41 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:59:33 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@
 //----------| STRUCTS |----------//
 typedef enum e_type
 {
-	A,		//Ambient Light
+	A = 2,		//Ambient Light
 	C,		//Camera
 	L,		//Light
 	SP,		//Sphere
@@ -186,10 +186,16 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
+typedef struct s_ambient
+{
+	int	has_cam;
+} t_ambient;
+
 typedef struct s_world
 {
 	t_light		*light;
 	t_object	*object;
+	t_ambient	amb;
 }	t_world;
 
 typedef struct s_minilibx
@@ -257,6 +263,11 @@ void		render_tests(t_minilibx *libx);
 
 //___________Parse_________________
 int	parse(int fd, t_world *w);
+int	valid_line_count(char **str_split, int words_to_go);
+int	get_coords(char *str, t_point *position);
+int	get_directions(char *str, t_vector *dir);
+int	amb_parse(t_world *w, char *line);
+int	cam_parse(t_world *w, char *line);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -408,5 +419,8 @@ int		onlynumber(char *s, int type);
 //__________ lib5.c __________
 char	*my_strdup(const char *s);
 char	*my_itoa(int n);
+
+//__________ lib6.c __________
+char	**my_split(const char *s, char c);
 
 #endif //| MINIRT_H
