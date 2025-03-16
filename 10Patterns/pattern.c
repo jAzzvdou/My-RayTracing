@@ -36,7 +36,7 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
-	p.texture = load_texture(mlx, "10Patterns/Textures/snoopy.xpm");
+	p.texture = load_texture(mlx, "10Patterns/Textures/camuflagem.xpm");
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)

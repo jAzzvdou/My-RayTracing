@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/16 17:15:29 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:45:12 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,6 +386,13 @@ t_color		stripe_at(t_pattern p, t_point pt);
 t_color		gradient_at(t_pattern p, t_point pt);
 t_color		ring_at(t_pattern p, t_point pt);
 t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx);
+t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
+void	set_pattern_transform(t_pattern *p, t_matrix transform);
+t_color	stripe_at(t_pattern p, t_point pt);
+t_color	gradient_at(t_pattern p, t_point pt);
+t_color	ring_at(t_pattern p, t_point pt);
+int	near_zero(double nb);
+t_color	texture_color(t_texture tex, t_uv uv);
 
 //__________ reflection __________
 t_color	reflected_color(t_world w, t_comps comps, int remaining);

@@ -33,7 +33,7 @@ void render_scene(t_minilibx *libx, t_world *w)
 	t_object sphere = new_object(SP);
 	sphere.material.pattern = new_pattern(TEXTURE, color(1, 1, 1), color(0, 0, 0), libx->mlx);
 	set_pattern_transform(&sphere.material.pattern, scaling(1, 1, 1));
-	set_transform(&sphere, translation(0, 0, 2));
+	set_transform(&sphere, mult_matrix(translation(0, 0, 2), rotationy(130 * (M_PI / 180))));
 
 	w->cam = camera(HEIGHT, WIDTH, M_PI / 3);
 	w->cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
