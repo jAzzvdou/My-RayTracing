@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 11:29:09 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:35:06 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ int	parse_line(char *line, t_world *w)
 		return (light_parse(w, line));
 	else if (token == SP)
 		return (sphere_parse(w, line));
-
+	else if (token == PL)
+		return (plane_parse(w, line));
+	else if (token == CY)
+		return (cy_parse(w, line));
+	else if (token == CN)
+		return (cone_parse(w, line));
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 11:24:42 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 16:50:27 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	get_coords(char *str, t_point *position)
 	return (1);
 }
 
-int	get_directions(char *str, t_vector *dir)
+int	get_dir(char *str, t_vector *dir)
 {
 	char	**str_split;
 

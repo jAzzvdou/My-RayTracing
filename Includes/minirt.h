@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/16 11:42:22 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:15:29 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ typedef struct s_world
 {
 	t_light		*light;
 	t_object	*object;
-	t_camera	*cam;
+	t_camera	cam;
 	t_ambient	amb;
 }	t_world;
 
@@ -272,15 +272,16 @@ int	valid_line_count(char **str_split, int words_to_go);
 int	get_int(char *str, int *n);
 int	get_double(char *str, double *val);
 int	get_coords(char *str, t_point *position);
-int	get_directions(char *str, t_vector *dir);
+int	get_dir(char *str, t_vector *dir);
 int	get_color(char *str, t_color *n_color);
 int	get_radius(char *str, double *r);
-int	get_pattern(char *str, t_material *m, t_world *w);
 int	amb_parse(t_world *w, char *line);
 int	cam_parse(t_world *w, char *line);
 int	light_parse(t_world *w, char *line);
 int	sphere_parse(t_world *w, char *line);
-void	put_amb_color(t_world *world);
+int	plane_parse(t_world *w, char *line);
+int	cy_parse(t_world *w, char *line);
+
 
 //__________ color __________
 t_color	color(double r, double g, double b);

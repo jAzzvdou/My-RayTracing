@@ -32,6 +32,9 @@ SRCS	=	main.c                                  \
 		Parse/parse_utils.c \
 		Parse/light_parse.c \
 		Parse/sphere_parse.c \
+		Parse/plane_parse.c \
+		Parse/cy_parse.c \
+		Parse/cone_parse.c \
 
 OBJDIR	=	Objects
 

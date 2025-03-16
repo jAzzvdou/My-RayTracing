@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:47 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 12:08:48 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:29:29 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_object	glass_sphere(void)
 	return (sp);
 }
 
-/*void render_scene(t_minilibx *libx, t_world *w)
+void render_scene(t_minilibx *libx, t_world *w)
 {
 	t_object floor = new_object(PL);
 	floor.material = material();
@@ -35,19 +35,18 @@ t_object	glass_sphere(void)
 	set_pattern_transform(&sphere.material.pattern, scaling(1, 1, 1));
 	set_transform(&sphere, translation(0, 0, 2));
 
-	t_world w = world();
-	t_camera cam = camera(HEIGHT, WIDTH, M_PI / 3);
-	cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
+	w->cam = camera(HEIGHT, WIDTH, M_PI / 3);
+	w->cam.transform = view_transform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
 
-	add_object(&w.object, sphere);
-	//add_object(&w.object, floor);
+	add_object(&w->object, sphere);
+	add_object(&w->object, floor);
 
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
-	add_light(&w.light, light);
+	add_light(&w->light, light);
 
-	t_canvas canvas = render(w, w->cam);
+	t_canvas canvas = render(*w, w->cam);
 	draw_canvas(libx, &canvas);
-}*/
+}
 
 void print_point(t_tuple t)
 {
@@ -108,9 +107,7 @@ t_intersection *inter_index(t_intersection *inter, int index)
 
 void render_tests(t_minilibx *libx, t_world *w)
 {
-	//render_scene(libx, w);
-	(void) libx;
-	(void) w;
+	render_scene(libx, w);
 /*	t_object cn = new_object(CN);
     // Test case 1: point(0, 0, 0)
     t_vector n1 = normal_at(cn, point(0, 0, 0));
