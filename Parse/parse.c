@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/15 23:25:28 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 11:29:09 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	parse_line(char *line, t_world *w)
 		return (1);
 	else if (!token)
 		return (0);
-	/*if (token == A)
-		return (amb_parse(w, line));*/
-	if (token == C)
+	if (token == A)
+		return (amb_parse(w, line));
+	else if (token == C)
 		return (cam_parse(w, line));
 	else if (token == L)
 		return (light_parse(w, line));
@@ -80,5 +80,7 @@ int	parse(int fd, t_world *w)
 		line = get_next_line(fd);
 		line_count++;
 	}
+	printf("after parse gnl loop\n");
+	//put_amb_color(w);
 	return (1);
 }

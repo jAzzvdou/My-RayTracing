@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:08:47 by jbergfel          #+#    #+#             */
+/*   Updated: 2025/03/16 12:08:48 by jbergfel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/minirt.h"
 
 t_object	glass_sphere(void)
@@ -8,7 +20,7 @@ t_object	glass_sphere(void)
 	return (sp);
 }
 
-void render_scene(t_minilibx *libx)
+/*void render_scene(t_minilibx *libx, t_world *w)
 {
 	t_object floor = new_object(PL);
 	floor.material = material();
@@ -33,9 +45,9 @@ void render_scene(t_minilibx *libx)
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
 	add_light(&w.light, light);
 
-	t_canvas canvas = render(w, cam);
+	t_canvas canvas = render(w, w->cam);
 	draw_canvas(libx, &canvas);
-}
+}*/
 
 void print_point(t_tuple t)
 {
@@ -94,10 +106,11 @@ t_intersection *inter_index(t_intersection *inter, int index)
 	return (aux);
 }
 
-void render_tests(t_minilibx *libx)
+void render_tests(t_minilibx *libx, t_world *w)
 {
-	render_scene(libx);
-	(void)libx;
+	//render_scene(libx, w);
+	(void) libx;
+	(void) w;
 /*	t_object cn = new_object(CN);
     // Test case 1: point(0, 0, 0)
     t_vector n1 = normal_at(cn, point(0, 0, 0));

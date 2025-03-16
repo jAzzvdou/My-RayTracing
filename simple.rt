@@ -1,0 +1,17 @@
+# Brightness 1/2 01
+
+# Ambient
+#   ratio           color
+A   0.1             255,255,255
+
+# Camera
+#   position        direction       fov
+C   1.5,1.5,-5      0,0,1           50
+
+# Light
+#   position        intensity       color
+L   10,12,-5        1               255,255,255
+
+# Sphere
+#   position        radius          color
+sp  3,1,0           1               255,51,255

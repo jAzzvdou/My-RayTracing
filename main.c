@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/12 19:18:21 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 11:25:31 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 		perror(av[1]);
 	if (fd < 0 || !parse(fd, &w))
 		printf("invalid map!");
-
+	//screen(&w);
 	memcard(NULL, 0, FREEALL, 0); //POR SEGURANÇA, UM GARBADE COLLECTOR
 	return (0);
 }

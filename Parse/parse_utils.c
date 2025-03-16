@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/15 23:21:47 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/16 11:24:42 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	get_coords(char *str, t_point *position)
 	}
 	//split free
 	position->w = 1;
+	printf("coords x -> %f | coords y -> %f | coords z -> %f\n", position->x, position->y, position->z);
 	return (1);
 }
 
@@ -98,6 +99,7 @@ int	get_directions(char *str, t_vector *dir)
 	}
 	//split free
 	dir->w = 1;
+	printf("dir x -> %f | dir y -> %f | dir z -> %f\n", dir->x, dir->y, dir->z);
 	return (1);
 }
 
@@ -128,8 +130,13 @@ int	get_color(char *str, t_color *n_color)
 	n_color->b = b;
 	*n_color = convert_color(*n_color);
 
-	printf("r -> %f\n", n_color->r);
-	printf("g -> %f\n", n_color->g);
-	printf("b -> %f\n", n_color->b);
+	printf("color R -> %f | color G -> %f | color B -> %f\n", n_color->r, n_color->g, n_color->b);
+	return (1);
+}
+
+int	get_radius(char *str, double *r)
+{
+	if (!get_double(str, r) || !(*r > 0))
+		return (printf("get radius ko\n"), 0);
 	return (1);
 }

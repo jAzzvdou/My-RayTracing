@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 09:53:28 by jbergfel          #+#    #+#             */
+/*   Updated: 2025/03/16 11:43:39 by jbergfel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/minirt.h"
 
 void	set_index(t_matrix *a, int x, int y, double value)
@@ -185,7 +197,7 @@ double	determinant(t_matrix a)
 	if (a.rows == 2 && a.cols == 2)
 	{
 		result = get_index(&a, 0, 0) * get_index(&a, 1, 1)
-			- get_index(&a, 0, 1) * get_index(&a, 1, 0); 
+			- get_index(&a, 0, 1) * get_index(&a, 1, 0);
 		return (result);
 	}
 	result = 0;
