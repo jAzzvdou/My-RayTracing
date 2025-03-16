@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/15 13:50:22 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/15 23:25:28 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int	parse_line(char *line, t_world *w)
 		return (amb_parse(w, line));*/
 	if (token == C)
 		return (cam_parse(w, line));
+	else if (token == L)
+		return (light_parse(w, line));
+	else if (token == SP)
+		return (sphere_parse(w, line));
 
 	return (1);
 }

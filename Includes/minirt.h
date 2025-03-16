@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/15 13:59:33 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/15 23:08:07 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,13 +191,6 @@ typedef struct s_ambient
 	int	has_cam;
 } t_ambient;
 
-typedef struct s_world
-{
-	t_light		*light;
-	t_object	*object;
-	t_ambient	amb;
-}	t_world;
-
 typedef struct s_minilibx
 {
 	int		bpp;
@@ -254,7 +247,16 @@ typedef struct s_camera
 	double		half_height;
 	double		pixel_size;
 	t_matrix	transform;
+	t_matrix	inverse;
 }	t_camera;
+
+typedef struct s_world
+{
+	t_light		*light;
+	t_object	*object;
+	t_camera	*cam;
+	t_ambient	amb;
+}	t_world;
 
 //----------| FUNCTIONS |----------//
 void		screen(void);
@@ -264,10 +266,14 @@ void		render_tests(t_minilibx *libx);
 //___________Parse_________________
 int	parse(int fd, t_world *w);
 int	valid_line_count(char **str_split, int words_to_go);
+int	get_int(char *str, int *n);
+int	get_double(char *str, double *val);
 int	get_coords(char *str, t_point *position);
 int	get_directions(char *str, t_vector *dir);
+int	get_color(char *str, t_color *n_color);
 int	amb_parse(t_world *w, char *line);
 int	cam_parse(t_world *w, char *line);
+int	light_parse(t_world *w, char *line);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
