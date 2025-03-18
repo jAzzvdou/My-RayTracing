@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/16 17:45:12 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:36:32 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ int	light_parse(t_world *w, char *line);
 int	sphere_parse(t_world *w, char *line);
 int	plane_parse(t_world *w, char *line);
 int	cy_parse(t_world *w, char *line);
-
+int	cone_parse(t_world *w, char *line);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -314,7 +314,6 @@ t_vector	cross(t_vector a, t_vector b);
 void		draw_pixel(t_minilibx *libx, int x, int y, int color);
 void		set_canvas_pixel(t_canvas *canvas, int x, int y, t_color color);
 void		draw_canvas(t_minilibx *libx, t_canvas *canvas);
-void		canvas_to_ppm(t_canvas canvas, char *filename);
 t_color		pixel_at(t_canvas *canvas, int x, int y);
 t_canvas	create_canvas(int width, int height);
 
@@ -349,6 +348,8 @@ int				count_intersection(t_intersection *list);
 double			bhaskara(t_object o, t_ray r);
 t_point			position(t_ray r, double t);
 t_ray			ray(t_point p, t_vector v);
+void	intersect_cylinder(t_intersection **list, t_object o, t_ray r);
+void	intersect_cone(t_intersection **list, t_object o, t_ray r);
 t_intersection	intersection(t_object o, double t);
 t_intersection	*hit(t_intersection *inter);
 void			set_transform(t_object *o, t_matrix m);
