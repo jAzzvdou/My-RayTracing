@@ -94,8 +94,8 @@ t_color	checker_at(t_pattern p, t_point pt)
 
 t_color	texture_color(t_texture tex, t_uv uv)
 {
-	int x = (int)(uv.u * (tex.width - 1));
-	int y = (int)((1 - uv.v) * (tex.height - 1));
+	int x = floor(uv.u * (tex.width - 1));
+	int y = floor(uv.v * (tex.height - 1));
 
 	int pixel = (y * tex.linelen) + (x * (tex.bpp / 8));
 	unsigned char *color = (unsigned char *)(tex.addr + pixel);
