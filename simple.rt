@@ -1,4 +1,4 @@
-# Brightness 1/2 01
+# The Basic Shapes 01
 
 # Ambient
 #   ratio           color
@@ -6,12 +6,13 @@ A   0.1             255,255,255
 
 # Camera
 #   position        direction       fov
-C   1.5,1.5,-5      0,0,1           50
+C   0,0,-5          0.1,0,1           50
 
 # Light
 #   position        intensity       color
-L   10,12,-5        1               255,255,255
+L   0,10,-5         1               0,255,255
+L   0,-10,-5         1               255,0,0
 
 # Sphere
 #   position        radius          color
-sp  3,1,0           1               255,51,255
+sp  0,0,0           1               255,255,255

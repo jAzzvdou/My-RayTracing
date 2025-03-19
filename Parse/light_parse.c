@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:33:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 11:37:23 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:15:51 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	light_parse(t_world *w, char *line)
 {
 	t_color	n_color;
 	t_point	p;
+	t_light	n_light;
 	double	bright;
 	char	**line_split;
 
@@ -36,7 +37,8 @@ int	light_parse(t_world *w, char *line)
 		return (0);
 	}
 	//free split
-	add_light(&w->light, point_light(p, mult_color(n_color, bright)));
+	n_light = point_light(p, mult_color(n_color, bright));
+	add_light(&w->light, n_light);
 	printf("Intensity -> %f\n", bright);
 	printf("bright parse ok\n\n");
 	return (1);

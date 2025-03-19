@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/16 17:30:07 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:58:01 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	invalid_arguments(int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_world w;
-	//int fd;
+	int fd;
 
 	if (invalid_arguments(ac, av))
 		return (-1);
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 		perror(av[1]);
 	if (fd < 0 || !parse(fd, &w))
 		printf("invalid map!");
-	//screen(&w);
+	screen(&w);
 	memcard(NULL, 0, FREEALL, 0); //POR SEGURANÇA, UM GARBADE COLLECTOR
 	return (0);
 }

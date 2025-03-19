@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:47 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 17:29:29 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:21:33 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_object	glass_sphere(void)
 
 void render_scene(t_minilibx *libx, t_world *w)
 {
-	t_object floor = new_object(PL);
+	/*t_object floor = new_object(PL);
 	floor.material = material();
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.spec = 0;
@@ -42,7 +42,7 @@ void render_scene(t_minilibx *libx, t_world *w)
 	add_object(&w->object, floor);
 
 	t_light light = point_light(point(-10, 10, -10), color(1, 1, 1));
-	add_light(&w->light, light);
+	add_light(&w->light, light);*/
 
 	t_canvas canvas = render(*w, w->cam);
 	draw_canvas(libx, &canvas);

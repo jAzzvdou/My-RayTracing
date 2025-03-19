@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/16 17:45:12 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:58:51 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ int	light_parse(t_world *w, char *line);
 int	sphere_parse(t_world *w, char *line);
 int	plane_parse(t_world *w, char *line);
 int	cy_parse(t_world *w, char *line);
+int	cone_parse(t_world *w, char *line);
 
 
 //__________ color __________
