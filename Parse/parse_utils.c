@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 16:50:27 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:44:55 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	get_int(char *str, int *n)
 		i++;
 	if (!str || str[i] != '\0')
 	{
-		printf("ERROR get int\n");
+		err(RED, "Error! get_int ko\n", RESET);
 		if (str)
-			printf("Error get int str\n");
+			err(RED, str, RESET);
 		else
-			printf("NULL\n");
+			err(RED, "NULL", RESET);
 		return (0);
 	}
 	*n = my_atoi(str);
@@ -76,13 +76,11 @@ int	get_coords(char *str, t_point *position)
 	str_split = my_split(str, ',');
 	if (!valid_line_count(str_split, 3) || !get_double(str_split[0], &position->x) || !get_double(str_split[1], &position->y) || !get_double(str_split[2], &position->z))
 	{
-		//split free
-		printf("get_coords ko\n");
-		return (0);
+		str_split = memcard(str_split, VECTOR, FREE, 0);
+		return (err(RED, "Error! get_coords ko\n", RESET), 0);
 	}
-	//split free
+	str_split = memcard(str_split, VECTOR, FREE, 0);
 	position->w = 1;
-	printf("coords x -> %f | coords y -> %f | coords z -> %f\n", position->x, position->y, position->z);
 	return (1);
 }
 
@@ -93,22 +91,22 @@ int	get_dir(char *str, t_vector *dir)
 	str_split = my_split(str, ',');
 	if (!valid_line_count(str_split, 3) || !get_double(str_split[0], &dir->x) || !get_double(str_split[1], &dir->y) || !get_double(str_split[2], &dir->z))
 	{
-		//split free
-		printf("get_directions ko\n");
-		return (0);
+		str_split = memcard(str_split, VECTOR, FREE, 0);
+		return (err(RED, "Error! get_dir ko\n", RESET), 0);
 	}
-	//split free
+	str_split = memcard(str_split, VECTOR, FREE, 0);
 	dir->w = 1;
-	printf("dir x -> %f | dir y -> %f | dir z -> %f\n", dir->x, dir->y, dir->z);
 	return (1);
 }
 
 int	valid_colors(char **spl, int *r, int *g, int *b)
 {
 	if (!get_int(spl[0], r) || !get_int(spl[1], g) || !get_int(spl[2], b))
-		return (printf("get_int colors ko\n"), 0);
-	if (!(*r >= 0 && *r <= 255) || !(*g >= 0 && *g <= 255) || !(*b >= 0 && *b <= 255))
-		return (printf("color limits ko\n"), 0);
+		return (err(RED, "Error! get_int colors ko\n", RESET), 0);
+	if (!(*r >= 0 && *r <= 255)
+		|| !(*g >= 0 && *g <= 255)
+		|| !(*b >= 0 && *b <= 255))
+		return (err(RED, "Error! color limits ko\n", RESET), 0);
 	return (1);
 }
 
@@ -122,21 +120,20 @@ int	get_color(char *str, t_color *n_color)
 	str_split = my_split(str, ',');
 	if (!valid_line_count(str_split, 3) || !valid_colors(str_split, &r, &g, &b))
 	{
-		//split free
-		return (printf("get_color ko\n"), 0);
+		str_split = memcard(str_split, VECTOR, FREE, 0);
+		return (err(RED, "Error! get_color ko\n", RESET), 0);
 	}
+	str_split = memcard(str_split, VECTOR, FREE, 0);
 	n_color->r = r;
 	n_color->g = g;
 	n_color->b = b;
 	*n_color = convert_color(*n_color);
-
-	printf("color R -> %f | color G -> %f | color B -> %f\n", n_color->r, n_color->g, n_color->b);
 	return (1);
 }
 
 int	get_radius(char *str, double *r)
 {
 	if (!get_double(str, r) || !(*r > 0))
-		return (printf("get radius ko\n"), 0);
+		return (err(RED, "Erro! get radius ko\n", RESET), 0);
 	return (1);
 }

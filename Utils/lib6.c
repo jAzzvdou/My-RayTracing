@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:41:29 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/15 13:48:35 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:36:28 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ static size_t	word_len(const char *s, char c)
 	return (i);
 }
 
-static void	split_free(char **arr, size_t j)
-{
-	while (j > 0)
-	{
-		free(arr[j]);
-		j--;
-	}
-	free(arr);
-}
-
 static char	**the_split(const char *s, char c, char **arr)
 {
 	size_t	wordl;
@@ -69,9 +59,9 @@ static char	**the_split(const char *s, char c, char **arr)
 		if (s[i] != '\0')
 		{
 			wordl = word_len(s + i, c);
-			arr[j] = (char *)malloc((wordl + 1) * sizeof(char));
+			arr[j] = memcard(NULL, STRING, MALLOC, sizeof(char) * (wordl + 1));
 			if (!arr[j])
-				split_free(arr, j);
+				arr = memcard(arr, VECTOR, FREE, 0);
 			k = 0;
 			while (k < wordl)
 				arr[j][k++] = s[i++];
@@ -88,7 +78,7 @@ char	**my_split(const char *s, char c)
 
 	if (!s)
 		return (NULL);
-	arr = (char **)malloc((count_words(s, c) + 1) * sizeof(*arr));
+	arr = memcard(NULL, VECTOR, MALLOC, sizeof(*arr) * (count_words(s, c) + 1));
 	if (!arr)
 		return (NULL);
 	the_split(s, c, arr);

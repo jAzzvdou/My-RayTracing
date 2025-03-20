@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/16 17:35:06 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:29:27 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ int	get_line_token(char *line)
 {
 	if (!line)
 		return (0);
-	else if (my_strncmp(line, "A ", 2) == 0)
+	else if (!my_strncmp(line, "A ", 2))
 		return (A);
-	else if (my_strncmp(line, "C ", 2) == 0)
+	else if (!my_strncmp(line, "C ", 2))
 		return (C);
-	else if (my_strncmp(line, "L ", 2) == 0)
+	else if (!my_strncmp(line, "L ", 2))
 		return (L);
-	else if (my_strncmp(line, "sp ", 3) == 0)
+	else if (!my_strncmp(line, "sp ", 3))
 		return (SP);
-	else if (my_strncmp(line, "pl ", 3) == 0)
+	else if (!my_strncmp(line, "pl ", 3))
 		return (PL);
-	else if (my_strncmp(line, "cy", 3) == 0)
+	else if (!my_strncmp(line, "cy", 3))
 		return (CY);
-	else if (my_strncmp(line, "cn ", 3) == 0)
+	else if (!my_strncmp(line, "cn ", 3))
 		return (CN);
-	else if (my_strncmp(line, "P ", 2) == 0)
+	else if (!my_strncmp(line, "P ", 2))
 		return (P);
-	else if (my_strncmp(line, "m ", 2) == 0)
+	else if (!my_strncmp(line, "m ", 2))
 		return (MT);
 	return (0);
 }
@@ -63,29 +63,21 @@ int	parse_line(char *line, t_world *w)
 	return (1);
 }
 
-int	parse(int fd, t_world *w)
+int	parse(t_world *w, int fd)
 {
-	int		line_count;
 	char	*line;
 
-	line_count = 1;
-	*w = world();
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line)
 	{
 		if (my_strchr(line, '\n'))
 			my_strchr(line, '\n')[0] = '\0';
 		if (!parse_line(line, w))
-		{
-			printf("line error -> %i\n", line_count);
-			return (0);
-		}
-		//printf("line %i -> %s\n", line_count, line);
-		//free(line);
+			return (line = memcard(line, STRING, FREE, 0), 0);
+		line = memcard(line, STRING, FREE, 0);
 		line = get_next_line(fd);
-		line_count++;
 	}
-	printf("after parse gnl loop\n");
+	close(fd);
 	//put_amb_color(w);
 	return (1);
 }

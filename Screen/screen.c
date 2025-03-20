@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/18 21:57:33 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:19:56 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	screen(t_world *w)
 {
 	t_minilibx	libx;
 
-	//libx.map = map;
 	libx.mlx = mlx_init();
 	libx.win = mlx_new_window(libx.mlx, WIDTH, HEIGHT, "| MiniRT |");
 	libx.img = mlx_new_image(libx.mlx, WIDTH, HEIGHT);
@@ -44,4 +43,5 @@ void	screen(t_world *w)
 	mlx_hook(libx.win, 2, 1L << 0, key_hook, &libx);
 	mlx_hook(libx.win, 17, 0, end_program, &libx);
 	mlx_loop(libx.mlx);
+	memcard(NULL, 0, FREEALL, 0);
 }

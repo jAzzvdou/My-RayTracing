@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/18 22:36:19 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:19:17 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ t_canvas	render(t_world w, t_camera cam);
 void		render_tests(t_minilibx *libx, t_world *w);
 
 //___________Parse_________________
-int	parse(int fd, t_world *w);
+int	parse(t_world *w, int fd);
 int	valid_line_count(char **str_split, int words_to_go);
 int	get_int(char *str, int *n);
 int	get_double(char *str, double *val);
@@ -405,15 +405,11 @@ void	err(char *color1, char *error, char *color2);
 //----------| CLEANERS |----------//
 
 //----------| UTILS |----------//
-
 //__________ space.c __________
 int		is_space(int c);
 void	skip_spaces(char **s);
 
 void print_matrix(t_matrix matrix);
-
-//__________ splitline.c __________
-char	**splitline(char const *s, char c);
 
 //__________ get_next_line.c __________
 char	*get_next_line(int fd);
