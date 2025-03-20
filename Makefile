@@ -44,7 +44,6 @@ SRCS	=	main.c                                  \
 		Utils/lib5.c                            \
 		Utils/lib6.c                            \
 		Utils/space.c                           \
-		Utils/splitline.c                       \
 
 OBJDIR	=	Objects
 
