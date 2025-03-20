@@ -18,7 +18,6 @@ int	sphere_parse(t_world *w, char *line)
 	t_point		p;
 	t_object	n_sp;
 
-	(void) w;
 	n_sp = new_object(SP);
 	n_sp.material = material();
 	line_spl = my_split(line, ' ');
@@ -32,7 +31,7 @@ int	sphere_parse(t_world *w, char *line)
 	line_spl = memcard(line_spl, VECTOR, FREE, 0);
 	n_sp.radius /= 2;
 	n_sp.origin = p;
-	set_transform(&n_sp, mult_matrix(scaling(1, 1, 1), translation(1, 0, 1)));
+	set_transform(&n_sp, scaling(1, 1, 1));
 	add_object(&w->object, n_sp);
 	return (1);
 }

@@ -87,7 +87,7 @@ test:
 	./miniRT "bonus_scene.rt"
 
 val: re
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./miniRT
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./miniRT Scenes/simple.rt
 
 clean:
 		@$(RM) $(OBJDIR)
