@@ -20,6 +20,7 @@ int	plane_parse(t_world *w, char *line)
 	t_object	n_pl;
 
 	n_pl = new_object(PL);
+	n_pl.material = material();
 	arr = my_split(line, ' ');
 	if (!get_coords(arr[1], &p)
 		|| !get_dir(arr[2], &n)
@@ -29,7 +30,7 @@ int	plane_parse(t_world *w, char *line)
 		return (err(RED, "Error! plane_parse ko\n", RESET), 0);
 	}
 	arr = memcard(arr, VECTOR, FREE, 0);
-	//set_transform(&n_pl, );
+	set_transform(&n_pl, translation(0, -1, 0));
 	add_object(&w->object, n_pl);
 	return (1);
 }
