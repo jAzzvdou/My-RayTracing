@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/20 00:19:56 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:46:06 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	key_hook(int key, t_minilibx *libx)
 void	screen(t_world *w)
 {
 	t_minilibx	libx;
-
 	libx.mlx = mlx_init();
 	libx.win = mlx_new_window(libx.mlx, WIDTH, HEIGHT, "| MiniRT |");
 	libx.img = mlx_new_image(libx.mlx, WIDTH, HEIGHT);

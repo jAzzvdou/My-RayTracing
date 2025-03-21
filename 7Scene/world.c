@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:00 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/19 23:27:28 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:44:12 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_world	world(void)
 	t_world	w;
 
 	my_bzero(&w, sizeof(t_world));
-	//w.amb.has_cam = 0;
 	return (w);
 }
 

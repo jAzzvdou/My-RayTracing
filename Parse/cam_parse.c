@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:29:47 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/20 00:00:03 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:40:31 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	cam_parse(t_world *w, char *line)
 		line_split = memcard(line_split, VECTOR, FREE, 0);
 		return (err(RED, "Error! cam_parse ko\n", RESET), 0);
 	}
+	w->amb.has_cam = 1;
 	line_split = memcard(line_split, VECTOR, FREE, 0);
 	if (!(fov >= 0 && fov <= 180))
 		return (err(RED, "Error! fov limits ko\n", RESET), 0);
-	w->amb.has_cam = 1;
 	n_cam = camera(WIDTH, HEIGHT, (fov * M_PI) / 180);
 	n_cam.transform = view_transform(cam_position, add_tuple(cam_position, cam_direction), vector(0, 1, 0));
 	n_cam.inverse = inverse(n_cam.transform);
