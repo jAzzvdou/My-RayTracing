@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:46:35 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/20 00:12:59 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:06:47 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	plane_parse(t_world *w, char *line)
 	n_pl.normal = n;
 	n_pl.origin = p;
 	arr = memcard(arr, VECTOR, FREE, 0);
-	set_transform(&n_pl, translation(0,-1, 0));
+	set_transform(&n_pl, rotate_matrix(p, n, n_pl));
 	add_object(&w->object, n_pl);
 	return (1);
 }

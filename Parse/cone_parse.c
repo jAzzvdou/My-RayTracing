@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:35:17 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/20 00:17:47 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 15:45:21 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	cone_parse(t_world *w, char *line)
 	n_cn.maximum /= n_cn.radius;
 	n_cn.minimum = -n_cn.maximum;
 	n_cn.closed = true;
-	//set_transform(&n_cn, );
+	set_transform(&n_cn, rotate_matrix(p, n, n_cn));
 	add_object(&w->object, n_cn);
 	return (1);
 }

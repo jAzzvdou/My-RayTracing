@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:54:39 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/20 00:15:40 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 15:54:46 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	cy_parse(t_world *w, char *line)
 	n_cy.radius /= 2;
 	n_cy.maximum /= n_cy.radius;
 	n_cy.minimum = 0;
-	n_cy.closed = true;
-	//set_transform(&n_cy, );
+	n_cy.closed = false;
+	set_transform(&n_cy, rotate_matrix(p, n, n_cy));
 	add_object(&w->object, n_cy);
 	return (1);
 }

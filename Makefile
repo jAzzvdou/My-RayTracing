@@ -1,6 +1,6 @@
 NAME	=	miniRT
 
-SRCS	=	main.c                                  \
+SRCS	=	main.c                              \
 		1TuplesPointsVectors/tuple_and_point.c  \
 		1TuplesPointsVectors/tuple_utils.c      \
 		1TuplesPointsVectors/vector.c           \
@@ -12,6 +12,7 @@ SRCS	=	main.c                                  \
 		3Matrices/matrix3.c                     \
 		4MatrixTransformation/rotations.c       \
 		4MatrixTransformation/transformations.c \
+		4MatrixTransformation/rotate_matrix.c   \
 		5RayIntersections/inter_cy_and_cn.c     \
 		5RayIntersections/inter_sp_and_pl.c     \
 		5RayIntersections/intersect_utils.c     \

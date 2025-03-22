@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/19 23:19:17 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:12:32 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define KEY_EVENT 02
 
 //__________ image __________
-# define WIDTH  720
-# define HEIGHT 720
+# define WIDTH  926
+# define HEIGHT 601
 
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
@@ -264,7 +264,8 @@ typedef struct s_world
 //----------| FUNCTIONS |----------//
 void		screen(t_world *w);
 t_canvas	render(t_world w, t_camera cam);
-void		render_tests(t_minilibx *libx, t_world *w);
+void	render_tests(t_minilibx *libx, t_world *w);
+void	render_scene(t_minilibx *libx, t_world *w);
 
 //___________Parse_________________
 int	parse(t_world *w, int fd);
@@ -329,7 +330,7 @@ double		minor(t_matrix a, int x, int y);
 double		cofactor(t_matrix a, int x, int y);
 t_matrix	inverse(t_matrix a);
 double		determinant(t_matrix a);
-t_matrix	rotation_matrix(t_point p, t_vector dir, t_object obj);
+t_matrix	rotate_matrix(t_point p, t_vector d, t_object obj);
 
 //__________ transformations __________
 t_matrix	translation(double x, double y, double z);

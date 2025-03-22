@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/19 23:29:27 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 15:12:25 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_line_token(char *line)
 		return (SP);
 	else if (!my_strncmp(line, "pl ", 3))
 		return (PL);
-	else if (!my_strncmp(line, "cy", 3))
+	else if (!my_strncmp(line, "cy ", 3))
 		return (CY);
 	else if (!my_strncmp(line, "cn ", 3))
 		return (CN);
@@ -78,6 +78,5 @@ int	parse(t_world *w, int fd)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	//put_amb_color(w);
 	return (1);
 }

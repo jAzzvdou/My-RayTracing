@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:33:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/20 00:10:33 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/22 14:32:50 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ int	light_parse(t_world *w, char *line)
 	char	**line_split;
 	t_color	n_color;
 	t_point	p;
-	t_light	n_light;
 
-	(void)w;
 	line_split = my_split(line, ' ');
 	if (!valid_line_count(line_split, 4)
 		|| !get_coords(line_split[1], &p)
@@ -38,7 +36,6 @@ int	light_parse(t_world *w, char *line)
 		return (err(RED, "Error! light_parse ko\n", RESET), 0);
 	}
 	line_split = memcard(line_split, VECTOR, FREE, 0);
-	n_light = point_light(p, mult_color(n_color, bright));
-	add_light(&w->light, n_light);
+	add_light(&w->light, point_light(p, mult_color(n_color, bright)));
 	return (1);
 }
