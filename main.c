@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/23 20:02:34 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:24:07 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 	memlist_holder(start_memlist(), 0);
 	w = world();
 	if (fd < 0 || !parse(&w, fd))
-		return (err(RED, "Error! Invalid map!\n", RESET), 1);
+		return (memcard(NULL, 0, FREEALL, 0), 1);
 	screen(&w);
 	return (0);
 }
