@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/22 15:12:25 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:01:41 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ int	parse_line(char *line, t_world *w)
 	return (1);
 }
 
+int	post_validations(t_world *w)
+{
+	if (w->amb.has_cam != 1)
+		return (err(RED, "Error! Cam ko\n", RESET), 0); // free and exit
+	if (w->amb.has_amb_color != 1)
+		return (err(RED, "Error! Ambient color ko\n", RESET), 0); // free and exit
+	if (!w->light)
+		return (err(RED, "Error! No Lights\n", RESET), 0); // free and exit
+	if (!w->object)
+		return (err(RED, "Error! No objects ko\n", RESET), 0); // free and exit
+	return (1);
+}
+
 int	parse(t_world *w, int fd)
 {
 	char	*line;
@@ -78,5 +91,7 @@ int	parse(t_world *w, int fd)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	if (!post_validations(w))
+		return (0);
 	return (1);
 }
