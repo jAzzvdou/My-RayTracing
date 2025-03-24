@@ -6,25 +6,11 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/24 12:27:08 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:49:31 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
-
-t_texture	load_texture(void *mlx, char *path)
-{
-	t_texture	texture;
-
-	texture.img = mlx_xpm_file_to_image(mlx, path, &texture.width, &texture.height);
-	if (!texture.img)
-	{
-		err(NULL, "Error\nTexture not found", NULL);
-		exit(1);
-	}
-	texture.addr = mlx_get_data_addr(texture.img, &texture.bpp, &texture.linelen, &texture.endian);
-	return (texture);
-}
 
 t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 {
@@ -36,7 +22,6 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
-	//p.texture = load_texture(mlx, "10Patterns/Textures/camuflagem.xpm");
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)
@@ -49,6 +34,7 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 		p.type = TEXTURE;
 	else
 		p.type = NO_TYPE;
+	set_pattern_transform(&p, scaling(0.25, 0.25, 0.25));
 	return (p);
 }
 

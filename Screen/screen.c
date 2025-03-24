@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/24 19:09:51 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:54:16 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_texture       load_texture(void *mlx, char *path)
         t_texture       texture;
 
         texture.img = mlx_xpm_file_to_image(mlx, path, &texture.width, &texture.height);
+	path = memcard(path, STRING, FREE, 0);
         if (!texture.img)
         {
                 err(NULL, "Error\nTexture not found", NULL);

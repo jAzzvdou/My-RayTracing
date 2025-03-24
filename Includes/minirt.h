@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/24 19:08:12 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:33:36 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,8 +270,8 @@ void	make_the_scene(t_minilibx *libx, t_world *w);
 //___________Parse_________________
 int	parse(t_world *w, int fd);
 int	get_transparency(char *s, double *transparency);
-int	get_refractive(char *s, double *reflective, double *refractive_index);
-int	get_path(char *s);
+int	get_reflective(char *s1, char *s2, double *reflective, double *refractive_index);
+int	valid_path(char *s);
 int	valid_line_count(char **str_split, int words_to_go);
 int	get_int(char *str, int *n);
 int	get_double(char *str, double *val);

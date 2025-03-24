@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/24 18:59:43 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 20:00:46 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	valid_path(char *s)
 	char	*path;
 
 	path = my_strjoin("10Patterns/Textures/", s);
-	fd = open(s, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
 	close(fd);
