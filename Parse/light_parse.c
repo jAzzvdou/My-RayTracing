@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:33:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/23 20:06:08 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:12:20 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	set_bright(char *str, double *bright)
 int	light_parse(t_world *w, char *line)
 {
 	double	bright;
-	char	**line_split;
+	char	**splited;
 	t_color	n_color;
 	t_point	p;
 
-	line_split = my_split(line, ' ');
-	if (!valid_line_count(line_split, 4)
-		|| !get_coords(line_split[1], &p)
-		|| !set_bright(line_split[2], &bright)
-		|| !get_color(line_split[3], &n_color))
+	splited = my_split(line, ' ');
+	if (!valid_line_count(splited, 4)
+		|| !get_coords(splited[1], &p)
+		|| !set_bright(splited[2], &bright)
+		|| !get_color(splited[3], &n_color))
 	{
-		line_split = memcard(line_split, VECTOR, FREE, 0);
+		splited = memcard(splited, VECTOR, FREE, 0);
 		return (err(RED, "Error! light_parse ko\n", RESET), 0);
 	}
-	line_split = memcard(line_split, VECTOR, FREE, 0);
+	splited = memcard(splited, VECTOR, FREE, 0);
 	add_light(&w->light, point_light(p, mult_color(n_color, bright)));
 	return (1);
 }

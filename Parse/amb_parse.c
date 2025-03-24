@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:53 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/19 23:47:01 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:07:05 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ int	valid_has_amb_color(int has_ambient_color)
 int	amb_parse(t_world *w, char *line)
 {
 	double		amb_ratio;
-	char	**line_spl;
+	char	**splited;
 	t_color	amb_color;
 
-	line_spl = my_split(line, ' ');
-	if (!valid_line_count(line_spl, 3)
+	splited = my_split(line, ' ');
+	if (!valid_line_count(splited, 3)
 		|| !valid_has_amb_color(w->amb.has_amb_color)
-		|| !get_double(line_spl[1], &amb_ratio)
-		|| !get_color(line_spl[2], &amb_color))
+		|| !get_double(splited[1], &amb_ratio)
+		|| !get_color(splited[2], &amb_color))
 	{
-		line_spl = memcard(line_spl, VECTOR, FREE, 0);
+		splited = memcard(splited, VECTOR, FREE, 0);
 		return (err(RED, "amb parse ko\n", RESET), 0);
 	}
-	line_spl = memcard(line_spl, VECTOR, FREE, 0);
+	splited = memcard(splited, VECTOR, FREE, 0);
 	w->amb.has_amb_color = 1;
 	w->amb.amb_ratio = amb_ratio;
 	w->amb.amb_color = amb_color;

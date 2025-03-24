@@ -11,11 +11,9 @@ C   0,0,-5          0.1,0,1           50
 # Light
 #   position        intensity       color
 L   0,10,-5         1               0,255,255
-L   0,-10,-5         1               255,0,0
+L   0,-10,-5        1               255,0,0
 
 # Sphere
-#   position        radius          color           reflection    reflection_index    pattern    texture
-sp  0,0,0           1               255,255,255     1             10                  stripe     snoopy.xlm
-
-
-#	SE TIVER PATTERN E TEXTURE TEM QUE DAR ERRO PORQUE SÓ PODE TER UMA
+#   position        radius          color           transparency   reflection    reflection_index    pattern   color_a    color_b       texture
+sp  0,0,0           1               255,255,255     1              1             10                  stripe    0,0,0      254,255,255   snoopy.xlm
+sp  0,0,0           1               255,255,255     0              0             0                   null      0,0,0      255,255,255   null

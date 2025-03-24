@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/22 16:12:32 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:08:12 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,13 +151,14 @@ typedef struct s_pattern
 	t_color	b;
 	t_matrix	inversed;
 	t_matrix	transformed;
+	char		*texture_path;
 	t_texture	texture;
 }	t_pattern;
 
 typedef struct s_material
 {
 	t_color	color;
-	double	amb;	//| ambient
+	t_color	amb;	//| ambient (MUDAR PARA T_COLOR)
 	double	diff;	//| diffuse
 	double	spec;	//| specular
 	double	shiny;	//| shininess
@@ -264,11 +265,13 @@ typedef struct s_world
 //----------| FUNCTIONS |----------//
 void		screen(t_world *w);
 t_canvas	render(t_world w, t_camera cam);
-void	render_tests(t_minilibx *libx, t_world *w);
-void	render_scene(t_minilibx *libx, t_world *w);
+void	make_the_scene(t_minilibx *libx, t_world *w);
 
 //___________Parse_________________
 int	parse(t_world *w, int fd);
+int	get_transparency(char *s, double *transparency);
+int	get_refractive(char *s, double *reflective, double *refractive_index);
+int	get_path(char *s);
 int	valid_line_count(char **str_split, int words_to_go);
 int	get_int(char *str, int *n);
 int	get_double(char *str, double *val);
@@ -387,7 +390,7 @@ t_color		pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 t_color		stripe_at(t_pattern p, t_point pt);
 t_color		gradient_at(t_pattern p, t_point pt);
 t_color		ring_at(t_pattern p, t_point pt);
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx);
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);

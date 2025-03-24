@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/18 00:52:44 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:27:08 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_texture	load_texture(void *mlx, char *path)
 	return (texture);
 }
 
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx)
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 {
 	t_pattern	p;
 
@@ -36,7 +36,7 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, void *mlx)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
-	p.texture = load_texture(mlx, "10Patterns/Textures/camuflagem.xpm");
+	//p.texture = load_texture(mlx, "10Patterns/Textures/camuflagem.xpm");
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)

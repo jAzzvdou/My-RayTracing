@@ -6,11 +6,43 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/19 23:44:55 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:59:43 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
+
+int	get_transparency(char *s, double *transparency)
+{
+	*transparency = my_atod(s);
+	if (*transparency < 0 || *transparency > 1)
+		return (0);
+	return (1);
+}
+
+int	get_reflective(char *s1, char *s2, double *reflective, double *refractive_index)
+{
+	*reflective = my_atod(s1);
+	*refractive_index = my_atod(s2);
+	if (*reflective < 0 || *reflective > 1
+		|| *refractive_index < 0 || *refractive_index > 20)
+		return (0);
+	return (1);
+}
+
+int	valid_path(char *s)
+{
+	int	fd;
+	char	*path;
+
+	path = my_strjoin("10Patterns/Textures/", s);
+	fd = open(s, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	path = memcard(path, STRING, FREE, 0);
+	return (1);
+}
 
 int	valid_line_count(char **str_split, int words_to_go)
 {
@@ -74,7 +106,10 @@ int	get_coords(char *str, t_point *position)
 	char	**str_split;
 
 	str_split = my_split(str, ',');
-	if (!valid_line_count(str_split, 3) || !get_double(str_split[0], &position->x) || !get_double(str_split[1], &position->y) || !get_double(str_split[2], &position->z))
+	if (!valid_line_count(str_split, 3)
+		|| !get_double(str_split[0], &position->x)
+		|| !get_double(str_split[1], &position->y)
+		|| !get_double(str_split[2], &position->z))
 	{
 		str_split = memcard(str_split, VECTOR, FREE, 0);
 		return (err(RED, "Error! get_coords ko\n", RESET), 0);
@@ -89,7 +124,10 @@ int	get_dir(char *str, t_vector *dir)
 	char	**str_split;
 
 	str_split = my_split(str, ',');
-	if (!valid_line_count(str_split, 3) || !get_double(str_split[0], &dir->x) || !get_double(str_split[1], &dir->y) || !get_double(str_split[2], &dir->z))
+	if (!valid_line_count(str_split, 3)
+		|| !get_double(str_split[0], &dir->x)
+		|| !get_double(str_split[1], &dir->y)
+		|| !get_double(str_split[2], &dir->z))
 	{
 		str_split = memcard(str_split, VECTOR, FREE, 0);
 		return (err(RED, "Error! get_dir ko\n", RESET), 0);
@@ -118,7 +156,8 @@ int	get_color(char *str, t_color *n_color)
 	char	**str_split;
 
 	str_split = my_split(str, ',');
-	if (!valid_line_count(str_split, 3) || !valid_colors(str_split, &r, &g, &b))
+	if (!valid_line_count(str_split, 3)
+		|| !valid_colors(str_split, &r, &g, &b))
 	{
 		str_split = memcard(str_split, VECTOR, FREE, 0);
 		return (err(RED, "Error! get_color ko\n", RESET), 0);

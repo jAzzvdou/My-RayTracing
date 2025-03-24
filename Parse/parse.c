@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/23 20:01:41 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:11:06 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ int	post_validations(t_world *w)
 	return (1);
 }
 
+void	set_ambient_color(t_world *w)
+{
+	t_color		amb;
+	t_object	*o;
+
+	amb = mult_color(w->amb.amb_color, w->amb.amb_ratio);
+	o = w->object;
+	while (o)
+	{
+		if (o->material.pattern.has_pattern)
+			o->material.amb = hadama_color(amb, o->material.pattern.a);
+		else
+			o->material.amb = hadama_color(amb, o->material.color);
+		o = o->next;
+	}
+}
+
 int	parse(t_world *w, int fd)
 {
 	char	*line;
@@ -93,5 +110,6 @@ int	parse(t_world *w, int fd)
 	close(fd);
 	if (!post_validations(w))
 		return (0);
+	set_ambient_color(w);
 	return (1);
 }

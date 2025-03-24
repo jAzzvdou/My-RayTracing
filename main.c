@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/23 20:24:07 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:32:52 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ int	invalid_arguments(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	int fd;
-	t_world w;
+	int	fd;
+	t_world	w;
 
 	if (invalid_arguments(ac, av))
-		return (-1);
+		return (1);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (err(RED, av[1], RESET), -1);
+		return (err(RED, av[1], RESET), 2);
 	memlist_holder(start_memlist(), 0);
 	w = world();
-	if (fd < 0 || !parse(&w, fd))
-		return (memcard(NULL, 0, FREEALL, 0), 1);
+	if (!parse(&w, fd))
+		return (memcard(NULL, 0, FREEALL, 0), 3);
 	screen(&w);
 	return (0);
 }
