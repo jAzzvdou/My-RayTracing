@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/08 11:25:48 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/24 19:33:36 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define KEY_EVENT 02
 
 //__________ image __________
-# define WIDTH  720
-# define HEIGHT 720
+# define WIDTH  926
+# define HEIGHT 601
 
 //__________ errors __________
 # define ARGV "Error! Usage: ./miniRT <filename>.\n"
@@ -69,10 +69,15 @@
 //----------| STRUCTS |----------//
 typedef enum e_type
 {
-	SP,
-	PL,
-	CY,
-	CN,
+	A = 2,		//Ambient Light
+	C,		//Camera
+	L,		//Light
+	SP,		//Sphere
+	PL,		//Plane
+	CY,		//Cilynder
+	CN,		//Cone
+	MT,		//Material
+	P,		//Pattern
 	NONE
 }	t_type;
 
@@ -82,6 +87,7 @@ typedef enum e_pattern_type
 	GRADIENT,
 	RING,
 	CHECKER,
+	TEXTURE,
 	NO_TYPE
 }	t_pattern_type;
 
@@ -118,6 +124,25 @@ typedef struct s_matrix
 	double	matrix[16];
 }	t_matrix;
 
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
+typedef struct s_texture
+{
+	int		width;
+	int		height;
+	int		bpp;
+	int		linelen;
+	int		endian;
+	char	*addr;
+	void	*mlx;
+	void	*win;
+	void	*img;
+}	t_texture;
+
 typedef struct s_pattern
 {
 	bool	has_pattern;
@@ -126,12 +151,14 @@ typedef struct s_pattern
 	t_color	b;
 	t_matrix	inversed;
 	t_matrix	transformed;
+	char		*texture_path;
+	t_texture	texture;
 }	t_pattern;
 
 typedef struct s_material
 {
 	t_color	color;
-	double	amb;	//| ambient
+	t_color	amb;	//| ambient (MUDAR PARA T_COLOR)
 	double	diff;	//| diffuse
 	double	spec;	//| specular
 	double	shiny;	//| shininess
@@ -160,11 +187,13 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
-typedef struct s_world
+typedef struct s_ambient
 {
-	t_light		*light;
-	t_object	*object;
-}	t_world;
+	int		has_cam;
+	int		has_amb_color;
+	double	amb_ratio;
+	t_color	amb_color;
+} t_ambient;
 
 typedef struct s_minilibx
 {
@@ -222,12 +251,41 @@ typedef struct s_camera
 	double		half_height;
 	double		pixel_size;
 	t_matrix	transform;
+	t_matrix	inverse;
 }	t_camera;
 
+typedef struct s_world
+{
+	t_light		*light;
+	t_object	*object;
+	t_camera	cam;
+	t_ambient	amb;
+}	t_world;
+
 //----------| FUNCTIONS |----------//
-void		screen(void);
+void		screen(t_world *w);
 t_canvas	render(t_world w, t_camera cam);
-void		render_tests(t_minilibx *libx);
+void	make_the_scene(t_minilibx *libx, t_world *w);
+
+//___________Parse_________________
+int	parse(t_world *w, int fd);
+int	get_transparency(char *s, double *transparency);
+int	get_reflective(char *s1, char *s2, double *reflective, double *refractive_index);
+int	valid_path(char *s);
+int	valid_line_count(char **str_split, int words_to_go);
+int	get_int(char *str, int *n);
+int	get_double(char *str, double *val);
+int	get_coords(char *str, t_point *position);
+int	get_dir(char *str, t_vector *dir);
+int	get_color(char *str, t_color *n_color);
+int	get_radius(char *str, double *r);
+int	amb_parse(t_world *w, char *line);
+int	cam_parse(t_world *w, char *line);
+int	light_parse(t_world *w, char *line);
+int	sphere_parse(t_world *w, char *line);
+int	plane_parse(t_world *w, char *line);
+int	cy_parse(t_world *w, char *line);
+int	cone_parse(t_world *w, char *line);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -250,32 +308,32 @@ int		comp_tuple(t_tuple a, t_tuple b);
 t_point	point(double x, double y, double z);
 
 //__________ vector __________
+double		magnitude(t_vector a);
+double		dot(t_vector a, t_vector b);
 t_vector	vector(double x, double y, double z);
 t_vector	normalize(t_vector a);
 t_vector	cross(t_vector a, t_vector b);
-double	magnitude(t_vector a);
-double	dot(t_vector a, t_vector b);
 
 //__________ canvas __________
+void		draw_pixel(t_minilibx *libx, int x, int y, int color);
+void		set_canvas_pixel(t_canvas *canvas, int x, int y, t_color color);
+void		draw_canvas(t_minilibx *libx, t_canvas *canvas);
+t_color		pixel_at(t_canvas *canvas, int x, int y);
 t_canvas	create_canvas(int width, int height);
-void	draw_pixel(t_minilibx *libx, int x, int y, int color);
-void	set_canvas_pixel(t_canvas *canvas, int x, int y, t_color color);
-t_color	pixel_at(t_canvas *canvas, int x, int y);
-void	draw_canvas(t_minilibx *libx, t_canvas *canvas);
-void	canvas_to_ppm(t_canvas canvas, char *filename);
 
 //__________ matrix __________
-void	set_index(t_matrix *a, int x, int y, double value);
-double	get_index(t_matrix *a, int x, int y);
+void		set_index(t_matrix *a, int x, int y, double value);
+double		get_index(t_matrix *a, int x, int y);
 t_matrix	mult_matrix(t_matrix a, t_matrix b);
-t_tuple	mult_matrix_tuple(t_matrix a, t_tuple b);
+t_tuple		mult_matrix_tuple(t_matrix a, t_tuple b);
 t_matrix	identity(void);
 t_matrix	transpose(t_matrix a);
 t_matrix	submatrix(t_matrix a, int x, int y);
-double	minor(t_matrix a, int x, int y);
-double	cofactor(t_matrix a, int x, int y);
+double		minor(t_matrix a, int x, int y);
+double		cofactor(t_matrix a, int x, int y);
 t_matrix	inverse(t_matrix a);
-double	determinant(t_matrix a);
+double		determinant(t_matrix a);
+t_matrix	rotate_matrix(t_point p, t_vector d, t_object obj);
 
 //__________ transformations __________
 t_matrix	translation(double x, double y, double z);
@@ -288,15 +346,17 @@ t_matrix	rotationy(double rad);
 t_matrix	rotationz(double rad);
 
 //__________ rays __________
-t_ray	ray(t_point p, t_vector v);
-t_point	position(t_ray r, double t);
-double	bhaskara(t_object o, t_ray r);
-void intersect(t_intersection **list, t_object o, t_ray r);
-void	add_intersection(t_intersection **list, t_intersection inter);
+void			intersect(t_intersection **list, t_object o, t_ray r);
+void			add_intersection(t_intersection **list, t_intersection inter);
+int				count_intersection(t_intersection *list);
+double			bhaskara(t_object o, t_ray r);
+t_point			position(t_ray r, double t);
+t_ray			ray(t_point p, t_vector v);
+void	intersect_cylinder(t_intersection **list, t_object o, t_ray r);
+void	intersect_cone(t_intersection **list, t_object o, t_ray r);
 t_intersection	intersection(t_object o, double t);
-int	count_intersection(t_intersection *list);
 t_intersection	*hit(t_intersection *inter);
-void	set_transform(t_object *o, t_matrix m);
+void			set_transform(t_object *o, t_matrix m);
 
 //__________ objects __________
 t_object	new_object(t_type type);
@@ -304,25 +364,32 @@ t_object	new_object(t_type type);
 //__________ light __________
 t_vector	normal_at(t_object o, t_point p);
 t_vector	reflect(t_vector in, t_vector normal);
-t_light	point_light(t_point p, t_color c);
-t_color	lighting(t_light l, t_comps comps);
+t_light		point_light(t_point p, t_color c);
+t_color		clamp_color(t_color c);
+t_color		lighting(t_light l, t_comps comps);
 t_material	material(void);
 
 //__________ world __________
-t_world	world(void);
-t_world	default_world(void);
-void	add_light(t_light **l1, t_light l2);
-void	add_object(t_object **obj1, t_object obj2);
+t_world			world(void);
+t_world			default_world(void);
+void			add_light(t_light **l1, t_light l2);
+void			add_object(t_object **obj1, t_object obj2);
 t_intersection	*intersect_world(t_world w, t_ray r);
-t_comps	prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs);
-void	calculate_index(t_comps *comps, t_intersection *xs);
-t_color	shade_hit(t_world w, t_comps comps, int remaining);
-t_color	color_at(t_world w, t_ray r, int remaining);
-t_matrix	view_transform(t_point from, t_point to, t_vector up);
-t_camera	camera(int hsize, int vsize, double fov);
-t_ray	ray_for_pixel(t_camera c, int x, int y);
+t_comps			prepare_computations(t_intersection inter, t_ray ray, t_intersection *xs);
+void			calculate_index(t_comps *comps, t_intersection *xs);
+t_color			shade_hit(t_world w, t_comps comps, int remaining);
+t_color			color_at(t_world w, t_ray r, int remaining);
+t_matrix		view_transform(t_point from, t_point to, t_vector up);
+t_camera		camera(int hsize, int vsize, double fov);
+t_ray			ray_for_pixel(t_camera c, int x, int y);
 
 //__________ pattern __________
+void		set_pattern_transform(t_pattern *p, t_matrix transform);
+int		near_zero(double nb);
+t_color		pattern_at_object(t_pattern pattern, t_object obj, t_point point);
+t_color		stripe_at(t_pattern p, t_point pt);
+t_color		gradient_at(t_pattern p, t_point pt);
+t_color		ring_at(t_pattern p, t_point pt);
 t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 void	set_pattern_transform(t_pattern *p, t_matrix transform);
@@ -330,6 +397,7 @@ t_color	stripe_at(t_pattern p, t_point pt);
 t_color	gradient_at(t_pattern p, t_point pt);
 t_color	ring_at(t_pattern p, t_point pt);
 int	near_zero(double nb);
+t_color	texture_color(t_texture tex, t_uv uv);
 
 //__________ reflection __________
 t_color	reflected_color(t_world w, t_comps comps, int remaining);
@@ -341,13 +409,11 @@ void	err(char *color1, char *error, char *color2);
 //----------| CLEANERS |----------//
 
 //----------| UTILS |----------//
-
 //__________ space.c __________
 int		is_space(int c);
 void	skip_spaces(char **s);
 
-//__________ splitline.c __________
-char	**splitline(char const *s, char c);
+void print_matrix(t_matrix matrix);
 
 //__________ get_next_line.c __________
 char	*get_next_line(int fd);
@@ -378,5 +444,8 @@ int		onlynumber(char *s, int type);
 //__________ lib5.c __________
 char	*my_strdup(const char *s);
 char	*my_itoa(int n);
+
+//__________ lib6.c __________
+char	**my_split(const char *s, char c);
 
 #endif //| MINIRT_H

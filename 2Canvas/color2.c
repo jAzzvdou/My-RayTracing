@@ -6,13 +6,13 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 19:51:31 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/02/02 19:51:54 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:05:36 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-t_color convert_color(t_color a)
+t_color	convert_color(t_color a)
 {
 	return (color(a.r / 255, a.g / 255, a.b / 255));
 }

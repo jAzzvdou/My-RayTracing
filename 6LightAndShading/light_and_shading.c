@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light_and_shading.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:07:39 by jbergfel          #+#    #+#             */
+/*   Updated: 2025/03/24 19:03:29 by jazevedo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/minirt.h"
 
 t_vector	reflect(t_vector in, t_vector normal)
@@ -36,7 +48,7 @@ t_color	lighting(t_light l, t_comps comps)
 		c[4] = pattern_at_object(m.pattern, comps.object, comps.point);
 	c[0] = hadama_color(c[4], l.intensity);
 	v[0] = normalize(sub_tuple(l.position, comps.point));
-	c[1] = mult_color(c[0], m.amb);
+	c[1] = hadama_color(c[0], m.amb);
 	if (comps.in_shadow)
 		return (c[1]);
 	d[0] = dot(v[0], comps.normalv);
@@ -67,7 +79,7 @@ t_material	material(void)
 
 	my_bzero(&m, sizeof(t_material));
 	m.color = color(1, 1, 1);
-	m.amb = 0.1;
+	m.amb = color(1, 1, 1);
 	m.diff = 0.9;
 	m.spec = 0.9;
 	m.shiny = 200.0;

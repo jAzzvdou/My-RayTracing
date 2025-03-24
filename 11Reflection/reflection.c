@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reflection.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:08:14 by jbergfel          #+#    #+#             */
+/*   Updated: 2025/03/16 12:08:15 by jbergfel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/minirt.h"
 
 t_color	reflected_color(t_world w, t_comps comps, int remaining)
@@ -9,7 +21,7 @@ t_color	reflected_color(t_world w, t_comps comps, int remaining)
 		return (color(0, 0, 0));
 	reflect_ray = ray(comps.over_point, comps.reflectv);
 	c = color_at(w, reflect_ray, remaining - 1);
-	return (mult_color(c, comps.object.material.reflective));
+	return (clamp_color(mult_color(c, comps.object.material.reflective)));
 }
 
 t_color	refracted_color(t_world w, t_comps comps, int depth)
@@ -28,7 +40,7 @@ t_color	refracted_color(t_world w, t_comps comps, int depth)
 	cos_t = sqrt(1.0 - sin2_t);
 	refracted_ray = ray(comps.under_point, sub_tuple(mult_tuple(comps.normalv, (n_ratio * cos_i) - cos_t),
 													mult_tuple(comps.eyev, n_ratio)));
-	return (mult_color(color_at(w, refracted_ray, depth - 1), comps.object.material.transparency));
+	return (clamp_color(mult_color(color_at(w, refracted_ray, depth - 1), comps.object.material.transparency)));
 }
 
 /* ------------------------UTILS--------------------------------- */

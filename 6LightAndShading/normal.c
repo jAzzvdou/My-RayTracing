@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   normal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:07:42 by jbergfel          #+#    #+#             */
+/*   Updated: 2025/03/18 01:47:08 by jazevedo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/minirt.h"
 
 t_vector	sphere_normal_at(t_point p)
@@ -7,12 +19,6 @@ t_vector	sphere_normal_at(t_point p)
 	normal = sub_tuple(p, point(0, 0, 0));
 	normal.w = 0;
 	return (normalize(normal));
-}
-
-t_vector	plane_normal_at(t_point p)
-{
-	(void)p;
-	return (vector(0, 1, 0));
 }
 
 t_vector	cylinder_normal_at(t_object o, t_point p)
@@ -59,7 +65,7 @@ t_vector	object_normal_at(t_object o, t_point p)
 	if (o.type == SP)
 		return (sphere_normal_at(p));
 	else if (o.type == PL)
-		return (plane_normal_at(p));
+		return (vector(0, 1, 0));
 	else if (o.type == CY)
 		return (cylinder_normal_at(o, p));
 	else if (o.type == CN)

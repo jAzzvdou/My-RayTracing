@@ -1,0 +1,43 @@
+# Camera's position and direction 03
+
+# Ambient
+#   ratio           color
+A   0.1             255,255,255
+
+# Camera
+#   position        direction       fov
+C   0,5,-15          0,0,1          90
+
+# Light
+#   position        intensity         color
+L   -12,7,-10          0.6         255,255,255
+L   12,7,-10           0.6         255,255,255
+L   0,7,-10            0.6         255,255,255
+
+# Sphere
+#   position        radius          color
+#sp  0,1,-1           1.2            125,25,25
+sp  -5,0,10          4.2            140,140,140
+sp  5,0,10           4.2            140,140,140
+sp  -5,0,-2          4.2            140,140,140
+sp  5,0,-2           4.2            140,140,140
+sp  -5,10,10         4.2            140,140,140
+sp  5,10,10          4.2            140,140,140
+sp  -5,10,-2         4.2            140,140,140
+sp  5,10,-2          4.2            140,140,140
+
+# Cone                normal
+#   position         direction        radius        height        color
+cn   0,4,-1           0,1,1            0.5           1.5         255,0,255
+
+# Plane             normal
+#   position        direction       color
+pl  0,0,0            0,1,0               104,104,104
+pl  0,0,16           0,0,-1              25,25,178
+pl  0,10,0           0,-1,0              128,0,0
+
+# Cyliner
+cy  -5,0,-2     0,1,0   2.8 10         140,140,140
+cy  -5,0,10     0,1,0   2.8 10         140,140,140
+cy  5,0,-2      0,1,0   2.8  10        140,140,140
+cy  5,0,10      0,1,0   2.8 10         140,140,140
