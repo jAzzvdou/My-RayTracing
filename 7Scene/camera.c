@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:29:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:47 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:15:51 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_matrix	view_transform(t_point from, t_point to, t_vector up)
 		v[1] = cross(v[0], normalize(up));
 	v[2] = cross(v[1], v[0]);
 	return (mult_matrix(get_orientation(v),
-				translation(-from.x, -from.y, -from.z)));
+			translation(-from.x, -from.y, -from.z)));
 }
 
 t_camera	camera(int hsize, int vsize, double fov)

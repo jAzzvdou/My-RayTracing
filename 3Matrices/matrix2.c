@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:29:07 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:08 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:50:05 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_matrix	identity(void)
 
 t_matrix	transpose(t_matrix a)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));

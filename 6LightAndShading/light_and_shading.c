@@ -6,16 +6,11 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:07:39 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 02:34:52 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:14:04 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
-
-t_vector	reflect(t_vector in, t_vector normal)
-{
-	return (sub_tuple(in, mult_tuple(normal, 2 * dot(in, normal))));
-}
 
 t_light	point_light(t_point p, t_color c)
 {
@@ -35,42 +30,52 @@ t_color	clamp_color(t_color c)
 	return (c);
 }
 
-t_color	lighting(t_light l, t_comps comps)
+t_color	calc_diff_spec(t_light l, t_comps cm, t_color bc, t_vector *v)
 {
-	double		d[3];	//| 0: light_dot_normal, 1: reflect_dot_eye, 2: factor
-	t_color		c[5];	//| 0: effective_color, 1: ambient, 2: diffuse, 3: specular, 4: color
-	t_vector	v[2];	//| 0: lightv, 1: reflectv
-	t_material	m;
+	double		d[3];
+	t_color		c[2];
 
-	m = comps.object.material;
-	c[4] = m.color;
-	if (m.pattern.has_pattern)
-		c[4] = pattern_at_object(m.pattern, comps.object, comps.point);
-	c[0] = hadama_color(c[4], l.intensity);
-	v[0] = normalize(sub_tuple(l.position, comps.point));
-	c[1] = hadama_color(c[0], m.amb);
-	if (comps.in_shadow)
-		return (c[1]);
-	d[0] = dot(v[0], comps.normalv);
+	v[0] = normalize(sub_tuple(l.position, cm.point));
+	d[0] = dot(v[0], cm.normalv);
 	if (d[0] < 0)
 	{
-		c[2] = color(0, 0, 0);
-		c[3] = color(0, 0, 0);
+		c[0] = color(0, 0, 0);
+		c[1] = color(0, 0, 0);
 	}
 	else
 	{
-		c[2] = mult_color(c[0], m.diff * d[0]);
-		v[1] = reflect(inverse_tuple(v[0]), comps.normalv);
-		d[1] = dot(v[1], comps.eyev);
+		c[0] = mult_color(bc, cm.object.material.diff * d[0]);
+		v[1] = reflect(inverse_tuple(v[0]), cm.normalv);
+		d[1] = dot(v[1], cm.eyev);
 		if (d[1] <= 0)
-			c[3] = color(0, 0, 0);
+			c[1] = color(0, 0, 0);
 		else
 		{
-			d[2] = pow(d[1], m.shiny);
-			c[3] = mult_color(l.intensity, m.spec * d[2]);
+			d[2] = pow(d[1], cm.object.material.shiny);
+			c[1] = mult_color(l.intensity, cm.object.material.spec * d[2]);
 		}
 	}
-	return (clamp_color(add_color(add_color(c[1], c[2]), c[3])));
+	return (add_color(c[0], c[1]));
+}
+
+t_color	lighting(t_light l, t_comps comps)
+{
+	t_color		base_color;
+	t_color		ambient;
+	t_color		diffuse_specular;
+	t_material	m;
+	t_vector	v[2];
+
+	m = comps.object.material;
+	base_color = m.color;
+	if (m.pattern.has_pattern)
+		base_color = pattern_at_object(m.pattern, comps.object, comps.point);
+	base_color = hadama_color(base_color, l.intensity);
+	ambient = hadama_color(base_color, m.amb);
+	if (comps.in_shadow)
+		return (ambient);
+	diffuse_specular = calc_diff_spec(l, comps, base_color, v);
+	return (clamp_color(add_color(ambient, diffuse_specular)));
 }
 
 t_material	material(void)

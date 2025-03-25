@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:07:21 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/18 01:05:15 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:49:37 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ t_color	hadama_color(t_color a, t_color b)
 {
 	return (color((a.r * b.r), (a.g * b.g), (a.b * b.b)));
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:03:28 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:56:03 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:28:56 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ int	power(int base, int exp)
 	return (result);
 }
 
+double	parse_fractional_part(const char *nptr, double nb, int *i)
+{
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		nb = nb + ((double)(*nptr - '0') / power(10, *i + 1));
+		nptr++;
+		(*i)++;
+	}
+	return (nb);
+}
+
 double	my_atod(const char *nptr)
 {
 	int		i;
@@ -81,12 +92,7 @@ double	my_atod(const char *nptr)
 	if (*nptr == '.')
 	{
 		nptr++;
-		while (*nptr >= '0' && *nptr <= '9')
-		{
-			nb = nb + ((double)(*nptr - '0') / power(10, i + 1));
-			nptr++;
-			i++;
-		}
+		nb = parse_fractional_part(nptr, nb, &i);
 	}
 	return (nb * mult);
 }

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:03:24 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/22 16:00:05 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:51:26 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static void	get_angles(t_vector v, double *x, double *z)
 {
 	*x = 0;
 	*z = 0;
-
 	if (fabs(v.y) == 1)
-		return;
+		return ;
 	else if (!near_zero(v.z))
 		*x = atan2(v.z, sqrt(v.x * v.x + v.y * v.y));
 	else if (!near_zero(v.x))
@@ -37,9 +36,9 @@ t_matrix	get_matrix(t_matrix scale, t_matrix rotate, t_matrix translate)
 
 t_matrix	rotate_matrix(t_point p, t_vector d, t_object obj)
 {
-	double r;
-	double x;
-	double z;
+	double	r;
+	double	x;
+	double	z;
 
 	x = 0;
 	z = 0;
@@ -47,6 +46,6 @@ t_matrix	rotate_matrix(t_point p, t_vector d, t_object obj)
 	get_angles(d, &x, &z);
 	if (obj.type == SP || obj.type == CY || obj.type == CN)
 		r = obj.radius;
-	return (get_matrix(translation(p.x, p.y, p.z), rot_m(x, z), scaling(r, r, r)));
+	return (get_matrix(translation(p.x, p.y, p.z),
+			rot_m(x, z), scaling(r, r, r)));
 }
-

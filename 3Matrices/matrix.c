@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 09:53:28 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/18 01:28:30 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:50:00 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double	get_index(t_matrix *a, int x, int y)
 
 static double	mult_index(t_matrix a, t_matrix b, int x, int y)
 {
-	int	i;
+	int		i;
 	double	result;
 
 	result = 0;
@@ -43,8 +43,8 @@ static double	mult_index(t_matrix a, t_matrix b, int x, int y)
 
 t_matrix	mult_matrix(t_matrix a, t_matrix b)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:29:12 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:13 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:50:25 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_matrix	submatrix(t_matrix a, int x, int y)
 {
-	int		x1[2];
-	int		y1[2];
+	int			x1[2];
+	int			y1[2];
 	t_matrix	matrix;
 
 	my_bzero(&matrix, sizeof(t_matrix));
@@ -58,8 +58,8 @@ double	cofactor(t_matrix a, int x, int y)
 
 t_matrix	inverse(t_matrix a)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 	double		det;
 	t_matrix	matrix;
 
@@ -86,7 +86,7 @@ t_matrix	inverse(t_matrix a)
 double	determinant(t_matrix a)
 {
 	int		i;
-	double		result;
+	double	result;
 
 	if (a.rows == 2 && a.cols == 2)
 	{

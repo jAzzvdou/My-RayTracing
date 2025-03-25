@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:04 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/24 09:32:52 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:19:15 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	invalid_arguments(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	int	fd;
+	int		fd;
 	t_world	w;
 
 	if (invalid_arguments(ac, av))

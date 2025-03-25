@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 02:46:56 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:45:04 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,137 +38,28 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 	return (p);
 }
 
-t_color	stripe_at(t_pattern p, t_point pt)
-{
-	if ((int)floor(pt.x) % 2 == 0)
-		return (p.a);
-	return (p.b);
-}
-
-t_color	gradient_at(t_pattern p, t_point pt)
-{
-	double	fraction;
-	t_color	distance;
-
-	distance = sub_color(p.b, p.a);
-	fraction = fmod(fabs(pt.x), 1);
-	if (fmod(fabs(pt.x), 2) >= 1)
-		fraction = 1 - fmod(fabs(pt.x), 1);
-	return (add_color(mult_color(distance, fraction), p.a));
-}
-
-int	near_zero(double nb)
-{
-	return (nb < EPSILON && nb > -EPSILON);
-}
-
-t_color	ring_at(t_pattern p, t_point pt)
-{
-	double	discriminant;
-
-	discriminant = floor(sqrt(pow(pt.x, 2) + pow(pt.z, 2)));
-	if (near_zero(fmod(discriminant, 2)))
-		return (p.a);
-	return (p.b);
-}
-
-t_color	checker_at(t_pattern p, t_point pt)
-{
-	int	mod;
-	int	sum;
-
-	mod = 1;
-	sum = (int)(pt.x + pt.y + pt.z);
-	if (sum % 2 == 0)
-		mod = 0;
-	if (pt.x < 0)
-		mod = !mod;
-	if (pt.z < 0)
-		mod = !mod;
-	if (mod)
-		return (p.a);
-	return (p.b);
-}
-
 t_color	texture_color(t_texture tex, t_uv uv)
 {
+	int				x;
+	int				y;
+	int				pixel;
+	unsigned char	*color;
+
 	if (!tex.addr)
 		return ((t_color){0, 0, 0});
 	uv.u = fmod(fabs(uv.u), 1.0);
 	uv.v = fmod(fabs(uv.v), 1.0);
-
-	int x = fmax(0, fmin(floor(uv.u * (tex.width - 1)), tex.width - 1));
-	int y = fmax(0, fmin(floor(uv.v * (tex.height - 1)), tex.height - 1));
-
-	int pixel = (y * tex.linelen) + (x * (tex.bpp / 8));
-	unsigned char *color = (unsigned char *)(tex.addr + pixel);
-
+	x = fmax(0, fmin(floor(uv.u * (tex.width - 1)), tex.width - 1));
+	y = fmax(0, fmin(floor(uv.v * (tex.height - 1)), tex.height - 1));
+	pixel = (y * tex.linelen) + (x * (tex.bpp / 8));
+	color = (unsigned char *)(tex.addr + pixel);
 	return ((t_color){color[2] / 255.0, color[1] / 255.0, color[0] / 255.0});
-}
-
-t_color	sphere_texture(t_pattern p, t_point pt)
-{
-	t_uv	uv;
-	double	phi;
-	double	theta;
-
-	theta = atan2(pt.x, pt.z);
-	phi = acos(pt.y);
-	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
-	uv.v = 1 - (phi / M_PI);
-	return (texture_color(p.texture, uv));
-}
-
-t_color	plane_texture(t_pattern p, t_point pt)
-{
-	t_uv	uv;
-
-	uv.u = fmod(pt.x, 1);
-	uv.v = fmod(pt.z, 1);
-	return (texture_color(p.texture, uv));
-}
-
-t_color	cylinder_texture(t_pattern p, t_point pt)
-{
-	t_uv	uv;
-	double	theta;
-
-	theta = atan2(pt.x, pt.z);
-	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
-	uv.v = fmod(pt.y, 1);
-	return (texture_color(p.texture, uv));
-}
-
-t_color	cone_texture(t_pattern p, t_point pt)
-{
-	t_uv	uv;
-	double	theta;
-	double	radius;
-
-	radius = pow(pt.x, 2) + pow(pt.z, 2);
-	theta = atan2(pt.x, pt.z);
-	uv.u = 1 - ((theta / (2 * M_PI)) + 0.5);
-	uv.v = fmod(sqrt(radius), 1);
-	return (texture_color(p.texture, uv));
-}
-
-t_color	texture_at(t_pattern p, t_object obj, t_point pt)
-{
-	if (obj.type == SP)
-		return (sphere_texture(p, pt));
-	if (obj.type == PL)
-		return (plane_texture(p, pt));
-	if (obj.type == CY)
-		return (cylinder_texture(p, pt));
-	if (obj.type == CN)
-		return (cone_texture(p, pt));
-	return (color(0, 0, 0));
 }
 
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 {
 	t_point	obj_point;
-	t_point pat_point;
+	t_point	pat_point;
 
 	obj_point = mult_matrix_tuple(obj.inversed, point);
 	pat_point = mult_matrix_tuple(pattern.inversed, obj_point);

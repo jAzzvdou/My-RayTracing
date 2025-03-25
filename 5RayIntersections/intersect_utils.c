@@ -6,13 +6,22 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:29:32 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:33 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:03:00 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-double 	bhaskara(t_object o, t_ray r)
+void	swap(double *a, double *b)
+{
+	double	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+double	bhaskara(t_object o, t_ray r)
 {
 	double		abc[3];
 	t_vector	to_ray;

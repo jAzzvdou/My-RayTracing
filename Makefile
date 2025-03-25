@@ -19,13 +19,18 @@ SRCS	=	main.c                              \
 		5RayIntersections/new_object.c          \
 		5RayIntersections/ray.c                 \
 		6LightAndShading/light_and_shading.c    \
+		6LightAndShading/light_and_shading_utils.c    \
 		6LightAndShading/normal.c               \
 		7Scene/camera.c                         \
 		7Scene/color_at.c                       \
 		7Scene/ray_for_pixel.c                  \
 		7Scene/world.c                          \
 		10Patterns/pattern.c                    \
+		10Patterns/pattern_utils.c              \
+		10Patterns/pattern_utils2.c             \
 		11Reflection/reflection.c               \
+		11Reflection/reflection_utils.c         \
+		11Reflection/reflection_utils2.c        \
 		Parse/amb_parse.c                       \
 		Parse/cam_parse.c                       \
 		Parse/cone_parse.c                      \

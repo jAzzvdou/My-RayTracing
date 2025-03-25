@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:29:49 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:50 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:16:34 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	is_shadowed(t_world w, t_point p, t_light *light)
 {
-	double		distance;
-	t_vector	lightv;
+	double			distance;
+	t_vector		lightv;
 	t_intersection	*inters_list;
 	t_intersection	*i;
 
@@ -51,7 +51,7 @@ t_color	shade_hit(t_world w, t_comps comps, int remaining)
 t_color	color_at(t_world w, t_ray r, int remaining)
 {
 	t_intersection	*h;
-	t_comps		comps;
+	t_comps			comps;
 
 	h = hit(intersect_world(w, r));
 	if (!h)

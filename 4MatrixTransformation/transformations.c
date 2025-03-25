@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:07:02 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/18 01:18:48 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:51:33 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ t_matrix	shearing(double *x, double *y, double *z)
 	set_index(&matrix, 1, 2, z[1]);
 	return (matrix);
 }
-
