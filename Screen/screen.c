@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/25 02:49:40 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:10:25 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,21 @@ t_texture       load_texture(void *mlx, char *path)
         return (texture);
 }
 
-// LEMBRAR DE ALTERAR ESSA FUNÇÃO PARA QUE OS OBJETOS DO MUNDO SEJAM ATUALIZADOS
 void    set_textures(t_world *w, void *mlx)
 {
 	t_object	*tmp;
+	t_object	*new_objects;
 
 	tmp = w->object;
 	while (tmp)
 	{
 		if (tmp->material.pattern.type == TEXTURE)
-			w->object->material.pattern.texture = load_texture(mlx, tmp->material.pattern.texture_path);
+			tmp->material.pattern.texture = load_texture(mlx, tmp->material.pattern.texture_path);
+		add_object(&new_objects, *tmp);
 		tmp = tmp->next;
 	}
+	object_clear_list(&w->object);
+	w->object = new_objects;
 }
 
 void	screen(t_world *w)

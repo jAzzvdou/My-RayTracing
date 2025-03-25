@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/24 19:33:36 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:10:09 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,6 +407,7 @@ t_color	refracted_color(t_world w, t_comps comps, int depth);
 void	err(char *color1, char *error, char *color2);
 
 //----------| CLEANERS |----------//
+void	object_clear_list(t_object **object_list);
 
 //----------| UTILS |----------//
 //__________ space.c __________
