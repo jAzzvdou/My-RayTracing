@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/24 19:49:31 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 02:46:56 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,13 @@ t_color	checker_at(t_pattern p, t_point pt)
 
 t_color	texture_color(t_texture tex, t_uv uv)
 {
-	int x = floor(uv.u * (tex.width - 1));
-	int y = floor(uv.v * (tex.height - 1));
+	if (!tex.addr)
+		return ((t_color){0, 0, 0});
+	uv.u = fmod(fabs(uv.u), 1.0);
+	uv.v = fmod(fabs(uv.v), 1.0);
+
+	int x = fmax(0, fmin(floor(uv.u * (tex.width - 1)), tex.width - 1));
+	int y = fmax(0, fmin(floor(uv.v * (tex.height - 1)), tex.height - 1));
 
 	int pixel = (y * tex.linelen) + (x * (tex.bpp / 8));
 	unsigned char *color = (unsigned char *)(tex.addr + pixel);

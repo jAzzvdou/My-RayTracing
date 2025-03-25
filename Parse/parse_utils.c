@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:47:46 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/24 20:00:46 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 01:48:49 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	get_dir(char *str, t_vector *dir)
 		|| !get_double(str_split[1], &dir->y)
 		|| !get_double(str_split[2], &dir->z))
 	{
+		printf("s0: %s\ns1: %s\ns2: %s\n", str_split[0], str_split[1], str_split[2]);
 		str_split = memcard(str_split, VECTOR, FREE, 0);
 		return (err(RED, "Error! get_dir ko\n", RESET), 0);
 	}
