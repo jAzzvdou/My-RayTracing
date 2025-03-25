@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:57 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:21:41 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:19:58 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_line_token(char *line)
 	return (0);
 }
 
-int	parse_line(char *line, t_world *w)
+int	parse_line(char *line, t_world *w, void *mlx)
 {
 	int	token;
 
@@ -53,13 +53,13 @@ int	parse_line(char *line, t_world *w)
 	else if (token == L)
 		return (light_parse(w, line));
 	else if (token == SP)
-		return (sphere_parse(w, line));
+		return (sphere_parse(w, line, mlx));
 	else if (token == PL)
-		return (plane_parse(w, line));
+		return (plane_parse(w, line, mlx));
 	else if (token == CY)
-		return (cy_parse(w, line));
+		return (cy_parse(w, line, mlx));
 	else if (token == CN)
-		return (cone_parse(w, line));
+		return (cone_parse(w, line, mlx));
 	return (1);
 }
 
@@ -93,7 +93,7 @@ void	set_ambient_color(t_world *w)
 	}
 }
 
-int	parse(t_world *w, int fd)
+int	parse(t_world *w, int fd, void *mlx)
 {
 	char	*line;
 
@@ -102,7 +102,7 @@ int	parse(t_world *w, int fd)
 	{
 		if (my_strchr(line, '\n'))
 			my_strchr(line, '\n')[0] = '\0';
-		if (!parse_line(line, w))
+		if (!parse_line(line, w, mlx))
 			return (line = memcard(line, STRING, FREE, 0), 0);
 		line = memcard(line, STRING, FREE, 0);
 		line = get_next_line(fd);

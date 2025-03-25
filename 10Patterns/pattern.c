@@ -6,13 +6,29 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 12:45:04 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:48:05 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
+t_texture	load_texture(void *mlx, char *path)
+{
+	t_texture	texture;
+
+	texture.img = mlx_xpm_file_to_image(mlx, path,
+			&texture.width, &texture.height);
+	if (!texture.img)
+	{
+		err(NULL, "Error\nTexture not found", NULL);
+		exit(1);
+	}
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bpp,
+			&texture.linelen, &texture.endian);
+	return (texture);
+}
+
+t_pattern	new_pattern(t_pat_tp tp, t_color a, t_color b, char *ph, void *mlx)
 {
 	t_pattern	p;
 
@@ -22,18 +38,20 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
-	if (type == STRIPE)
-		p.type = STRIPE;
-	else if (type == GRADIENT)
-		p.type = GRADIENT;
-	else if (type == RING)
-		p.type = RING;
-	else if (type == CHECKER)
-		p.type = CHECKER;
-	else if (type == TEXTURE)
-		p.type = TEXTURE;
+	if (ph)
+		p.texture = load_texture(mlx, ph);
+	if (tp == STRIPE)
+		p.tp = STRIPE;
+	else if (tp == GRADIENT)
+		p.tp = GRADIENT;
+	else if (tp == RING)
+		p.tp = RING;
+	else if (tp == CHECKER)
+		p.tp = CHECKER;
+	else if (tp == TEXTURE)
+		p.tp = TEXTURE;
 	else
-		p.type = NO_TYPE;
+		p.tp = NO_TYPE;
 	set_pattern_transform(&p, scaling(0.25, 0.25, 0.25));
 	return (p);
 }
@@ -63,15 +81,15 @@ t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point)
 
 	obj_point = mult_matrix_tuple(obj.inversed, point);
 	pat_point = mult_matrix_tuple(pattern.inversed, obj_point);
-	if (pattern.type == STRIPE)
+	if (pattern.tp == STRIPE)
 		return (stripe_at(pattern, pat_point));
-	if (pattern.type == GRADIENT)
+	if (pattern.tp == GRADIENT)
 		return (gradient_at(pattern, pat_point));
-	if (pattern.type == RING)
+	if (pattern.tp == RING)
 		return (ring_at(pattern, pat_point));
-	if (pattern.type == CHECKER)
+	if (pattern.tp == CHECKER)
 		return (checker_at(pattern, pat_point));
-	if (pattern.type == TEXTURE)
+	if (pattern.tp == TEXTURE)
 		return (texture_at(pattern, obj, obj_point));
 	return (pattern.a);
 }
