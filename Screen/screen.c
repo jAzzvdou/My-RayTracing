@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:19:09 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/25 02:49:40 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:28:05 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,24 @@ int	key_hook(int key, t_minilibx *libx)
 	return (0);
 }
 
-t_texture       load_texture(void *mlx, char *path)
+t_texture	load_texture(void *mlx, char *path)
 {
-        t_texture       texture;
+	t_texture	texture;
 
-        texture.img = mlx_xpm_file_to_image(mlx, path, &texture.width, &texture.height);
+	texture.img = mlx_xpm_file_to_image(mlx, path,
+			&texture.width, &texture.height);
 	path = memcard(path, STRING, FREE, 0);
-        if (!texture.img)
-        {
-                err(NULL, "Error\nTexture not found", NULL);
-                exit(1);
-        }
-        texture.addr = mlx_get_data_addr(texture.img, &texture.bpp, &texture.linelen, &texture.endian);
-        return (texture);
+	if (!texture.img)
+	{
+		err(NULL, "Error\nTexture not found", NULL);
+		exit(1);
+	}
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bpp,
+			&texture.linelen, &texture.endian);
+	return (texture);
 }
 
-// LEMBRAR DE ALTERAR ESSA FUNÇÃO PARA QUE OS OBJETOS DO MUNDO SEJAM ATUALIZADOS
-void    set_textures(t_world *w, void *mlx)
+void	set_textures(t_world *w, void *mlx)
 {
 	t_object	*tmp;
 
@@ -54,7 +55,8 @@ void    set_textures(t_world *w, void *mlx)
 	while (tmp)
 	{
 		if (tmp->material.pattern.type == TEXTURE)
-			w->object->material.pattern.texture = load_texture(mlx, tmp->material.pattern.texture_path);
+			w->object->material.pattern.texture = load_texture(mlx,
+					tmp->material.pattern.texture_path);
 		tmp = tmp->next;
 	}
 }
@@ -62,10 +64,12 @@ void    set_textures(t_world *w, void *mlx)
 void	screen(t_world *w)
 {
 	t_minilibx	libx;
+
 	libx.mlx = mlx_init();
 	libx.win = mlx_new_window(libx.mlx, WIDTH, HEIGHT, "| MiniRT |");
 	libx.img = mlx_new_image(libx.mlx, WIDTH, HEIGHT);
-	libx.addr = mlx_get_data_addr(libx.img, &libx.bpp, &libx.linelen, &libx.endian);
+	libx.addr = mlx_get_data_addr(libx.img, &libx.bpp,
+			&libx.linelen, &libx.endian);
 	set_textures(w, libx.mlx);
 	make_the_scene(&libx, w);
 	mlx_put_image_to_window(libx.mlx, libx.win, libx.img, 0, 0);

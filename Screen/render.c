@@ -6,18 +6,18 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:47 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 02:15:45 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:25:57 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-t_canvas render(t_world w, t_camera cam)
+t_canvas	render(t_world w, t_camera cam)
 {
-	int xy[2];
-	t_ray r;
-	t_color c;
-	t_canvas image;
+	int			xy[2];
+	t_ray		r;
+	t_color		c;
+	t_canvas	image;
 
 	image = create_canvas(cam.hsize, cam.vsize);
 	xy[1] = 0;

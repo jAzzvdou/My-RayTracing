@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/24 19:33:36 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:38:34 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,8 +400,18 @@ int	near_zero(double nb);
 t_color	texture_color(t_texture tex, t_uv uv);
 
 //__________ reflection __________
-t_color	reflected_color(t_world w, t_comps comps, int remaining);
-t_color	refracted_color(t_world w, t_comps comps, int depth);
+double			get_n1_refract(t_object *containers);
+void			add_object_to_container(t_object **containers, t_object object);
+void			remove_object_from_container(t_object **containers, t_object object);
+int				has_object(t_object *containers, t_object obj);
+void			update_containers(t_object **containers, t_object object);
+int				is_same_object(t_object object1, t_object object2);
+int				float_compare(double d1, double d2);
+int				is_same_hit(t_intersection *hit_list, t_intersection hit);
+t_intersection	intersection2(double t, t_object s);
+t_object		get_last_object(t_object *object_list);
+t_color			reflected_color(t_world w, t_comps comps, int remaining);
+t_color			refracted_color(t_world w, t_comps comps, int depth);
 
 //----------| ERRORS |----------//
 void	err(char *color1, char *error, char *color2);
