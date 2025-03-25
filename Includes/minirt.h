@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/25 12:10:09 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:48:04 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ typedef struct s_pattern
 	t_color	b;
 	t_matrix	inversed;
 	t_matrix	transformed;
-	char		*texture_path;
 	t_texture	texture;
 }	t_pattern;
 
@@ -263,12 +262,12 @@ typedef struct s_world
 }	t_world;
 
 //----------| FUNCTIONS |----------//
-void		screen(t_world *w);
+void		screen(t_world *w, t_minilibx libx);
 t_canvas	render(t_world w, t_camera cam);
 void	make_the_scene(t_minilibx *libx, t_world *w);
 
 //___________Parse_________________
-int	parse(t_world *w, int fd);
+int	parse(t_world *w, int fd, void *mlx);
 int	get_transparency(char *s, double *transparency);
 int	get_reflective(char *s1, char *s2, double *reflective, double *refractive_index);
 int	valid_path(char *s);
@@ -282,10 +281,10 @@ int	get_radius(char *str, double *r);
 int	amb_parse(t_world *w, char *line);
 int	cam_parse(t_world *w, char *line);
 int	light_parse(t_world *w, char *line);
-int	sphere_parse(t_world *w, char *line);
-int	plane_parse(t_world *w, char *line);
-int	cy_parse(t_world *w, char *line);
-int	cone_parse(t_world *w, char *line);
+int	sphere_parse(t_world *w, char *line, void *mlx);
+int	plane_parse(t_world *w, char *line, void *mlx);
+int	cy_parse(t_world *w, char *line, void *mlx);
+int	cone_parse(t_world *w, char *line, void *mlx);
 
 //__________ color __________
 t_color	color(double r, double g, double b);
@@ -390,7 +389,7 @@ t_color		pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 t_color		stripe_at(t_pattern p, t_point pt);
 t_color		gradient_at(t_pattern p, t_point pt);
 t_color		ring_at(t_pattern p, t_point pt);
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b);
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, char *path, void *mlx);
 t_color	pattern_at_object(t_pattern pattern, t_object obj, t_point point);
 void	set_pattern_transform(t_pattern *p, t_matrix transform);
 t_color	stripe_at(t_pattern p, t_point pt);

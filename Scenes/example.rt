@@ -18,12 +18,12 @@ sp  0,-1,0             1                     255,255,255 0            0.1       
 
 # Plane
 #   position direction                       color       transparency reflection reflection_index pattern  color_a   color_b     texture
-pl  0,0,3    0,0,1                           255,255,255 0            0.1      0.1                null     50,255,50  255,50,255 brunin.xpm
+pl  0,0,3    0,0,1                           255,255,255 0            0.1      0.1                null     50,255,50 255,50,255  brunin.xpm
 
 # Cylinder
 #   position direction       diameter height color       transparency reflection reflection_index pattern  color_a   color_b     texture
-cy  4,1,0    0.0,1.0,0.0     2        3      255,255,255 0            0.1        0.1              ring     50,50,255  255,255,50 null
+cy  4,1,0    0.0,1.0,0.0     2        3      255,255,255 0            0.1        0.1              null     50,50,255  255,255,50 aipim.xpm
 
 # Cone
 #   position direction       radius   height color       transparency reflection reflection_index pattern  color_a   color_b     texture
-cn -2,2,0    0.0,1.0,0.0    1        3      255,255,255 0            0.1        0.1              gradient 50,50,50  150,150,150  null
+cn -2,2,0    0.0,1.0,0.0    1        3      255,255,255 0            0.1        0.1               null     50,50,50  150,150,150 camuflagem.xpm

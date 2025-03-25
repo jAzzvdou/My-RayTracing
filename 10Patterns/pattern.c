@@ -6,13 +6,27 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 02:46:56 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:41:43 by jazevedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minirt.h"
 
-t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
+t_texture       load_texture(void *mlx, char *path)
+{
+        t_texture       texture;
+
+        texture.img = mlx_xpm_file_to_image(mlx, path, &texture.width, &texture.height);
+        if (!texture.img)
+        {
+                err(NULL, "Error\nTexture not found", NULL);
+                exit(1);
+        }
+        texture.addr = mlx_get_data_addr(texture.img, &texture.bpp, &texture.linelen, &texture.endian);
+        return (texture);
+}
+
+t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b, char *path, void *mlx)
 {
 	t_pattern	p;
 
@@ -22,6 +36,8 @@ t_pattern	new_pattern(t_pattern_type type, t_color a, t_color b)
 	p.b = b;
 	p.inversed = identity();
 	p.transformed = identity();
+	if (path)
+		p.texture = load_texture(mlx, path);
 	if (type == STRIPE)
 		p.type = STRIPE;
 	else if (type == GRADIENT)
