@@ -33,6 +33,8 @@ SRCS	=	main.c                              \
 		Parse/light_parse.c                     \
 		Parse/parse.c                           \
 		Parse/parse_utils.c                     \
+		Parse/parse_utils2.c                    \
+		Parse/parse_utils3.c                    \
 		Parse/plane_parse.c                     \
 		Parse/sphere_parse.c                    \
 		Screen/render.c                         \
