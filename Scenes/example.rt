@@ -18,7 +18,7 @@ sp  0,-1,0             1                     255,255,255 0            0.1       
 
 # Plane
 #   position direction                       color       transparency reflection reflection_index pattern  color_a   color_b     texture
-pl  0,0,3    0,0,1                           255,255,255 0            0.1      0.1                null     50,255,50  255,50,255 brunin.xpm
+pl  0,0,3    0,0,1                           255,255,255 0            0.1      0.1                null     50,255,50  255,50,255 null
 
 # Cylinder
 #   position direction       diameter height color       transparency reflection reflection_index pattern  color_a   color_b     texture

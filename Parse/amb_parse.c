@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 11:24:53 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/24 11:07:05 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:12:15 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	valid_has_amb_color(int has_ambient_color)
 int	amb_parse(t_world *w, char *line)
 {
 	double		amb_ratio;
-	char	**splited;
-	t_color	amb_color;
+	char		**splited;
+	t_color		amb_color;
 
 	splited = my_split(line, ' ');
 	if (!valid_line_count(splited, 3)
