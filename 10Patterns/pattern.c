@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:08:09 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/25 15:48:05 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:19:50 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ t_texture	load_texture(void *mlx, char *path)
 	return (texture);
 }
 
-t_pattern	new_pattern(t_pat_tp tp, t_color a, t_color b, char *ph, void *mlx)
+t_pattern	new_pattern(t_pat_tp tp, t_color *ab, char *ph, void *mlx)
 {
 	t_pattern	p;
 
 	my_bzero(&p, sizeof(t_pattern));
 	p.has_pattern = true;
-	p.a = a;
-	p.b = b;
+	p.a = ab[0];
+	p.b = ab[1];
 	p.inversed = identity();
 	p.transformed = identity();
 	if (ph)

@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:24:41 by jazevedo          #+#    #+#             */
-/*   Updated: 2025/03/25 15:46:22 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:20:30 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,8 +390,7 @@ t_color			pattern_at_object(t_pattern pattern, t_object obj,
 t_color			stripe_at(t_pattern p, t_point pt);
 t_color			gradient_at(t_pattern p, t_point pt);
 t_color			ring_at(t_pattern p, t_point pt);
-t_pattern		new_pattern(t_pat_tp tp, t_color a,
-					t_color b, char *path, void *mlx);
+t_pattern		new_pattern(t_pat_tp tp, t_color *ab, char *path, void *mlx);
 t_color			checker_at(t_pattern p, t_point pt);
 t_color			texture_color(t_texture tex, t_uv uv);
 t_color			texture_at(t_pattern p, t_object obj, t_point pt);
