@@ -31,7 +31,6 @@ cn  0,4,-1        0,1,1          0.5       1.5        255,0,255   0            0
 #   position      direction                      color       transparency reflection reflection_index pattern  color_a   color_b     texture
 pl  0,0,0        0,1,0                          104,104,104 0            0.1        0.1              null     50,255,50 255,50,255  null
 pl  0,0,16       0,0,-1                         25,25,178   0            0.1        0.1              null     50,255,50 255,50,255  null
-pl  0,10,0       0,-1,0                         128,0,0     0            0.1        0.1              null     50,255,50 255,50,255  null
 
 # Cylinder
 #   position      direction        diameter height     color       transparency reflection reflection_index pattern  color_a   color_b     texture

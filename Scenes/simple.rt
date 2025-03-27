@@ -2,7 +2,7 @@
 
 # Ambient
 #   ratio           color
-A   0.1             255,255,255
+A   0.3             255,255,255
 
 # Camera
 #   position        direction       fov

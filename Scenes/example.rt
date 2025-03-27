@@ -14,7 +14,7 @@ L   0,3,-6             1                     255,255,255
 
 # Sphere
 #   position           radius                color       transparency reflection reflection_index pattern  color_a   color_b     texture
-sp  0,-1,0             1                     0,0,255     1            0.1        0.1              null     255,50,50 50,255,255  null
+sp  0,-1,0             1                     0,0,255     0            0.1        0.1              null     255,50,50 50,255,255  null
 
 # Plane
 #   position direction                       color       transparency reflection reflection_index pattern  color_a   color_b     texture
