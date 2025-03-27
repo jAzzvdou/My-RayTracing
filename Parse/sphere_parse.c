@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:26:13 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/26 10:26:48 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/27 00:07:47 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ int	get_pattern_sphere(char **splited, t_pattern *pattern, void *mlx)
 	return (1);
 }
 
-int	valid_sphere(char **splited, t_object *n_sp, void *mlx)
+int	valid_sphere(char **splited, t_point *p, t_object *n_sp, void *mlx)
 {
-	t_point	p;
-
 	if (!valid_line_count(splited, 11)
-		|| !get_coords(splited[1], &p)
+		|| !get_coords(splited[1], p)
 		|| !get_radius(splited[2], &n_sp->radius)
 		|| !get_color(splited[3], &n_sp->material.color)
 		|| !get_transparency(splited[4], &n_sp->material.transparency)
@@ -54,7 +52,6 @@ int	valid_sphere(char **splited, t_object *n_sp, void *mlx)
 			&n_sp->material.refractive_index)
 		|| !get_pattern_sphere(splited, &n_sp->material.pattern, mlx))
 		return (0);
-	n_sp->origin = p;
 	return (1);
 }
 
@@ -62,17 +59,18 @@ int	sphere_parse(t_world *w, char *line, void *mlx)
 {
 	char		**splited;
 	t_object	n_sp;
+	t_point		p;
 
 	n_sp = new_object(SP);
 	splited = my_split(line, ' ');
-	if (!valid_sphere(splited, &n_sp, mlx))
+	if (!valid_sphere(splited, &p, &n_sp, mlx))
 	{
 		splited = memcard(splited, VECTOR, FREE, 0);
 		return (err(RED, "Error! sphere_parse ko\n", RESET), 0);
 	}
 	splited = memcard(splited, VECTOR, FREE, 0);
 	n_sp.radius /= 2;
-	set_transform(&n_sp, rotate_matrix(n_sp.origin, point(0, 1, 0), n_sp));
+	set_transform(&n_sp, rotate_matrix(p, point(0, 1, 0), n_sp));
 	add_object(&w->object, n_sp);
 	return (1);
 }

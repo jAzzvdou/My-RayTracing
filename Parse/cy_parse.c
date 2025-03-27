@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:54:39 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/26 10:26:53 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/27 00:10:55 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ int	get_pattern_cylinder(char **splited, t_pattern *pattern, void *mlx)
 	return (1);
 }
 
-int	valid_cy(char **split, t_object *n_cy, void *mlx)
+int	valid_cy(char **split, t_point *p, t_object *n_cy, void *mlx)
 {
-	t_point		p;
 	t_vector	n;
 
 	if (!valid_line_count(split, 13)
-		|| !get_coords(split[1], &p)
+		|| !get_coords(split[1], p)
 		|| !get_dir(split[2], &n)
 		|| !get_double(split[3], &n_cy->radius)
 		|| !get_double(split[4], &n_cy->maximum)
@@ -57,7 +56,6 @@ int	valid_cy(char **split, t_object *n_cy, void *mlx)
 			&n_cy->material.refractive_index)
 		|| !get_pattern_cylinder(split, &n_cy->material.pattern, mlx))
 		return (0);
-	n_cy->origin = p;
 	n_cy->normal = n;
 	return (1);
 }
@@ -66,10 +64,11 @@ int	cy_parse(t_world *w, char *line, void *mlx)
 {
 	char		**splited;
 	t_object	n_cy;
+	t_point		p;
 
 	n_cy = new_object(CY);
 	splited = my_split(line, ' ');
-	if (!valid_cy(splited, &n_cy, mlx))
+	if (!valid_cy(splited, &p, &n_cy, mlx))
 	{
 		splited = memcard(splited, VECTOR, FREE, 0);
 		return (err(RED, "Error! cylinder_parse ko\n", RESET), 0);
@@ -79,7 +78,7 @@ int	cy_parse(t_world *w, char *line, void *mlx)
 	n_cy.maximum /= n_cy.radius;
 	n_cy.minimum = 0;
 	n_cy.closed = false;
-	set_transform(&n_cy, rotate_matrix(n_cy.origin, n_cy.normal, n_cy));
+	set_transform(&n_cy, rotate_matrix(p, n_cy.normal, n_cy));
 	add_object(&w->object, n_cy);
 	return (1);
 }

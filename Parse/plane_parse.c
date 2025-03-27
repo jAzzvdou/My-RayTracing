@@ -6,7 +6,7 @@
 /*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:46:35 by jbergfel          #+#    #+#             */
-/*   Updated: 2025/03/26 10:26:38 by jbergfel         ###   ########.fr       */
+/*   Updated: 2025/03/27 00:11:44 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ int	get_pattern_plane(char **splited, t_pattern *pattern, void *mlx)
 	return (1);
 }
 
-int	valid_pl(char **split, t_object *n_pl, void *mlx)
+int	valid_pl(char **split, t_point *p, t_object *n_pl, void *mlx)
 {
-	t_point		p;
 	t_vector	n;
 
 	if (!valid_line_count(split, 11)
-		|| !get_coords(split[1], &p)
+		|| !get_coords(split[1], p)
 		|| !get_dir(split[2], &n)
 		|| !get_color(split[3], &n_pl->material.color)
 		|| !get_transparency(split[4], &n_pl->material.transparency)
@@ -54,7 +53,6 @@ int	valid_pl(char **split, t_object *n_pl, void *mlx)
 			&n_pl->material.refractive_index)
 		|| !get_pattern_plane(split, &n_pl->material.pattern, mlx))
 		return (0);
-	n_pl->origin = p;
 	n_pl->normal = n;
 	return (1);
 }
@@ -63,16 +61,17 @@ int	plane_parse(t_world *w, char *line, void *mlx)
 {
 	char		**splited;
 	t_object	n_pl;
+	t_point		p;
 
 	n_pl = new_object(PL);
 	splited = my_split(line, ' ');
-	if (!valid_pl(splited, &n_pl, mlx))
+	if (!valid_pl(splited, &p, &n_pl, mlx))
 	{
 		splited = memcard(splited, VECTOR, FREE, 0);
 		return (err(RED, "Error! plane_parse ko\n", RESET), 0);
 	}
 	splited = memcard(splited, VECTOR, FREE, 0);
-	set_transform(&n_pl, rotate_matrix(n_pl.origin, n_pl.normal, n_pl));
+	set_transform(&n_pl, rotate_matrix(p, n_pl.normal, n_pl));
 	add_object(&w->object, n_pl);
 	return (1);
 }
