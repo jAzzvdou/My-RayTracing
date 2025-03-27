@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jazevedo <jazevedo@student.42.rio>         +#+  +:+       +#+        */
+/*   By: jbergfel <jbergfel@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:01:17 by jazevedo          #+#    #+#             */
-/*   Updated: 2024/09/15 11:12:16 by jazevedo         ###   ########.fr       */
+/*   Updated: 2025/03/27 08:53:30 by jbergfel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*type_str(char *s, int tofree, size_t memsize)
 
 int	*type_ints(int *arr, int tofree, size_t memsize)
 {
-	int	*new;
+	int		*new;
 	size_t	i;
 
 	if (tofree == FREE)
